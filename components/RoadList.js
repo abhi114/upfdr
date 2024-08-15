@@ -7,15 +7,19 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 
 import { data } from './data';
 import { useNavigation } from '@react-navigation/native';
-
+import { Modal } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
 const RoadList = () => {
   const [search, setSearch] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const navigation = useNavigation();
   // Filtered data based on search input
@@ -28,7 +32,10 @@ const RoadList = () => {
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
-
+  const handlePress = item => {
+    setSelectedItem(item);
+    setModalVisible(true);
+  };
   // Slice the data for the current page
   const paginatedData = filteredData.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -51,13 +58,14 @@ const RoadList = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{flexDirection: 'row',marginBottom:15}}>
-        <TouchableOpacity onPress={()=>{navigation.goBack()}}>
+      <View style={{flexDirection: 'row', marginBottom: 15}}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}>
           <Text style={{color: '#0000FF'}}>Dashboard </Text>
         </TouchableOpacity>
-        <Text style={{color: '#FFFFFF', }}>
-          / UP FDR Roads List
-        </Text>
+        <Text style={{color: '#FFFFFF'}}>/ UP FDR Roads List</Text>
       </View>
       <Text style={styles.title}>UP FDR Roads List</Text>
       <TextInput
@@ -90,30 +98,118 @@ const RoadList = () => {
               <Text style={styles.cellTitle}>Block:</Text>
               <Text style={styles.cell}>{item.block}</Text>
             </View>
-            <View style={styles.row}>
-              <Text style={styles.cellTitle}>Road Name:</Text>
-              <Text style={styles.cell}>{item.roadName}</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.cellTitle}>Year Sanctioned:</Text>
-              <Text style={styles.cell}>{item.yearSanctioned}</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.cellTitle}>IMS Batch:</Text>
-              <Text style={styles.cell}>{item.imsBatch}</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.cellTitle}>Total Length:</Text>
-              <Text style={styles.cell}>{item.totalLength} km</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.cellTitle}>Sanctioned Amount:</Text>
-              <Text style={styles.cell}>₹{item.sanctionedAmount} </Text>
-            </View>
+            
+            <TouchableOpacity onPress={() => handlePress(item)}>
+              <Text style={styles.detailsButton}>See Full Details</Text>
+            </TouchableOpacity>
           </TouchableOpacity>
         )}
         keyExtractor={item => item.id}
       />
+      {selectedItem && (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(!modalVisible)}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignContent: 'center',
+              margin: 5,
+              backgroundColor: '#191C24',
+            }}>
+            <Text
+              style={{
+                color: '#F1F1F1',
+                alignSelf: 'center',
+                margin: 30,
+                color: '#ffffff',
+                fontSize: 20,
+                fontWeight:'bold'
+              }}>
+              Detailed View
+            </Text>
+            <ScrollView
+              style={{
+                flex: 1,
+                margin: 5,
+                backgroundColor: '#191C24',
+              }}>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Package:</Text>
+                <Text style={styles.cell}>{selectedItem.packageNumber}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>FDR Group:</Text>
+                <Text style={styles.cell}>{selectedItem.fdrGroup}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>District:</Text>
+                <Text style={styles.cell}>{selectedItem.district}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Block:</Text>
+                <Text style={styles.cell}>{selectedItem.block}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Road Name:</Text>
+                <Text style={styles.cell}>{selectedItem.roadName}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Year Sanctioned:</Text>
+                <Text style={styles.cell}>{selectedItem.yearSanctioned}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>IMS Batch:</Text>
+                <Text style={styles.cell}>{selectedItem.imsBatch}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Total Length:</Text>
+                <Text style={styles.cell}>{selectedItem.totalLength} km</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Sanctioned Amount:</Text>
+                <Text style={styles.cell}>
+                  ₹{selectedItem.sanctionedAmount}{' '}
+                </Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}> PavementCost:</Text>
+                <Text style={styles.cell}>₹{selectedItem.PavementCost} </Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}> PavementCostUnit:</Text>
+                <Text style={styles.cell}>
+                  ₹{selectedItem.PavementCostUnit}{' '}
+                </Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}> CarriageWidth:</Text>
+                <Text style={styles.cell}>₹{selectedItem.CarriageWidth} </Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}> TrafficName:</Text>
+                <Text style={styles.cell}>₹{selectedItem.TrafficName} </Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}> TotalCost:</Text>
+                <Text style={styles.cell}>₹{selectedItem.TotalCost} </Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}> AverageCost:</Text>
+                <Text style={styles.cell}>₹{selectedItem.AverageCost} </Text>
+              </View>
+            </ScrollView>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}>
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+      )}
       <View style={styles.pagination}>
         <Button
           borderRadius={20}
@@ -143,11 +239,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
     padding: 16,
   },
+  detailsButton: {
+    color: '#1e90ff',
+    height:20,
+    width:'100%',
+    textAlign: 'center',
+    marginTop: 30,
+    textDecorationLine: 'underline',
+  },
   title: {
     color: '#ffffff',
     fontSize: 24,
     fontWeight: 'bold',
     margin: 16,
+    textAlign: 'center',
   },
   searchInput: {
     backgroundColor: '#191C24',
@@ -168,7 +273,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#444444',
   },
   cellTitle: {
     color: '#aaaaaa',
@@ -177,10 +284,12 @@ const styles = StyleSheet.create({
   },
   cell: {
     color: '#ffffff',
-    flex: 2,
-    textAlign: 'right',
+    flex: 1,
+    textAlign: 'center',
   },
   pagination: {
+    margin:5,
+    borderRadius:5,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -189,6 +298,57 @@ const styles = StyleSheet.create({
   pageIndicator: {
     color: '#ffffff',
     fontSize: 16,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+  modalContent: {
+    width: '100%',
+  },
+  modalView: {
+    width: '90%',
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: '#FFD700',
+    paddingVertical: 10,
+    paddingHorizontal: 40,
+    marginHorizontal:'32%',
+    borderRadius: 20,
+    marginBottom:10
+  },
+  modalTitle: {
+    color: '#ffffff',
+    fontSize: 16,
+    marginTop: 5,
+  },
+  modalText: {
+    color: '#ffffff',
+    marginBottom: 10,
+    fontSize: 16,
+  },
+  closeButtonText: {
+    fontSize: 18,
+    color: '#333333',
+    fontWeight: 'bold',
+  },
+  bold: {
+    fontWeight: 'bold',
   },
 });
 
