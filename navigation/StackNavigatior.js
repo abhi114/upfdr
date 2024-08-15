@@ -6,6 +6,8 @@ import Register from '../components/Register';
 import OtpScreen from '../components/OtpScreen';
 import Home from '../components/Home';
 import ResetPassword from '../components/ResetPassword';
+import RoadList from '../components/RoadList';
+import DrawerMain from '../components/Headers/HeaderMain';
 
 
 const Stack = createNativeStackNavigator();
@@ -32,6 +34,16 @@ const StackNavigator = () => {
         options={{headerShown: false}}
         name="ResetPassword"
         component={ResetPassword}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="RoadList"
+        component={RoadList}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="HeaderMain"
+        component={DrawerMain}
       />
     </Stack.Navigator>
   );

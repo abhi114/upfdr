@@ -11,6 +11,7 @@ const DrawerTab = ({setShowTab, tabPosition, screenname}) => {
         dx: tabPosition,
       },
     ]),
+    //wtf is this shit
     onPanResponderRelease: (event, gesture) => {
       // Prevent dragging left beyond half of the screen width
       if (gesture.dx > 100) {
@@ -22,6 +23,7 @@ const DrawerTab = ({setShowTab, tabPosition, screenname}) => {
         }).start(() => {
           console.log('hit here');
           setShowTab(false);
+          
         });
       } else if (gesture.dx < -100 && gesture.dx >= -200) {
         // Adjusted condition

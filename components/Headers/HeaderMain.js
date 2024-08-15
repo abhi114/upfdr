@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -14,14 +14,24 @@ import {useNavigation} from '@react-navigation/native';
 import DrawerTab from './DrawerTab';
 import ProfileTab from './ProfileTab';
 import Header from './HeaderComponent';
+import RoadList from '../RoadList';
 
-const DrawerMain = ({pageName}) => {
+const DrawerMain = ({pageName,route}) => {
+  const {index} = route.params;
+  const [screenName,setScreenName] = useState();
   const [showTab, setShowTab] = useState(false);
   const [tabPosition, setTabPosition] = useState(new Animated.Value(300));
   const [showProfileTab, setShowProfileTab] = useState(false);
   const [profileTabPosition, setProfileTabPosition] = useState(
     new Animated.Value(0),
   );
+  useEffect(() => {
+    if(index === 0 ){
+      setScreenName('RoadList');
+    }
+  }, [index])
+  
+  console.log("index taken" + index);
   const handleTabPress = () => {
     if (showProfileTab === true) {
       setShowProfileTab(!showProfileTab);
@@ -100,9 +110,9 @@ const DrawerMain = ({pageName}) => {
           handleProfilePress={handleProfilePress}
           handleTabPress={handleTabPress}
         />
-
+        {index===0 && (<RoadList/>)}
         {showTab && (
-          <DrawerTab setShowTab={setShowTab} tabPosition={tabPosition} />
+          <DrawerTab setShowTab={setShowTab} tabPosition={tabPosition} screenname={screenName}/>
         )}
         {showProfileTab && (
           <ProfileTab profileTabPosition={profileTabPosition} />

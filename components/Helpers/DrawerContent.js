@@ -37,6 +37,9 @@ const DrawerItems = ({
         console.log(name);
         if(name==='Dashboard'){
           navigation.navigate('Home');
+        }else if(name === 'UPFDR Road List'){
+          const index = 0;
+          navigation.navigate('HeaderMain',{index});
         }
     }
   };
@@ -122,7 +125,7 @@ const DrawerContent = ({screenname}) => {
       name: 'UPFDR Road List',
       icon: 'tag-outline',
       IconColor: '#FFAB00',
-
+      backgroundColor:screenname==='RoadList'? '#0F1015':null,
       isDropable: false,
       subItems: [],
     },

@@ -18,9 +18,15 @@ import { useNavigation } from '@react-navigation/native';
 import DrawerTab from './Headers/DrawerTab';
 import ProfileTab from './Headers/ProfileTab';
 import Header from './Headers/HeaderComponent';
-const Card = ({title, number, text, iconName,color}) => {
+const Card = ({index,title, number, text, iconName,color}) => {
+  const navigation = useNavigation();
+  const CardPress = ()=>{
+    if(index === 0){
+      navigation.navigate("HeaderMain",{index});
+    }
+  }
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={CardPress}>
       <View style={{flexDirection: 'row',justifyContent:'space-evenly',alignItems:'center',}}>
         <View style={{width:'52%',}}>
           <Text style={styles.cardTitle}>{title}</Text>
@@ -30,7 +36,7 @@ const Card = ({title, number, text, iconName,color}) => {
         <Icon name={iconName} size={65} color={`${color}`} />
       </View>
     </TouchableOpacity>
-  );
+  );      
 };
 const Home = () => {
   const [showTab, setShowTab] = useState(false);
@@ -222,7 +228,10 @@ const [cardsData] = useState([
       }).start();
     }
   }
-  
+  const handleCardPress = index => {
+    console.log(`Card at index ${index} was pressed`);
+    // Do something with the index, e.g. navigate to a details screen
+  };
   return (
     <TouchableWithoutFeedback onPress={handleOutsideTabPress}>
       <View style={styles.container}>
@@ -232,14 +241,19 @@ const [cardsData] = useState([
         />
         <ScrollView style={styles.content}>
           {cardsData.map((card, index) => (
-            <Card key={index} {...card} />
+            <Card
+              key={index}
+              {...card}
+              index={index}
+              onPress={() => handleCardPress(index)}
+            />
           ))}
         </ScrollView>
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}
             tabPosition={tabPosition}
-            screenname={"Dashboard"}
+            screenname={'Dashboard'}
           />
         )}
         {showProfileTab && (
