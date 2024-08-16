@@ -15,6 +15,8 @@ import { data } from './data';
 import { useNavigation } from '@react-navigation/native';
 import { Modal } from 'react-native';
 import DownloadExcel from './Helpers/DownloadExcel';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
+var RNFS = require('react-native-fs');
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
 const RoadList = () => {
@@ -69,6 +71,65 @@ const RoadList = () => {
    }
     console.log(paginatedData[indexToUpdate].Status);
   }
+  const generatePDF = async () => {
+     let htmlContent = `
+      <style>
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          table-layout: auto;
+        }
+        th, td {
+          padding: 8px;
+          text-align: left;
+          border: 1px solid #ddd;
+          word-wrap: break-word;
+        }
+        th {
+          background-color: #f2f2f2;
+        }
+      </style>
+      <h1>Road Data</h1>
+      <table>
+        <thead>
+          <tr>
+            ${Object.keys(data[0])
+              .map(key => `<th>${key}</th>`)
+              .join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${data
+            .map(
+              row => `
+            <tr>
+              ${Object.values(row)
+                .map(value => `<td>${value}</td>`)
+                .join('')}
+            </tr>
+          `,
+            )
+            .join('')}
+        </tbody>
+      </table>
+    `;
+
+    let options = {
+      html: htmlContent,
+      fileName: 'RoadData',
+      directory: 'Documents',
+    };
+
+    let file = await RNHTMLtoPDF.convert(options);
+     const destPath = `${RNFS.DownloadDirectoryPath}/RoadData.pdf`;
+     try {
+       await RNFS.moveFile(file.filePath, destPath);
+       alert(`PDF moved to: ${destPath}`);
+     } catch (err) {
+       console.error('Error moving file: ', err);
+     }
+    //console.log(`PDF generated at: ${file.filePath}`);
+  };
   const ExcelDownload =async()=>{
     try {
       const granted = await PermissionsAndroid.requestMultiple([
@@ -128,7 +189,8 @@ const RoadList = () => {
             margin: 5,
             padding: 5,
             borderRadius: 10,
-          }}>
+          }}
+          onPress={generatePDF}>
           <Text style={{color: '#FFFFFF', padding: 5}}>PDF</Text>
         </TouchableOpacity>
         <TouchableOpacity
