@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Modal } from 'react-native';
 import DownloadExcel from './Helpers/DownloadExcel';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import {Parser} from 'json2csv';
 var RNFS = require('react-native-fs');
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
@@ -71,6 +72,34 @@ const RoadList = () => {
    }
     console.log(paginatedData[indexToUpdate].Status);
   }
+   const generateCSV = async () => {
+    //manully creating csv
+    try {
+      // Extract the keys (column names)
+      const keys = Object.keys(data[0]);
+
+      // Create CSV header
+      const csvHeader = keys.join(',') + '\n';
+
+      // Create CSV rows
+      const csvRows = data
+        .map(row => keys.map(key => row[key]).join(','))
+        .join('\n');
+
+      // Combine header and rows
+      const csvContent = csvHeader + csvRows;
+      
+      // Define the file path
+      const filePath = `${RNFS.DownloadDirectoryPath}/RoadData.csv`;
+
+      // Write the CSV to the file
+      await RNFS.writeFile(filePath, csvContent, 'utf8');
+
+      alert(`CSV saved to: Downloads`);
+    } catch (err) {
+      console.error('Error creating CSV: ', err);
+    }
+   };
   const generatePDF = async () => {
      let htmlContent = `
       <style>
@@ -199,7 +228,8 @@ const RoadList = () => {
             margin: 5,
             padding: 5,
             borderRadius: 10,
-          }}>
+          }}
+          onPress={generateCSV}>
           <Text style={{color: '#FFFFFF', padding: 5}}>CSV</Text>
         </TouchableOpacity>
       </View>
