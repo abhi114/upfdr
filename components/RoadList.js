@@ -8,22 +8,24 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  PermissionsAndroid,
 } from 'react-native';
 
 import { data } from './data';
 import { useNavigation } from '@react-navigation/native';
 import { Modal } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import DownloadExcel from './Helpers/DownloadExcel';
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
 const RoadList = () => {
   const [search, setSearch] = useState('');
+  const [userData,setuserData] = useState(data);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const navigation = useNavigation();
   // Filtered data based on search input
-  const filteredData = data.filter(
+  const filteredData = userData.filter(
     item =>
       item.packageNumber.includes(search) ||
       item.roadName.toLowerCase().includes(search.toLowerCase()) ||
@@ -55,7 +57,38 @@ const RoadList = () => {
       setCurrentPage(currentPage - 1);
     }
   };
+  const changeStatus = (selectedid)=>{
+    //console.log(id);
+    const indexToUpdate = userData.findIndex(item => item.id === selectedid);
 
+   if (indexToUpdate !== -1) {
+     const updatedUserData = [...userData];
+     updatedUserData[indexToUpdate].Status =
+       !updatedUserData[indexToUpdate].Status;
+     setuserData(updatedUserData);
+   }
+    console.log(paginatedData[indexToUpdate].Status);
+  }
+  const ExcelDownload =async()=>{
+    try {
+      const granted = await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      ]);
+    } catch (err) {
+      console.warn(err);
+    }
+    const readGranted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE); 
+    const writeGranted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
+    if(!readGranted || !writeGranted) {
+      console.log('Read and write permissions have not been granted');
+      
+      return;
+    }else{
+      console.log('granted');
+      DownloadExcel();
+    }
+  }
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row', marginBottom: 15}}>
@@ -78,6 +111,36 @@ const RoadList = () => {
           setCurrentPage(1); // Reset to the first page on new search
         }}
       />
+      <View style={{flexDirection: 'row', justifyContent: 'center',marginBottom:10}}>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#881B1B',
+            margin: 5,
+            padding: 5,
+            borderRadius: 10,
+          }} 
+          onPress={ExcelDownload}>
+          <Text style={{color: '#FFFFFF', padding: 5}}>Excel</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#881B1B',
+            margin: 5,
+            padding: 5,
+            borderRadius: 10,
+          }}>
+          <Text style={{color: '#FFFFFF', padding: 5}}>PDF</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#881B1B',
+            margin: 5,
+            padding: 5,
+            borderRadius: 10,
+          }}>
+          <Text style={{color: '#FFFFFF', padding: 5}}>CSV</Text>
+        </TouchableOpacity>
+      </View>
       <FlatList
         data={paginatedData}
         renderItem={({item}) => (
@@ -98,7 +161,27 @@ const RoadList = () => {
               <Text style={styles.cellTitle}>Block:</Text>
               <Text style={styles.cell}>{item.block}</Text>
             </View>
-            
+            <View style={styles.row}>
+              <Text style={styles.cellTitle}>Status:</Text>
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  backgroundColor: item.Status === true ? '#00D25B' : '#FC424A',
+                  alignContent: 'center',
+                  borderRadius: 10,
+                  height: 30,
+
+                  alignSelf: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => changeStatus(item.id)}>
+                <Text
+                  style={{alignSelf: 'center', color: '#FFFFFF', fontSize: 15}}>
+                  {item.Status === true ? 'Active' : 'Inactive'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
             <TouchableOpacity onPress={() => handlePress(item)}>
               <Text style={styles.detailsButton}>See Full Details</Text>
             </TouchableOpacity>
@@ -127,7 +210,7 @@ const RoadList = () => {
                 margin: 30,
                 color: '#ffffff',
                 fontSize: 20,
-                fontWeight:'bold'
+                fontWeight: 'bold',
               }}>
               Detailed View
             </Text>

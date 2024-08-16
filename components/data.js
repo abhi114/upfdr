@@ -17,6 +17,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '2',
@@ -35,6 +36,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '3',
@@ -53,6 +55,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '4',
@@ -71,6 +74,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '5',
@@ -90,6 +94,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '6',
@@ -108,6 +113,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '7',
@@ -126,6 +132,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '8',
@@ -144,6 +151,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: false,
   },
   {
     id: '9',
@@ -162,6 +170,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: false,
   },
   {
     id: '10',
@@ -180,6 +189,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '11',
@@ -198,6 +208,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '12',
@@ -216,6 +227,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '13',
@@ -234,6 +246,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '14',
@@ -252,6 +265,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '15',
@@ -270,6 +284,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '16',
@@ -288,6 +303,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '17',
@@ -306,6 +322,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '18',
@@ -324,6 +341,7 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
   {
     id: '19',
@@ -338,5 +356,6 @@ export const data = [
     TrafficName: 'T5',
     TotalCost: '634.78723',
     AverageCost: '92.666',
+    Status: true,
   },
 ];
