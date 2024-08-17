@@ -201,14 +201,19 @@ const RoadList = () => {
           setCurrentPage(1); // Reset to the first page on new search
         }}
       />
-      <View style={{flexDirection: 'row', justifyContent: 'center',marginBottom:10}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          marginBottom: 5,
+        }}>
         <TouchableOpacity
           style={{
             backgroundColor: '#881B1B',
             margin: 5,
             padding: 5,
             borderRadius: 10,
-          }} 
+          }}
           onPress={ExcelDownload}>
           <Text style={{color: '#FFFFFF', padding: 5}}>Excel</Text>
         </TouchableOpacity>
@@ -239,7 +244,20 @@ const RoadList = () => {
           <TouchableOpacity style={styles.card}>
             <View style={styles.row}>
               <Text style={styles.cellTitle}>Package:</Text>
-              <Text style={styles.cell}>{item.packageNumber}</Text>
+              <View
+                style={{
+                  flex:0.8,
+                  borderRadius: 5,
+                  alignSelf:'center',
+                  borderColor: '#0090E7',
+                  borderWidth: 2,
+                  alignContent: 'center',
+                 
+                }}>
+                <Text style={[styles.cell, {color: '#0090E7'}]}>
+                  {item.packageNumber}
+                </Text>
+              </View>
             </View>
             <View style={styles.row}>
               <Text style={styles.cellTitle}>FDR Group:</Text>
@@ -426,7 +444,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 24,
     fontWeight: 'bold',
-    margin: 16,
+    margin: 12,
     textAlign: 'center',
   },
   searchInput: {
@@ -463,12 +481,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   pagination: {
-    margin:5,
+    margin:2,
     borderRadius:5,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 16,
+    marginTop: 10,
+    paddingHorizontal:10
   },
   pageIndicator: {
     color: '#ffffff',
