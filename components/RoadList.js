@@ -17,6 +17,7 @@ import { Modal } from 'react-native';
 import DownloadExcel from './Helpers/DownloadExcel';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import {Parser} from 'json2csv';
+import RoadListModal from './Modals/RoadListModal';
 var RNFS = require('react-native-fs');
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
@@ -24,8 +25,10 @@ const RoadList = () => {
   const [search, setSearch] = useState('');
   const [userData,setuserData] = useState(data);
   const [modalVisible, setModalVisible] = useState(false);
+  const [graphModalVisible,setgraphModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [mainSelectedItem,setmainSelectedItem] = useState(null);
   const navigation = useNavigation();
   // Filtered data based on search input
   const filteredData = userData.filter(
@@ -179,6 +182,9 @@ const RoadList = () => {
       DownloadExcel();
     }
   }
+  const handleMainPress = ()=>{
+    setgraphModalVisible(!graphModalVisible);
+  }
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row', marginBottom: 15}}>
@@ -241,7 +247,7 @@ const RoadList = () => {
       <FlatList
         data={paginatedData}
         renderItem={({item}) => (
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity style={styles.card} onPress={handleMainPress}>
             <View style={styles.row}>
               <Text style={styles.cellTitle}>Package:</Text>
               <View
@@ -402,7 +408,15 @@ const RoadList = () => {
             </TouchableOpacity>
           </View>
         </Modal>
+        
       )}
+      <Modal
+          animationType="slide"
+          transparent={true}
+          visible={graphModalVisible}
+          onRequestClose={() => setgraphModalVisible(!graphModalVisible)}>
+            <RoadListModal/>
+          </Modal>
       <View style={styles.pagination}>
         <Button
           borderRadius={20}

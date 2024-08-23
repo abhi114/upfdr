@@ -359,3 +359,20 @@ export const data = [
     Status: true,
   },
 ];
+
+export const Chartdata = [
+  {
+    name: 'Pavement Cost',
+    cost: 95.3,
+    color: '#FFBB33',
+    legendFontColor: '#7F7F7F',
+    legendFontSize: 15,
+  },
+  {
+    name: 'Average Cost',
+    cost: 106.78,
+    color: '#00FF00',
+    legendFontColor: '#7F7F7F',
+    legendFontSize: 15,
+  },
+];
