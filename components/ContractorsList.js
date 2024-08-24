@@ -82,7 +82,7 @@ const ContractorsList = () => {
       const csvContent = csvHeader + csvRows;
 
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/RoadData.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/ContractorsList.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -137,15 +137,15 @@ const ContractorsList = () => {
 
     let options = {
       html: htmlContent,
-      fileName: 'RoadData',
+      fileName: 'ContractorsList',
       directory: 'Documents',
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/RoadData.pdf`;
+    const destPath = `${RNFS.DownloadDirectoryPath}/ContractorsList.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
-      alert(`PDF moved to: ${destPath}`);
+      alert(`PDF Downloaded to: ${destPath}`);
     } catch (err) {
       console.error('Error moving file: ', err);
     }
