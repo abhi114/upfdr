@@ -2,7 +2,7 @@ import { View, Text, Animated, PanResponder } from 'react-native'
 import React from 'react'
 import DrawerContent from '../Helpers/DrawerContent';
 
-const DrawerTab = ({setShowTab, tabPosition, screenname}) => {
+const DrawerTab = ({setShowTab, tabPosition, screenname, setScreenName}) => {
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: Animated.event([
@@ -23,7 +23,6 @@ const DrawerTab = ({setShowTab, tabPosition, screenname}) => {
         }).start(() => {
           console.log('hit here');
           setShowTab(false);
-          
         });
       } else if (gesture.dx < -100 && gesture.dx >= -200) {
         // Adjusted condition
@@ -58,7 +57,7 @@ const DrawerTab = ({setShowTab, tabPosition, screenname}) => {
   };
   return (
     <Animated.View style={getTabStyles()} {...panResponder.panHandlers}>
-      <DrawerContent screenname={screenname} />
+      <DrawerContent screenname={screenname} setScreenName={setScreenName} />
     </Animated.View>
   );
 };

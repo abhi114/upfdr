@@ -11,7 +11,7 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 
-import {contractorsData as data} from './data';
+import {PiuData as data} from './data';
 import {useNavigation} from '@react-navigation/native';
 import {Modal} from 'react-native';
 
@@ -20,9 +20,10 @@ import {Parser} from 'json2csv';
 import RoadListModal from './Modals/RoadListModal';
 import XLSX from 'xlsx';
 var RNFS = require('react-native-fs');
+
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
-const ContractorsList = () => {
+const PIUList = () => {
   const [search, setSearch] = useState('');
   const [userData, setuserData] = useState(data);
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,9 +35,9 @@ const ContractorsList = () => {
   // Filtered data based on search input
   const filteredData = userData.filter(
     item =>
-      item.District.toLowerCase().includes(search) ||
-      item.CompanyName.toLowerCase().includes(search.toLowerCase()) ||
-      item.ContactPerson.toLowerCase().includes(search.toLowerCase()),
+      item.District.toLowerCase().includes(search.toLowerCase()) ||
+      item.EmailID.toLowerCase().includes(search.toLowerCase()) ||
+      item.ExecutiveEngineer.toLowerCase().includes(search.toLowerCase()),
   );
 
   // Calculate the total number of pages
@@ -64,7 +65,38 @@ const ContractorsList = () => {
       setCurrentPage(currentPage - 1);
     }
   };
-  
+  const DownloadExcel = async () => {
+    // Created Sample data
+    let sample_data_to_export = data;
+
+    let wb = XLSX.utils.book_new();
+    let ws = XLSX.utils.json_to_sheet(sample_data_to_export);
+    XLSX.utils.book_append_sheet(wb, ws, 'Users');
+    console.log(
+      ' main path is ' + RNFS.DownloadDirectoryPath + '/PIUList.xlsx',
+    );
+    // Write workbook to an array buffer
+    const wbout = XLSX.write(wb, {type: 'array', bookType: 'xlsx'});
+
+    // Convert array buffer to binary string
+    const binaryStr = new Uint8Array(wbout).reduce((data, byte) => {
+      return data + String.fromCharCode(byte);
+    }, '');
+
+    // Write generated excel to Storage
+    RNFS.writeFile(
+      RNFS.DownloadDirectoryPath + '/PIUList.xlsx',
+      binaryStr,
+      'ascii',
+    )
+      .then(() => {
+        console.log('success');
+      })
+      .catch(e => {
+        console.log('Error', e);
+      });
+  };
+
   const generateCSV = async () => {
     //manully creating csv
     try {
@@ -83,7 +115,7 @@ const ContractorsList = () => {
       const csvContent = csvHeader + csvRows;
 
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/ContractorsList.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/PIUList.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -111,7 +143,7 @@ const ContractorsList = () => {
           background-color: #f2f2f2;
         }
       </style>
-      <h1>Contractors Data</h1>
+      <h1>PIU List</h1>
       <table>
         <thead>
           <tr>
@@ -138,12 +170,12 @@ const ContractorsList = () => {
 
     let options = {
       html: htmlContent,
-      fileName: 'ContractorsList',
+      fileName: 'PIUList',
       directory: 'Documents',
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/ContractorsList.pdf`;
+    const destPath = `${RNFS.DownloadDirectoryPath}/PIUList.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
@@ -151,37 +183,6 @@ const ContractorsList = () => {
       console.error('Error moving file: ', err);
     }
     //console.log(`PDF generated at: ${file.filePath}`);
-  };
-  const DownloadExcel = async () => {
-    // Created Sample data
-    let sample_data_to_export = data;
-
-    let wb = XLSX.utils.book_new();
-    let ws = XLSX.utils.json_to_sheet(sample_data_to_export);
-    XLSX.utils.book_append_sheet(wb, ws, 'Users');
-    console.log(
-      ' main path is ' + RNFS.DownloadDirectoryPath + '/ContractorsList.xlsx',
-    );
-    // Write workbook to an array buffer
-    const wbout = XLSX.write(wb, {type: 'array', bookType: 'xlsx'});
-
-    // Convert array buffer to binary string
-    const binaryStr = new Uint8Array(wbout).reduce((data, byte) => {
-      return data + String.fromCharCode(byte);
-    }, '');
-
-    // Write generated excel to Storage
-    RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + '/ContractorsList.xlsx',
-      binaryStr,
-      'ascii',
-    )
-      .then(() => {
-        console.log('success');
-      })
-      .catch(e => {
-        console.log('Error', e);
-      });
   };
   const ExcelDownload = async () => {
     try {
@@ -207,7 +208,7 @@ const ContractorsList = () => {
       DownloadExcel();
     }
   };
- 
+
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row', marginBottom: 6}}>
@@ -217,12 +218,12 @@ const ContractorsList = () => {
           }}>
           <Text style={{color: '#0000FF'}}>Dashboard </Text>
         </TouchableOpacity>
-        <Text style={{color: '#FFFFFF'}}>/ Contractors List</Text>
+        <Text style={{color: '#FFFFFF'}}>/ PIUs List</Text>
       </View>
-      <Text style={styles.title}>Contractors List</Text>
+      <Text style={styles.title}>PIUs List</Text>
       <TextInput
         style={styles.searchInput}
-        placeholder="Search by District , Company Name or Number"
+        placeholder="Search by District , Name or Email Id"
         placeholderTextColor="#aaaaaa"
         value={search}
         onChangeText={text => {
@@ -276,16 +277,8 @@ const ContractorsList = () => {
               <Text style={styles.cell}>{item.SerialNo}</Text>
             </View>
             <View style={styles.row}>
-              <Text style={styles.cellTitle}>Company Name:</Text>
-              <Text style={styles.cell}>{item.CompanyName}</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.cellTitle}>Contact Person:</Text>
-              <Text style={styles.cell}>{item.ContactPerson}</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.cellTitle}>Number of Roads:</Text>
-              <View
+              <Text style={styles.cellTitle}>District::</Text>
+              <TouchableOpacity
                 style={{
                   flex: 0.7,
                   borderRadius: 5,
@@ -293,11 +286,16 @@ const ContractorsList = () => {
                   borderColor: '#0090E7',
                   borderWidth: 2,
                   alignContent: 'center',
-                }}>
+                }} onPress={()=>{ setSearch(item.District);
+                setCurrentPage(1);}}>
                 <Text style={[styles.cell, {color: '#0090E7'}]}>
-                  {item.NoOfRoads}
+                  {item.District}
                 </Text>
-              </View>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.cellTitle}>Executive Engineer:</Text>
+              <Text style={styles.cell}>{item.ExecutiveEngineer}</Text>
             </View>
 
             <TouchableOpacity onPress={() => handlePress(item)}>
@@ -343,12 +341,14 @@ const ContractorsList = () => {
                 <Text style={styles.cell}>{selectedItem.SerialNo}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Company Name:</Text>
-                <Text style={styles.cell}>{selectedItem.CompanyName}</Text>
+                <Text style={styles.cellTitle}>District:</Text>
+                <Text style={styles.cell}>{selectedItem.District}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Contact Person:</Text>
-                <Text style={styles.cell}>{selectedItem.ContactPerson}</Text>
+                <Text style={styles.cellTitle}>Executive Engineer:</Text>
+                <Text style={styles.cell}>
+                  {selectedItem.ExecutiveEngineer}
+                </Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.cellTitle}>Phone No:</Text>
@@ -358,14 +358,7 @@ const ContractorsList = () => {
                 <Text style={styles.cellTitle}>EmailID:</Text>
                 <Text style={styles.cell}>{selectedItem.EmailID}</Text>
               </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>District:</Text>
-                <Text style={styles.cell}>{selectedItem.District}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>No of Roads:</Text>
-                <Text style={styles.cell}>{selectedItem.NoOfRoads}</Text>
-              </View>
+              
             </ScrollView>
             <TouchableOpacity
               style={styles.closeButton}
@@ -519,4 +512,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ContractorsList;
+export default PIUList;

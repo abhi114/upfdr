@@ -497,6 +497,29 @@ export const contractorsData = [
     NoOfRoads: '4',
   },
 ];
+export const PiuData = [
+  { SerialNo: 1, District: "Agra", ExecutiveEngineer: "DINESH SINGH", PhoneNo: "7080323377", EmailID: "eeredagra@gmail.com" },
+  { SerialNo: 2, District: "Allahabad", ExecutiveEngineer: "Bashisth Mishra", PhoneNo: "9838885844", EmailID: "eeredallahabad@gmail.com" },
+  { SerialNo: 3, District: "Ambedkarnagar", ExecutiveEngineer: "Pankaj Rai", PhoneNo: "9415367291", EmailID: "er.pankajrai28@gmail.com" },
+  { SerialNo: 4, District: "Amethi", ExecutiveEngineer: "K K Mishra", PhoneNo: "9450468417", EmailID: "krishna.gorakhpur1968@rediffmail.com" },
+  { SerialNo: 5, District: "Auraiya", ExecutiveEngineer: "Anil Kumar Pandey", PhoneNo: "9415457546", EmailID: "anilpandey959@gmail.com" },
+  { SerialNo: 6, District: "Azamgarh", ExecutiveEngineer: "UMA KANT VERMA", PhoneNo: "9794633370", EmailID: "EEREDAZAMGARH@GMAIL.COM" },
+  { SerialNo: 7, District: "Bahraich", ExecutiveEngineer: "PRAVEEN KUMAR SRIVASTAVA", PhoneNo: "9792357125", EmailID: "eeredbahraich@gmail.com" },
+  { SerialNo: 8, District: "Ballia", ExecutiveEngineer: "GAUTAM SINGH YADAV", PhoneNo: "9415689228", EmailID: "up-bll@pmgsy.nic.in" },
+  { SerialNo: 9, District: "Balrampur", ExecutiveEngineer: "RAM NATH SONKAR", PhoneNo: "9198660807", EmailID: "eeredbalrampur@gmail.com" },
+  { SerialNo: 10, District: "Banda", ExecutiveEngineer: "RAJNEESH KUMAR", PhoneNo: "9565000772", EmailID: "RAJNEESH.RAILWAYS@GMAIL.COM" },
+  { SerialNo: 11, District: "Barabanki", ExecutiveEngineer: "GYANENDRA KUMAR", PhoneNo: "7830449133", EmailID: "ayanendra179@gmail.com" },
+  { SerialNo: 12, District: "Bareilly", ExecutiveEngineer: "Vinay Kumar Sharma", PhoneNo: "8755477765", EmailID: "vkvinaykumar95@gmail.com" },
+  { SerialNo: 13, District: "Basti", ExecutiveEngineer: "ARVIND KUMAR", PhoneNo: "7376652336", EmailID: "arvind.red17@gmail.com" },
+  { SerialNo: 14, District: "Bulandshahr", ExecutiveEngineer: "RAKESH KUMAR JAIN", PhoneNo: "9411415359", EmailID: "rakeshjain1963@gmail.com" },
+  { SerialNo: 15, District: "Chandauli", ExecutiveEngineer: "Arun Kumar Verma", PhoneNo: "7906234525", EmailID: "eeredchandauli@gmail.com" },
+  { SerialNo: 16, District: "Chitrakoot", ExecutiveEngineer: "Shiv Prakash Pandey", PhoneNo: "9452687677", EmailID: "shiv.pandey779@gmail.com" },
+  { SerialNo: 17, District: "Deoria", ExecutiveEngineer: "ABRAR AHMAD", PhoneNo: "8840736476", EmailID: "eeredpiudeoria@gmail.com" },
+  { SerialNo: 18, District: "Etah", ExecutiveEngineer: "MOHD.SHAMIM", PhoneNo: "9412272037", EmailID: "up-eth@pmgsy.nic.in" },
+  { SerialNo: 19, District: "Etawah", ExecutiveEngineer: "ASHOK", PhoneNo: "9335921012", EmailID: "srivastavaashokcot@gmail.com" },
+  { SerialNo: 20, District: "Agra", ExecutiveEngineer: "DINESH SINGH", PhoneNo: "7080323377", EmailID: "eeredagra@gmail.com" },
+]
+
 export const Chartdata = [
   {
     name: 'Pavement Cost',

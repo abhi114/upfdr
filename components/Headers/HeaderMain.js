@@ -16,6 +16,7 @@ import ProfileTab from './ProfileTab';
 import Header from './HeaderComponent';
 import RoadList from '../RoadList';
 import ContractorsList from '../ContractorsList';
+import PIUList from '../PIUList';
 
 const DrawerMain = ({pageName,route}) => {
   const {index} = route.params;
@@ -29,6 +30,10 @@ const DrawerMain = ({pageName,route}) => {
   useEffect(() => {
     if(index === 0 ){
       setScreenName('RoadList');
+    }else if(index  === 1){
+      setScreenName('UserManagement/ListUser');
+    }else if(index ===2){
+      setScreenName('Statistics/ListPIU');
     }
   }, [index])
   
@@ -113,11 +118,13 @@ const DrawerMain = ({pageName,route}) => {
         />
         {index === 0 && <RoadList />}
         {index === 1 && <ContractorsList />}
+        {index === 2 && <PIUList/>}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}
             tabPosition={tabPosition}
             screenname={screenName}
+            setScreenName={setScreenName}
           />
         )}
         {showProfileTab && (

@@ -84,6 +84,7 @@ const DrawerItems = ({
                   flexDirection: 'row',
                   alignItems: 'center',
                   padding: 5,
+                  backgroundColor:item.backgroundColor,
                   borderRadius: 20,
                   marginLeft: 20,
                 }}
@@ -102,13 +103,21 @@ const DrawerItems = ({
   );
 };
 
-const DrawerContent = ({screenname}) => {
-  const [selectedScreen, setSelectedScreen] = useState(null);
+const DrawerContent = ({screenname, setScreenName}) => {
+  const [selectedScreen, setSelectedScreen] = useState(screenname);
   const [expandedItem, setExpandedItem] = useState(null);
-  console.log(screenname)
+  const navigation = useNavigation();
+  console.log(screenname);
   const handleSubItemPress = screenName => {
     setSelectedScreen(screenName);
     console.log('screen name is' + screenName);
+    if (screenName === 'List All Users') {
+      setScreenName('UserManagement/ListUser');
+      navigation.navigate('HeaderMain', {index: 1});
+    }else if(screenName === 'List of PIUs'){
+      setScreenName('Statistics/ListPIU');
+      navigation.navigate('HeaderMain', {index: 2});
+    }
     //setExpandedItem(null); // Close the dropdown after selection
   };
 
@@ -117,7 +126,7 @@ const DrawerContent = ({screenname}) => {
       name: 'Dashboard',
       icon: 'speedometer',
       IconColor: '#815FE8',
-      backgroundColor:screenname==='Dashboard'? '#0F1015':null,
+      backgroundColor: screenname === 'Dashboard' ? '#0F1015' : null,
       isDropable: false,
       subItems: [],
     },
@@ -125,7 +134,7 @@ const DrawerContent = ({screenname}) => {
       name: 'UPFDR Road List',
       icon: 'tag-outline',
       IconColor: '#FFAB00',
-      backgroundColor:screenname==='RoadList'? '#0F1015':null,
+      backgroundColor: screenname === 'RoadList' ? '#0F1015' : null,
       isDropable: false,
       subItems: [],
     },
@@ -133,9 +142,15 @@ const DrawerContent = ({screenname}) => {
       name: 'User Management',
       icon: 'laptop',
       IconColor: '#FC424A',
+
       isDropable: true,
       subItems: [
-        {name: 'List All Users', screenName: 'ListAllUsersScreen'},
+        {
+          name: 'List All Users',
+          screenName: 'ListAllUsersScreen',
+          backgroundColor:
+            screenname === 'UserManagement/ListUser' ? '#0F1015' : null,
+        },
         {name: 'Map Contractor', screenName: 'MapContractorScreen'},
       ],
     },
@@ -159,7 +174,12 @@ const DrawerContent = ({screenname}) => {
       subItems: [
         {name: 'List Contractors', screenName: ''},
         {name: 'List Mapped Contractors', screenName: ''},
-        {name: 'List of PIUs', screenName: ''},
+        {
+          name: 'List of PIUs',
+          screenName: '',
+          backgroundColor:
+            screenname === 'Statistics/ListPIU' ? '#0F1015' : null,
+        },
         {name: 'List of TS Requests', screenName: ''},
         {name: 'All JMF List', screenName: ''},
         {name: 'All SC List', screenName: ''},

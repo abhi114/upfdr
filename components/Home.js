@@ -25,6 +25,8 @@ const Card = ({index,title, number, text, iconName,color}) => {
       navigation.navigate("HeaderMain",{index});
     }else if(index === 1){
       navigation.navigate("HeaderMain",{index});
+    }else if(index === 2){
+      navigation.navigate("HeaderMain",{index});
     }
   }
   return (
