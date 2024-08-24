@@ -8,6 +8,7 @@ import Home from '../components/Home';
 import ResetPassword from '../components/ResetPassword';
 import RoadList from '../components/RoadList';
 import DrawerMain from '../components/Headers/HeaderMain';
+import ContractorsList from '../components/ContractorsList';
 
 
 const Stack = createNativeStackNavigator();
@@ -44,6 +45,11 @@ const StackNavigator = () => {
         options={{headerShown: false}}
         name="HeaderMain"
         component={DrawerMain}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="ContractorsList"
+        component={ContractorsList}
       />
     </Stack.Navigator>
   );

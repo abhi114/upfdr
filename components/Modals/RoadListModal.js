@@ -215,17 +215,8 @@ const infoData = [
     subtitle: 'View Bills Raised',
   }
 ];
-const App = () => {
-  const chartConfig = {
-    backgroundGradientFrom: '#1E2923',
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: '#08130D',
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false, // optional
-  };
+const App = ({selectedItem, setgraphModalVisible}) => {
+  console.log('done here is' + selectedItem.packageNumber);
   return (
     <ScrollView
       style={{
@@ -234,7 +225,20 @@ const App = () => {
         margin: 5,
         backgroundColor: '#000000',
       }}>
-      <ScrollView contentContainerStyle={styles.container}>
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          backgroundColor: '#191C24',
+          padding: 15,
+          borderRadius: 2,
+          flexDirection: 'row',
+          alignItems: 'center',
+        }} onPress={()=>{setgraphModalVisible(false)}}>
+        <Text style={{color: '#FFFFFF', fontSize: 12, padding: 5}}>{'<'}</Text>
+        <Text style={{color: '#0000FF'}}>UP FDR ROAD LIST </Text>
+        <Text style={{color: '#FFFFFF'}}>/ {selectedItem.packageNumber}</Text>
+      </TouchableOpacity>
+      <View style={styles.container}>
         <View style={{justifyContent: 'center'}}>
           <Text
             style={{
@@ -264,7 +268,7 @@ const App = () => {
             renderItem={({item}) => <TableRow item={item} />}
           />
         </View>
-      </ScrollView>
+      </View>
 
       <FlatList
         data={infoData}
@@ -273,8 +277,8 @@ const App = () => {
         numColumns={2} // This sets two items per row
         columnWrapperStyle={styles.columnWrapper} // Optional: for styling the row
       />
-      <ChartCard/>
-      <RoadDetailsCard/>
+      <ChartCard />
+      <RoadDetailsCard />
     </ScrollView>
   );
 };

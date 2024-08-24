@@ -11,9 +11,9 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 
-import { data } from './data';
-import { useNavigation } from '@react-navigation/native';
-import { Modal } from 'react-native';
+import {contractorsData as data} from './data';
+import {useNavigation} from '@react-navigation/native';
+import {Modal} from 'react-native';
 import DownloadExcel from './Helpers/DownloadExcel';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import {Parser} from 'json2csv';
@@ -21,21 +21,21 @@ import RoadListModal from './Modals/RoadListModal';
 var RNFS = require('react-native-fs');
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
-const RoadList = () => {
+const ContractorsList = () => {
   const [search, setSearch] = useState('');
-  const [userData,setuserData] = useState(data);
+  const [userData, setuserData] = useState(data);
   const [modalVisible, setModalVisible] = useState(false);
-  const [graphModalVisible,setgraphModalVisible] = useState(false);
+  const [graphModalVisible, setgraphModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [mainSelectedItem,setmainSelectedItem] = useState(null);
+  const [mainSelectedItem, setmainSelectedItem] = useState(null);
   const navigation = useNavigation();
   // Filtered data based on search input
   const filteredData = userData.filter(
     item =>
-      item.packageNumber.includes(search) ||
-      item.roadName.toLowerCase().includes(search.toLowerCase()) ||
-      item.district.toLowerCase().includes(search.toLowerCase()),
+      item.District.toLowerCase().includes(search) ||
+      item.CompanyName.toLowerCase().includes(search.toLowerCase()) ||
+      item.ContactPerson.toLowerCase().includes(search.toLowerCase()),
   );
 
   // Calculate the total number of pages
@@ -63,19 +63,8 @@ const RoadList = () => {
       setCurrentPage(currentPage - 1);
     }
   };
-  const changeStatus = (selectedid)=>{
-    //console.log(id);
-    const indexToUpdate = userData.findIndex(item => item.id === selectedid);
-
-   if (indexToUpdate !== -1) {
-     const updatedUserData = [...userData];
-     updatedUserData[indexToUpdate].Status =
-       !updatedUserData[indexToUpdate].Status;
-     setuserData(updatedUserData);
-   }
-    console.log(paginatedData[indexToUpdate].Status);
-  }
-   const generateCSV = async () => {
+  
+  const generateCSV = async () => {
     //manully creating csv
     try {
       // Extract the keys (column names)
@@ -91,7 +80,7 @@ const RoadList = () => {
 
       // Combine header and rows
       const csvContent = csvHeader + csvRows;
-      
+
       // Define the file path
       const filePath = `${RNFS.DownloadDirectoryPath}/RoadData.csv`;
 
@@ -102,9 +91,9 @@ const RoadList = () => {
     } catch (err) {
       console.error('Error creating CSV: ', err);
     }
-   };
+  };
   const generatePDF = async () => {
-     let htmlContent = `
+    let htmlContent = `
       <style>
         table {
           width: 100%;
@@ -153,16 +142,16 @@ const RoadList = () => {
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-     const destPath = `${RNFS.DownloadDirectoryPath}/RoadData.pdf`;
-     try {
-       await RNFS.moveFile(file.filePath, destPath);
-       alert(`PDF moved to: ${destPath}`);
-     } catch (err) {
-       console.error('Error moving file: ', err);
-     }
+    const destPath = `${RNFS.DownloadDirectoryPath}/RoadData.pdf`;
+    try {
+      await RNFS.moveFile(file.filePath, destPath);
+      alert(`PDF moved to: ${destPath}`);
+    } catch (err) {
+      console.error('Error moving file: ', err);
+    }
     //console.log(`PDF generated at: ${file.filePath}`);
   };
-  const ExcelDownload =async()=>{
+  const ExcelDownload = async () => {
     try {
       const granted = await PermissionsAndroid.requestMultiple([
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -171,21 +160,22 @@ const RoadList = () => {
     } catch (err) {
       console.warn(err);
     }
-    const readGranted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE); 
-    const writeGranted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
-    if(!readGranted || !writeGranted) {
+    const readGranted = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+    );
+    const writeGranted = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    );
+    if (!readGranted || !writeGranted) {
       console.log('Read and write permissions have not been granted');
-      
+
       return;
-    }else{
+    } else {
       console.log('granted');
       DownloadExcel();
     }
-  }
-  const handleMainPress = (item)=>{
-    setSelectedItem(item);
-    setgraphModalVisible(!graphModalVisible);
-  }
+  };
+ 
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row', marginBottom: 6}}>
@@ -195,12 +185,12 @@ const RoadList = () => {
           }}>
           <Text style={{color: '#0000FF'}}>Dashboard </Text>
         </TouchableOpacity>
-        <Text style={{color: '#FFFFFF'}}>/ UP FDR Roads List</Text>
+        <Text style={{color: '#FFFFFF'}}>/ Contractors List</Text>
       </View>
-      <Text style={styles.title}>UP FDR Roads List</Text>
+      <Text style={styles.title}>Contractors List</Text>
       <TextInput
         style={styles.searchInput}
-        placeholder="Search by package number or road name or district"
+        placeholder="Search by District , Company Name or Number"
         placeholderTextColor="#aaaaaa"
         value={search}
         onChangeText={text => {
@@ -248,18 +238,24 @@ const RoadList = () => {
       <FlatList
         data={paginatedData}
         renderItem={({item}) => (
-          <View
-            style={styles.card}
-            >
-            <TouchableOpacity
-              style={styles.row}
-              onPress={() => {
-                handleMainPress(item);
-              }}>
-              <Text style={styles.cellTitle}>Package:</Text>
+          <View style={styles.card}>
+            <View style={styles.row}>
+              <Text style={styles.cellTitle}>Serial No:</Text>
+              <Text style={styles.cell}>{item.SerialNo}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.cellTitle}>Company Name:</Text>
+              <Text style={styles.cell}>{item.CompanyName}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.cellTitle}>Contact Person:</Text>
+              <Text style={styles.cell}>{item.ContactPerson}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.cellTitle}>Number of Roads:</Text>
               <View
                 style={{
-                  flex: 0.8,
+                  flex: 0.7,
                   borderRadius: 5,
                   alignSelf: 'center',
                   borderColor: '#0090E7',
@@ -267,41 +263,9 @@ const RoadList = () => {
                   alignContent: 'center',
                 }}>
                 <Text style={[styles.cell, {color: '#0090E7'}]}>
-                  {item.packageNumber}
+                  {item.NoOfRoads}
                 </Text>
               </View>
-            </TouchableOpacity>
-            <View style={styles.row}>
-              <Text style={styles.cellTitle}>FDR Group:</Text>
-              <Text style={styles.cell}>{item.fdrGroup}</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.cellTitle}>District:</Text>
-              <Text style={styles.cell}>{item.district}</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.cellTitle}>Block:</Text>
-              <Text style={styles.cell}>{item.block}</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.cellTitle}>Status:</Text>
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  backgroundColor: item.Status === true ? '#00D25B' : '#FC424A',
-                  alignContent: 'center',
-                  borderRadius: 10,
-                  height: 30,
-
-                  alignSelf: 'center',
-                  justifyContent: 'center',
-                }}
-                onPress={() => changeStatus(item.id)}>
-                <Text
-                  style={{alignSelf: 'center', color: '#FFFFFF', fontSize: 15}}>
-                  {item.Status === true ? 'Active' : 'Inactive'}
-                </Text>
-              </TouchableOpacity>
             </View>
 
             <TouchableOpacity onPress={() => handlePress(item)}>
@@ -343,68 +307,32 @@ const RoadList = () => {
                 backgroundColor: '#191C24',
               }}>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Package:</Text>
-                <Text style={styles.cell}>{selectedItem.packageNumber}</Text>
+                <Text style={styles.cellTitle}>Serial No:</Text>
+                <Text style={styles.cell}>{selectedItem.SerialNo}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>FDR Group:</Text>
-                <Text style={styles.cell}>{selectedItem.fdrGroup}</Text>
+                <Text style={styles.cellTitle}>Company Name:</Text>
+                <Text style={styles.cell}>{selectedItem.CompanyName}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Contact Person:</Text>
+                <Text style={styles.cell}>{selectedItem.ContactPerson}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Phone No:</Text>
+                <Text style={styles.cell}>{selectedItem.PhoneNo}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>EmailID:</Text>
+                <Text style={styles.cell}>{selectedItem.EmailID}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.cellTitle}>District:</Text>
-                <Text style={styles.cell}>{selectedItem.district}</Text>
+                <Text style={styles.cell}>{selectedItem.District}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Block:</Text>
-                <Text style={styles.cell}>{selectedItem.block}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>Road Name:</Text>
-                <Text style={styles.cell}>{selectedItem.roadName}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>Year Sanctioned:</Text>
-                <Text style={styles.cell}>{selectedItem.yearSanctioned}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>IMS Batch:</Text>
-                <Text style={styles.cell}>{selectedItem.imsBatch}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>Total Length:</Text>
-                <Text style={styles.cell}>{selectedItem.totalLength} km</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>Sanctioned Amount:</Text>
-                <Text style={styles.cell}>
-                  ₹{selectedItem.sanctionedAmount}{' '}
-                </Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}> PavementCost:</Text>
-                <Text style={styles.cell}>₹{selectedItem.PavementCost} </Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}> PavementCostUnit:</Text>
-                <Text style={styles.cell}>
-                  ₹{selectedItem.PavementCostUnit}{' '}
-                </Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}> CarriageWidth:</Text>
-                <Text style={styles.cell}>₹{selectedItem.CarriageWidth} </Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}> TrafficName:</Text>
-                <Text style={styles.cell}>₹{selectedItem.TrafficName} </Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}> TotalCost:</Text>
-                <Text style={styles.cell}>₹{selectedItem.TotalCost} </Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}> AverageCost:</Text>
-                <Text style={styles.cell}>₹{selectedItem.AverageCost} </Text>
+                <Text style={styles.cellTitle}>No of Roads:</Text>
+                <Text style={styles.cell}>{selectedItem.NoOfRoads}</Text>
               </View>
             </ScrollView>
             <TouchableOpacity
@@ -415,16 +343,7 @@ const RoadList = () => {
           </View>
         </Modal>
       )}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={graphModalVisible}
-        onRequestClose={() => setgraphModalVisible(!graphModalVisible)}>
-        <RoadListModal
-          selectedItem={selectedItem}
-          setgraphModalVisible={setgraphModalVisible}
-        />
-      </Modal>
+
       <View style={styles.pagination}>
         <Button
           borderRadius={20}
@@ -456,15 +375,15 @@ const styles = StyleSheet.create({
   },
   detailsButton: {
     color: '#1e90ff',
-    height:20,
-    width:'100%',
+    height: 20,
+    width: '100%',
     textAlign: 'center',
     marginTop: 30,
     textDecorationLine: 'underline',
   },
   title: {
     color: '#ffffff',
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     margin: 12,
     textAlign: 'center',
@@ -503,13 +422,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   pagination: {
-    margin:2,
-    borderRadius:5,
+    margin: 2,
+    borderRadius: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 10,
-    paddingHorizontal:10
+    paddingHorizontal: 10,
   },
   pageIndicator: {
     color: '#ffffff',
@@ -544,9 +463,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFD700',
     paddingVertical: 10,
     paddingHorizontal: 40,
-    marginHorizontal:'32%',
+    marginHorizontal: '32%',
     borderRadius: 20,
-    marginBottom:10
+    marginBottom: 10,
   },
   modalTitle: {
     color: '#ffffff',
@@ -568,4 +487,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RoadList;
+export default ContractorsList;

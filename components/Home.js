@@ -23,6 +23,8 @@ const Card = ({index,title, number, text, iconName,color}) => {
   const CardPress = ()=>{
     if(index === 0){
       navigation.navigate("HeaderMain",{index});
+    }else if(index === 1){
+      navigation.navigate("HeaderMain",{index});
     }
   }
   return (

@@ -15,6 +15,7 @@ import DrawerTab from './DrawerTab';
 import ProfileTab from './ProfileTab';
 import Header from './HeaderComponent';
 import RoadList from '../RoadList';
+import ContractorsList from '../ContractorsList';
 
 const DrawerMain = ({pageName,route}) => {
   const {index} = route.params;
@@ -110,9 +111,14 @@ const DrawerMain = ({pageName,route}) => {
           handleProfilePress={handleProfilePress}
           handleTabPress={handleTabPress}
         />
-        {index===0 && (<RoadList/>)}
+        {index === 0 && <RoadList />}
+        {index === 1 && <ContractorsList />}
         {showTab && (
-          <DrawerTab setShowTab={setShowTab} tabPosition={tabPosition} screenname={screenName}/>
+          <DrawerTab
+            setShowTab={setShowTab}
+            tabPosition={tabPosition}
+            screenname={screenName}
+          />
         )}
         {showProfileTab && (
           <ProfileTab profileTabPosition={profileTabPosition} />
