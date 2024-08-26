@@ -17,6 +17,7 @@ import Header from './HeaderComponent';
 import RoadList from '../RoadList';
 import ContractorsList from '../ContractorsList';
 import PIUList from '../PIUList';
+import LabDetails from '../LabDetails';
 
 const DrawerMain = ({pageName,route}) => {
   const {index} = route.params;
@@ -118,7 +119,8 @@ const DrawerMain = ({pageName,route}) => {
         />
         {index === 0 && <RoadList />}
         {index === 1 && <ContractorsList />}
-        {index === 2 && <PIUList/>}
+        {index === 2 && <PIUList />}
+        {index === 4 && <LabDetails />}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}
@@ -128,7 +130,10 @@ const DrawerMain = ({pageName,route}) => {
           />
         )}
         {showProfileTab && (
-          <ProfileTab profileTabPosition={profileTabPosition} setShowProfileTab={setShowProfileTab}/>
+          <ProfileTab
+            profileTabPosition={profileTabPosition}
+            setShowProfileTab={setShowProfileTab}
+          />
         )}
       </View>
     </TouchableWithoutFeedback>

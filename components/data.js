@@ -519,7 +519,128 @@ export const PiuData = [
   { SerialNo: 19, District: "Etawah", ExecutiveEngineer: "ASHOK", PhoneNo: "9335921012", EmailID: "srivastavaashokcot@gmail.com" },
   { SerialNo: 20, District: "Agra", ExecutiveEngineer: "DINESH SINGH", PhoneNo: "7080323377", EmailID: "eeredagra@gmail.com" },
 ]
-
+export const LabData = [
+  {
+    slno: 1,
+    district: 'Gonda',
+    packagenumber: 'UP30120',
+    fdrgroup: 'UPFDR-119',
+    contractor: 'Nirbhay Construction',
+    nooflabs: 2,
+    equipmenttypes:
+      'Compressive Strength Machine | Proving Ring | Electric weighting machine | Pressure gauge | Moisture meter | flexural Strength Testing Machine',
+    action: 'View',
+    status: 'Recommended',
+  },
+  {
+    slno: 2,
+    district: 'Gonda',
+    packagenumber: 'UP30122',
+    fdrgroup: 'UPFDR-119',
+    contractor: 'Nirbhay Construction',
+    nooflabs: 1,
+    equipmenttypes:
+      'Compressive Strength Machine | Proving Ring | Electronic Weighting Machine | Pressure gauge | Moisture Meter | Flexural Strength Testing Machine',
+    action: 'View',
+    status: 'Pending',
+  },
+  {
+    slno: 3,
+    district: 'Gonda',
+    packagenumber: 'UP30127',
+    fdrgroup: 'UPFDR-119',
+    contractor: 'Nirbhay Construction',
+    nooflabs: 1,
+    equipmenttypes:
+      'Compressive Strength Machine | Electronic Weighting Machine | Pressure gauge | Moisture Meter | Flexural Strength Testing Machine',
+    action: 'View',
+    status: 'Pending',
+  },
+  {
+    slno: 4,
+    district: 'Sitapur',
+    packagenumber: 'UP66140',
+    fdrgroup: 'UP-FDR34',
+    contractor: 'Vishwa Samudra Engineering Pvt. Ltd.',
+    nooflabs: 1,
+    equipmenttypes:
+      'CTM | CUBES | SAND POURING CYLINDER | WEIGHING | AIV | GI SIEVE | HOT AIR OVEN | LL/PL | PROCTOR MOULDS',
+    action: 'View',
+    status: 'Recommended',
+  },
+  {
+    slno: 5,
+    district: 'Sitapur',
+    packagenumber: 'UP66132',
+    fdrgroup: 'UP-FDR37',
+    contractor: 'Vishwa Samudra Engineering Pvt. Ltd.',
+    nooflabs: 1,
+    equipmenttypes:
+      'CTM | CUBES | WEIGHING | LL/PL | POURING CYLINDER | PROCTOR MOULDS | HOT AIR OVEN | AIV | GI SIEVES',
+    action: 'View',
+    status: 'Pending',
+  },
+  {
+    slno: 6,
+    district: 'Sitapur',
+    packagenumber: 'UP66159',
+    fdrgroup: 'UP-FDR33',
+    contractor: 'Vishwa Samudra Engineering Pvt. Ltd.',
+    nooflabs: 1,
+    equipmenttypes:
+      'CTM | CUBES | WEIGHING | LL/PL | POURING CYLINDER | PROCTOR MOULDS | HOT AIR OVEN | AIV | GI SIEVES',
+    action: 'View',
+    status: 'Recommended',
+  },
+  {
+    slno: 7,
+    district: 'Sitapur',
+    packagenumber: 'UP66150',
+    fdrgroup: 'UP-FDR39',
+    contractor: 'Vishwa Samudra Engineering Pvt. Ltd.',
+    nooflabs: 1,
+    equipmenttypes:
+      'CTM | CUBES | WEIGHING | LL/PL | POURING CYLINDER | PROCTOR MOULDS | HOT AIR OVEN | AIV | GI SIEVES',
+    action: 'View',
+    status: 'Pending',
+  },
+  {
+    slno: 8,
+    district: 'Hardoi',
+    packagenumber: 'UP33161',
+    fdrgroup: 'UP-FDR41',
+    contractor: 'Vishwa Samudra Engineering Pvt. Ltd.',
+    nooflabs: 1,
+    equipmenttypes:
+      'CUBES | WEIGHING | LL/PL | POURING CYLINDER | PROCTOR MOULDS | HOT AIR OVEN | AIV | GI SIEVES | PROCTOR 1000CC',
+    action: 'View',
+    status: 'Pending',
+  },
+  {
+    slno: 9,
+    district: 'Hardoi',
+    packagenumber: 'UP33164',
+    fdrgroup: 'UP-FDR41',
+    contractor: 'Vishwa Samudra Engineering Pvt. Ltd.',
+    nooflabs: 1,
+    equipmenttypes:
+      'CUBES | WEIGHING | LL/PL | POURING CYLINDER | PROCTOR MOULDS | HOT AIR OVEN | AIV | GI SIEVES',
+    action: 'View',
+    status: 'Pending',
+  },
+  {
+    slno: 10,
+    district: 'Hardoi',
+    packagenumber: 'UP33179',
+    fdrgroup: 'UP-FDR41',
+    contractor: 'Vishwa Samudra Engineering Pvt. Ltd.',
+    nooflabs: 1,
+    equipmenttypes:
+      'CUBE | WEIGHING | PROCTOR COMPACTION | POURCYLINDER | HOT AIR OVEN | AIV | GI SIEVES',
+    action: 'View',
+    status: 'Pending',
+  },
+];
 export const Chartdata = [
   {
     name: 'Pavement Cost',
