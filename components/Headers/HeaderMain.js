@@ -128,7 +128,7 @@ const DrawerMain = ({pageName,route}) => {
           />
         )}
         {showProfileTab && (
-          <ProfileTab profileTabPosition={profileTabPosition} />
+          <ProfileTab profileTabPosition={profileTabPosition} setShowProfileTab={setShowProfileTab}/>
         )}
       </View>
     </TouchableWithoutFeedback>

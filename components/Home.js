@@ -21,12 +21,12 @@ import Header from './Headers/HeaderComponent';
 const Card = ({index,title, number, text, iconName,color}) => {
   const navigation = useNavigation();
   const CardPress = ()=>{
-    if(index === 0){
+    if(index === 0  ){
       navigation.navigate("HeaderMain",{index});
-    }else if(index === 1){
-      navigation.navigate("HeaderMain",{index});
-    }else if(index === 2){
-      navigation.navigate("HeaderMain",{index});
+    }else if (index === 1 || index === 3) {
+      navigation.navigate('HeaderMain', {index:1});
+    } else if (index === 2) {
+      navigation.navigate('HeaderMain', {index});
     }
   }
   return (
