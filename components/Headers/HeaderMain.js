@@ -119,7 +119,7 @@ const DrawerMain = ({pageName,route}) => {
           handleTabPress={handleTabPress}
         />
         {index === 0 && <RoadList />}
-        {index === 1 && <ContractorsList />}
+        {(index === 1 || index === 3) && <ContractorsList />}
         {index === 2 && <PIUList />}
         {index === 4 && <LabDetails />}
         {showTab && (

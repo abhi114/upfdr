@@ -22,10 +22,17 @@ const Card = ({index,title, number, text, iconName,color,screenName,setScreenNam
   const navigation = useNavigation();
   const CardPress = ()=>{
     if (index === 0) {
-      navigation.navigate('HeaderMain', {index,screenName,setScreenName});
+      console.log(screenName);
+      navigation.navigate('HeaderMain', {
+        index,
+        screenName: 'RoadList',
+        setScreenName,
+      });
     } else if (index === 1 || index === 3) {
-      navigation.navigate('HeaderMain', {index: 1, screenName, setScreenName});
+      console.log("screen name give to it is " + screenName);
+      navigation.navigate('HeaderMain', {index: 1, screenName:'ContractorsList', setScreenName});
     } else if (index === 2) {
+      console.log('screen name give to it is ' + screenName);
       navigation.navigate('HeaderMain', {index, screenName, setScreenName});
     } else if (index === 4) {
       navigation.navigate('HeaderMain', {index, screenName, setScreenName});
