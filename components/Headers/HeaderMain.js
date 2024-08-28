@@ -20,8 +20,8 @@ import PIUList from '../PIUList';
 import LabDetails from '../LabDetails';
 
 const DrawerMain = ({pageName,route}) => {
-  const {index} = route.params;
-  const [screenName,setScreenName] = useState();
+  const {index, screenName, setScreenName} = route.params;
+  
   const [showTab, setShowTab] = useState(false);
   const [tabPosition, setTabPosition] = useState(new Animated.Value(300));
   const [showProfileTab, setShowProfileTab] = useState(false);
@@ -110,6 +110,7 @@ const DrawerMain = ({pageName,route}) => {
       }).start();
     }
   };
+  console.log( typeof setScreenName);
   return (
     <TouchableWithoutFeedback onPress={handleOutsideTabPress}>
       <View style={styles.container}>
@@ -133,6 +134,8 @@ const DrawerMain = ({pageName,route}) => {
           <ProfileTab
             profileTabPosition={profileTabPosition}
             setShowProfileTab={setShowProfileTab}
+            screenname={'Dashboard'}
+            setScreenName={setScreenName}
           />
         )}
       </View>

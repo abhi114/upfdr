@@ -23,6 +23,7 @@ const DrawerItems = ({
   onSubItemPress,
   expandedItem,
   setExpandedItem,
+  setScreenName,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const navigation = useNavigation();
@@ -33,14 +34,18 @@ const DrawerItems = ({
       } else {
         setExpandedItem(name);
       }
-    }else{
-        console.log(name);
-        if(name==='Dashboard'){
-          navigation.navigate('Home');
-        }else if(name === 'UPFDR Road List'){
-          const index = 0;
-          navigation.navigate('HeaderMain',{index});
-        }
+    } else {
+      console.log(name);
+      if (name === 'Dashboard') {
+        navigation.navigate('Home');
+      } else if (name === 'UPFDR Road List') {
+        const index = 0;
+        navigation.navigate('HeaderMain', {
+          index,
+          screenName: name,
+          setScreenName,
+        });
+      }
     }
   };
 
@@ -84,7 +89,7 @@ const DrawerItems = ({
                   flexDirection: 'row',
                   alignItems: 'center',
                   padding: 5,
-                  backgroundColor:item.backgroundColor,
+                  backgroundColor: item.backgroundColor,
                   borderRadius: 20,
                   marginLeft: 20,
                 }}
@@ -105,18 +110,20 @@ const DrawerItems = ({
 
 const DrawerContent = ({screenname, setScreenName}) => {
   const [selectedScreen, setSelectedScreen] = useState(screenname);
+  console.log(screenname)
   const [expandedItem, setExpandedItem] = useState(null);
   const navigation = useNavigation();
-  console.log(screenname);
+  //console.log(screenname);
   const handleSubItemPress = screenName => {
     setSelectedScreen(screenName);
     console.log('screen name is' + screenName);
+    console.log('type of setScreen name is' + typeof setScreenName);
     if (screenName === 'List All Users') {
       setScreenName('UserManagement/ListUser');
-      navigation.navigate('HeaderMain', {index: 1});
-    }else if(screenName === 'List of PIUs'){
+      navigation.navigate('HeaderMain', {index: 1, screenName, setScreenName});
+    } else if (screenName === 'List of PIUs') {
       setScreenName('Statistics/ListPIU');
-      navigation.navigate('HeaderMain', {index: 2});
+      navigation.navigate('HeaderMain', {index: 2, screenName, setScreenName});
     }
     //setExpandedItem(null); // Close the dropdown after selection
   };
@@ -134,7 +141,7 @@ const DrawerContent = ({screenname, setScreenName}) => {
       name: 'UPFDR Road List',
       icon: 'tag-outline',
       IconColor: '#FFAB00',
-      backgroundColor: screenname === 'RoadList' ? '#0F1015' : null,
+      backgroundColor: screenname === 'UPFDR Road List' ? '#0F1015' : null,
       isDropable: false,
       subItems: [],
     },
@@ -148,8 +155,7 @@ const DrawerContent = ({screenname, setScreenName}) => {
         {
           name: 'List All Users',
           screenName: 'ListAllUsersScreen',
-          backgroundColor:
-            screenname === 'UserManagement/ListUser' ? '#0F1015' : null,
+          backgroundColor: screenname === 'List All Users' ? '#0F1015' : null,
         },
         {name: 'Map Contractor', screenName: 'MapContractorScreen'},
       ],
@@ -177,8 +183,7 @@ const DrawerContent = ({screenname, setScreenName}) => {
         {
           name: 'List of PIUs',
           screenName: '',
-          backgroundColor:
-            screenname === 'Statistics/ListPIU' ? '#0F1015' : null,
+          backgroundColor: screenname === 'List of PIUs' ? '#0F1015' : null,
         },
         {name: 'List of TS Requests', screenName: ''},
         {name: 'All JMF List', screenName: ''},
@@ -236,6 +241,7 @@ const DrawerContent = ({screenname, setScreenName}) => {
               onSubItemPress={handleSubItemPress}
               expandedItem={expandedItem}
               setExpandedItem={setExpandedItem}
+              setScreenName={setScreenName}
             />
           ))}
         </View>

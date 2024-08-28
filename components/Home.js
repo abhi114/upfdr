@@ -18,17 +18,17 @@ import { useNavigation } from '@react-navigation/native';
 import DrawerTab from './Headers/DrawerTab';
 import ProfileTab from './Headers/ProfileTab';
 import Header from './Headers/HeaderComponent';
-const Card = ({index,title, number, text, iconName,color}) => {
+const Card = ({index,title, number, text, iconName,color,screenName,setScreenName}) => {
   const navigation = useNavigation();
   const CardPress = ()=>{
     if (index === 0) {
-      navigation.navigate('HeaderMain', {index});
+      navigation.navigate('HeaderMain', {index,screenName,setScreenName});
     } else if (index === 1 || index === 3) {
-      navigation.navigate('HeaderMain', {index: 1});
+      navigation.navigate('HeaderMain', {index: 1, screenName, setScreenName});
     } else if (index === 2) {
-      navigation.navigate('HeaderMain', {index});
+      navigation.navigate('HeaderMain', {index, screenName, setScreenName});
     } else if (index === 4) {
-      navigation.navigate('HeaderMain', {index});
+      navigation.navigate('HeaderMain', {index, screenName, setScreenName});
     }
   }
   return (
@@ -46,6 +46,7 @@ const Card = ({index,title, number, text, iconName,color}) => {
 };
 const Home = () => {
   const [showTab, setShowTab] = useState(false);
+  const [screenName, setScreenName] = useState();
   const [tabPosition, setTabPosition] = useState(new Animated.Value(300));
   const [showProfileTab, setShowProfileTab] = useState(false);
   const [profileTabPosition, setProfileTabPosition] = useState(
@@ -250,6 +251,8 @@ const [cardsData] = useState([
             <Card
               key={index}
               {...card}
+              screenName={screenName}
+              setScreenName={setScreenName}
               index={index}
               onPress={() => handleCardPress(index)}
             />
@@ -260,12 +263,15 @@ const [cardsData] = useState([
             setShowTab={setShowTab}
             tabPosition={tabPosition}
             screenname={'Dashboard'}
+            setScreenName={setScreenName}
           />
         )}
         {showProfileTab && (
           <ProfileTab
             profileTabPosition={profileTabPosition}
             setShowProfileTab={setShowProfileTab}
+            screenname={'Dashboard'}
+            setScreenName={setScreenName}
           />
         )}
       </View>

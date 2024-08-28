@@ -17,7 +17,8 @@ import ProfileTab from './Headers/ProfileTab';
 import Header from './Headers/HeaderComponent';
 
 
-const ResetPassword = () => {
+const ResetPassword = ({route}) => {
+  const {screenname,setScreenName} = route.params;
     const [showTab, setShowTab] = useState(false);
     const [tabPosition, setTabPosition] = useState(new Animated.Value(300));
     const [showProfileTab, setShowProfileTab] = useState(false);
@@ -117,7 +118,13 @@ const ResetPassword = () => {
           handleProfilePress={handleProfilePress}
           handleTabPress={handleTabPress}
         />
-        <View style={{padding: 30, margin:30,backgroundColor: '#191C24',borderRadius:10}}>
+        <View
+          style={{
+            padding: 30,
+            margin: 30,
+            backgroundColor: '#191C24',
+            borderRadius: 10,
+          }}>
           <Text style={styles.title}>Update Password</Text>
 
           <Text style={styles.label}>Set New Password</Text>
@@ -150,10 +157,19 @@ const ResetPassword = () => {
           </Text>
         </View>
         {showTab && (
-          <DrawerTab setShowTab={setShowTab} tabPosition={tabPosition} screenname={'ResetPassword'}/>
+          <DrawerTab
+            setShowTab={setShowTab}
+            tabPosition={tabPosition}
+            screenname={'ResetPassword'}
+            setScreenName={setScreenName}
+          />
         )}
         {showProfileTab && (
-          <ProfileTab profileTabPosition={profileTabPosition} />
+          <ProfileTab
+            profileTabPosition={profileTabPosition}
+            screenname={'ResetPassword'}
+            setScreenName={setScreenName}
+          />
         )}
       </View>
     </TouchableWithoutFeedback>

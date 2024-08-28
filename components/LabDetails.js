@@ -11,7 +11,7 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 
-import {PiuData as data} from './data';
+import {PiuData as data, LabData} from './data';
 import {useNavigation} from '@react-navigation/native';
 import {Modal} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -25,7 +25,7 @@ const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
 const LabDetails = () => {
   const [search, setSearch] = useState('');
-  const [userData, setuserData] = useState(data);
+  const [userData, setuserData] = useState(LabData);
   const [modalVisible, setModalVisible] = useState(false);
   const [graphModalVisible, setgraphModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -35,9 +35,9 @@ const LabDetails = () => {
   // Filtered data based on search input
   const filteredData = userData.filter(
     item =>
-      item.District.toLowerCase().includes(search.toLowerCase()) ||
-      item.EmailID.toLowerCase().includes(search.toLowerCase()) ||
-      item.ExecutiveEngineer.toLowerCase().includes(search.toLowerCase()),
+      item.district.toLowerCase().includes(search.toLowerCase()) ||
+      item.packagenumber.toLowerCase().includes(search.toLowerCase()) ||
+      item.fdrgroup.toLowerCase().includes(search.toLowerCase()),
   );
 
   // Calculate the total number of pages
@@ -73,7 +73,7 @@ const LabDetails = () => {
     let ws = XLSX.utils.json_to_sheet(sample_data_to_export);
     XLSX.utils.book_append_sheet(wb, ws, 'Users');
     console.log(
-      ' main path is ' + RNFS.DownloadDirectoryPath + '/PIUList.xlsx',
+      ' main path is ' + RNFS.DownloadDirectoryPath + '/LabDetails.xlsx',
     );
     // Write workbook to an array buffer
     const wbout = XLSX.write(wb, {type: 'array', bookType: 'xlsx'});
@@ -85,7 +85,7 @@ const LabDetails = () => {
 
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + '/PIUList.xlsx',
+      RNFS.DownloadDirectoryPath + '/LabDetails.xlsx',
       binaryStr,
       'ascii',
     )
@@ -115,7 +115,7 @@ const LabDetails = () => {
       const csvContent = csvHeader + csvRows;
 
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/PIUList.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/LabDetails.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -143,7 +143,7 @@ const LabDetails = () => {
           background-color: #f2f2f2;
         }
       </style>
-      <h1>PIU List</h1>
+      <h1>Lab Details</h1>
       <table>
         <thead>
           <tr>
@@ -170,12 +170,12 @@ const LabDetails = () => {
 
     let options = {
       html: htmlContent,
-      fileName: 'PIUList',
+      fileName: 'LabDetails',
       directory: 'Documents',
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/PIUList.pdf`;
+    const destPath = `${RNFS.DownloadDirectoryPath}/LabDetails.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
@@ -356,10 +356,10 @@ const LabDetails = () => {
             <View style={styles.card}>
               <View style={styles.row}>
                 <Text style={styles.cellTitle}>Serial No:</Text>
-                <Text style={styles.cell}>{item.SerialNo}</Text>
+                <Text style={styles.cell}>{item.slno}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>District::</Text>
+                <Text style={styles.cellTitle}>Package No:</Text>
                 <TouchableOpacity
                   style={{
                     flex: 0.7,
@@ -370,17 +370,59 @@ const LabDetails = () => {
                     alignContent: 'center',
                   }}
                   onPress={() => {
-                    setSearch(item.District);
+                    setSearch(item.packagenumber);
                     setCurrentPage(1);
                   }}>
                   <Text style={[styles.cell, {color: '#0090E7'}]}>
-                    {item.District}
+                    {item.packagenumber}
                   </Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Executive Engineer:</Text>
-                <Text style={styles.cell}>{item.ExecutiveEngineer}</Text>
+                <Text style={styles.cellTitle}>District:</Text>
+                <Text style={styles.cell}>{item.district}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Status:</Text>
+                <TouchableOpacity
+                  style={{
+                    flex: 0.7,
+                    borderRadius: 5,
+                    alignSelf: 'center',
+                    borderColor:
+                      item.status === 'Recommended' ? '#00D25B' : '#F8AB00',
+                    borderWidth: 2,
+                    alignContent: 'center',
+                  }}
+                  >
+                  <Text
+                    style={[
+                      styles.cell,
+                      {
+                        color:
+                          item.status === 'Recommended' ? '#00D25B' : '#F8AB00',
+                      },
+                    ]}>
+                    {item.status}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Action:</Text>
+                <TouchableOpacity
+                  style={{
+                    flex: 0.7,
+                    borderRadius: 5,
+                    alignSelf: 'center',
+                    borderColor: '#0090E7',
+                    borderWidth: 2,
+                    alignContent: 'center',
+                  }}
+                  onPress={() => {}}>
+                  <Text style={[styles.cell, {color: '#0090E7'}]}>
+                    {item.action}
+                  </Text>
+                </TouchableOpacity>
               </View>
 
               <TouchableOpacity onPress={() => handlePress(item)}>
@@ -423,25 +465,31 @@ const LabDetails = () => {
                 }}>
                 <View style={styles.row}>
                   <Text style={styles.cellTitle}>Serial No:</Text>
-                  <Text style={styles.cell}>{selectedItem.SerialNo}</Text>
+                  <Text style={styles.cell}>{selectedItem.slno}</Text>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.cellTitle}>District:</Text>
-                  <Text style={styles.cell}>{selectedItem.District}</Text>
+                  <Text style={styles.cell}>{selectedItem.district}</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Executive Engineer:</Text>
-                  <Text style={styles.cell}>
-                    {selectedItem.ExecutiveEngineer}
-                  </Text>
+                  <Text style={styles.cellTitle}>Package No:</Text>
+                  <Text style={styles.cell}>{selectedItem.packagenumber}</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Phone No:</Text>
-                  <Text style={styles.cell}>{selectedItem.PhoneNo}</Text>
+                  <Text style={styles.cellTitle}>fdr group:</Text>
+                  <Text style={styles.cell}>{selectedItem.fdrgroup}</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.cellTitle}>EmailID:</Text>
-                  <Text style={styles.cell}>{selectedItem.EmailID}</Text>
+                  <Text style={styles.cellTitle}>Contractor:</Text>
+                  <Text style={styles.cell}>{selectedItem.contractor}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.cellTitle}>No Of Labs:</Text>
+                  <Text style={styles.cell}>{selectedItem.nooflabs}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.cellTitle}>equipment:</Text>
+                  <Text style={styles.cell}>{selectedItem.equipmenttypes}</Text>
                 </View>
               </ScrollView>
               <TouchableOpacity

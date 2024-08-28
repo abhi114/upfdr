@@ -5,9 +5,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useNavigation } from '@react-navigation/native';
 
-const ProfileTab = ({profileTabPosition, setShowProfileTab}) => {
+const ProfileTab = ({profileTabPosition, setShowProfileTab,screenname,setScreenName}) => {
   const resetpassword = () => {
-    navigation.navigate('ResetPassword');
+    navigation.navigate('ResetPassword', {screenname, setScreenName});
     setShowProfileTab(false);
   };
   const navigation = useNavigation();
