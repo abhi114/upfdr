@@ -11,7 +11,7 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 
-import {PiuData as data, LabData} from './data';
+import { LabData as data} from './data';
 import {useNavigation} from '@react-navigation/native';
 import {Modal} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -25,7 +25,7 @@ const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
 const LabDetails = () => {
   const [search, setSearch] = useState('');
-  const [userData, setuserData] = useState(LabData);
+  const [userData, setuserData] = useState(data);
   const [modalVisible, setModalVisible] = useState(false);
   const [graphModalVisible, setgraphModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
