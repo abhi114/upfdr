@@ -33,9 +33,15 @@ const Card = ({index,title, number, text, iconName,color,screenName,setScreenNam
       navigation.navigate('HeaderMain', {index: 1, screenName:'ContractorsList', setScreenName});
     } else if (index === 2) {
       console.log('screen name give to it is ' + screenName);
-      navigation.navigate('HeaderMain', {index, screenName, setScreenName});
+      navigation.navigate('HeaderMain', {index, screenName:'PIUList', setScreenName});
     } else if (index === 4) {
-      navigation.navigate('HeaderMain', {index, screenName, setScreenName});
+      navigation.navigate('HeaderMain', {index, screenName:'labDetails', setScreenName});
+    }else if(index  === 5){
+      navigation.navigate('HeaderMain', {
+        index,
+        screenName: 'JointSurveys',
+        setScreenName,
+      });
     }
   }
   return (

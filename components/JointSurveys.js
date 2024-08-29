@@ -9,12 +9,13 @@ import {
   TouchableOpacity,
   ScrollView,
   PermissionsAndroid,
+  Image,
 } from 'react-native';
 
-import {PiuData as data, LabData} from './data';
+import {JointSurveysData as  data} from './data';
 import {useNavigation} from '@react-navigation/native';
 import {Modal} from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import {Parser} from 'json2csv';
 import RoadListModal from './Modals/RoadListModal';
@@ -23,12 +24,14 @@ var RNFS = require('react-native-fs');
 
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
-const LabDetails = () => {
+const JointSurveys = () => {
   const [search, setSearch] = useState('');
-  const [userData, setuserData] = useState(LabData);
+  const [userData, setuserData] = useState(data);
   const [modalVisible, setModalVisible] = useState(false);
   const [graphModalVisible, setgraphModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedPhotoItem,setSelectedPhotoItem] = useState(null);
+  const [photoModalVisible,setPhotoModalVisible]= useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [mainSelectedItem, setmainSelectedItem] = useState(null);
   const navigation = useNavigation();
@@ -36,8 +39,8 @@ const LabDetails = () => {
   const filteredData = userData.filter(
     item =>
       item.district.toLowerCase().includes(search.toLowerCase()) ||
-      item.packagenumber.toLowerCase().includes(search.toLowerCase()) ||
-      item.fdrgroup.toLowerCase().includes(search.toLowerCase()),
+      item.packageNumber.toLowerCase().includes(search.toLowerCase()) ||
+      item.fdrGroup.toLowerCase().includes(search.toLowerCase()),
   );
 
   // Calculate the total number of pages
@@ -73,7 +76,7 @@ const LabDetails = () => {
     let ws = XLSX.utils.json_to_sheet(sample_data_to_export);
     XLSX.utils.book_append_sheet(wb, ws, 'Users');
     console.log(
-      ' main path is ' + RNFS.DownloadDirectoryPath + '/LabDetails.xlsx',
+      ' main path is ' + RNFS.DownloadDirectoryPath + '/JointSurveys.xlsx',
     );
     // Write workbook to an array buffer
     const wbout = XLSX.write(wb, {type: 'array', bookType: 'xlsx'});
@@ -85,7 +88,7 @@ const LabDetails = () => {
 
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + '/LabDetails.xlsx',
+      RNFS.DownloadDirectoryPath + '/JointSurveys.xlsx',
       binaryStr,
       'ascii',
     )
@@ -115,7 +118,7 @@ const LabDetails = () => {
       const csvContent = csvHeader + csvRows;
 
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/LabDetails.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/JointSurveys.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -143,7 +146,7 @@ const LabDetails = () => {
           background-color: #f2f2f2;
         }
       </style>
-      <h1>Lab Details</h1>
+      <h1>Joint Surveys</h1>
       <table>
         <thead>
           <tr>
@@ -170,12 +173,12 @@ const LabDetails = () => {
 
     let options = {
       html: htmlContent,
-      fileName: 'LabDetails',
+      fileName: 'JointSurveys',
       directory: 'Documents',
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/LabDetails.pdf`;
+    const destPath = `${RNFS.DownloadDirectoryPath}/JointSurveys.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
@@ -219,25 +222,25 @@ const LabDetails = () => {
             }}>
             <Text style={{color: '#0000FF'}}>Dashboard </Text>
           </TouchableOpacity>
-          <Text style={{color: '#FFFFFF'}}>/ Lab Details</Text>
+          <Text style={{color: '#FFFFFF'}}>/ Joint Surveys</Text>
         </View>
         <View style={styles.card}>
           <Text
             style={{color: '#FFFFFF', fontWeight: 'bold', marginBottom: 10}}>
-            Total Lab Details Uploaded
+            Roads With Joint Survey Uploaded
           </Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View>
               <Text
                 style={{color: '#FFFFFF', fontWeight: 'bold', fontSize: 22}}>
-                1308
+                592
               </Text>
               <Text style={{color: '#aaaaaa', fontSize: 12}}>
-                Total Number of Lab Details Uploaded
+                Number of Roads with Joint Survey Uploaded
               </Text>
             </View>
             <View style={{margin: 2}}>
-              <Icon name="lab-flask" size={30} color={'#0000FF'} />
+              <Icon name="road-variant" size={30} color={'#0000FF'} />
             </View>
           </View>
         </View>
@@ -248,56 +251,26 @@ const LabDetails = () => {
               borderRadius: 10,
               padding: 12,
               marginBottom: 16,
-              marginHorizontal: 8,
               elevation: 4,
-              flex: 0.5,
+              flex: 1,
             }}>
             <Text
               style={{color: '#FFFFFF', fontWeight: 'bold', marginBottom: 10}}>
-              Roads with lab Details Uploaded
+              Roads With Pending Joint Survey
             </Text>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <View>
                 <Text
                   style={{color: '#FFFFFF', fontWeight: 'bold', fontSize: 22}}>
-                  685
+                  87
                 </Text>
                 <Text style={{color: '#aaaaaa', fontSize: 12}}>
-                  Number of Lab Details Uploaded
-                </Text>
-              </View>
-              <View style={{margin: 2}}>
-                <Icon name="lab-flask" size={30} color={'#FFFF00'} />
-              </View>
-            </View>
-          </View>
-          <View
-            style={{
-              backgroundColor: '#191C24',
-              borderRadius: 10,
-              padding: 12,
-              marginBottom: 16,
-              elevation: 4,
-              flex: 0.5,
-            }}>
-            <Text
-              style={{color: '#FFFFFF', fontWeight: 'bold', marginBottom: 10}}>
-              Roads With Pending Lab Details
-            </Text>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View>
-                <Text
-                  style={{color: '#FFFFFF', fontWeight: 'bold', fontSize: 22}}>
-                  6
-                </Text>
-                <Text style={{color: '#aaaaaa', fontSize: 12}}>
-                  Number of Roads With pending Lab Details
+                  Number of Roads With pending Joint Survey
                 </Text>
               </View>
               <View style={{margin: 1}}>
-                <Icon name="lab-flask" size={30} color={'#ff0000'} />
+                <Icon name="road-variant" size={30} color={'#ff0000'} />
               </View>
             </View>
           </View>
@@ -355,35 +328,19 @@ const LabDetails = () => {
           renderItem={({item}) => (
             <View style={styles.card}>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Serial No:</Text>
-                <Text style={styles.cell}>{item.slno}</Text>
+                <Text style={styles.cellTitle}>Upload Date:</Text>
+                <Text style={styles.cell}>{item.uploadDate}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Package No:</Text>
-                <TouchableOpacity
-                  style={{
-                    flex: 0.7,
-                    borderRadius: 5,
-                    alignSelf: 'center',
-                    borderColor: '#0090E7',
-                    borderWidth: 2,
-                    alignContent: 'center',
-                  }}
-                  onPress={() => {
-                    setSearch(item.packagenumber);
-                    setCurrentPage(1);
-                  }}>
-                  <Text style={[styles.cell, {color: '#0090E7'}]}>
-                    {item.packagenumber}
-                  </Text>
-                </TouchableOpacity>
+                <Text style={styles.cellTitle}>Survey Date:</Text>
+                <Text style={styles.cell}>{item.surveyDate}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.cellTitle}>District:</Text>
                 <Text style={styles.cell}>{item.district}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Status:</Text>
+                <Text style={styles.cellTitle}>Action:</Text>
                 <TouchableOpacity
                   style={{
                     flex: 0.7,
@@ -393,6 +350,10 @@ const LabDetails = () => {
                       item.status === 'Recommended' ? '#00D25B' : '#F8AB00',
                     borderWidth: 2,
                     alignContent: 'center',
+                  }}
+                  onPress={() => {
+                    setPhotoModalVisible(!photoModalVisible);
+                    setSelectedPhotoItem(item);
                   }}>
                   <Text
                     style={[
@@ -402,12 +363,12 @@ const LabDetails = () => {
                           item.status === 'Recommended' ? '#00D25B' : '#F8AB00',
                       },
                     ]}>
-                    {item.status}
+                    View Photo
                   </Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Action:</Text>
+                <Text style={styles.cellTitle}>Package Number:</Text>
                 <TouchableOpacity
                   style={{
                     flex: 0.7,
@@ -419,7 +380,7 @@ const LabDetails = () => {
                   }}
                   onPress={() => {}}>
                   <Text style={[styles.cell, {color: '#0090E7'}]}>
-                    {item.action}
+                    {item.packageNumber}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -463,37 +424,87 @@ const LabDetails = () => {
                   backgroundColor: '#191C24',
                 }}>
                 <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Serial No:</Text>
-                  <Text style={styles.cell}>{selectedItem.slno}</Text>
+                  <Text style={styles.cellTitle}>Upload Date:</Text>
+                  <Text style={styles.cell}>{selectedItem.uploadDate}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.cellTitle}>Survey Date:</Text>
+                  <Text style={styles.cell}>{selectedItem.surveyDate}</Text>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.cellTitle}>District:</Text>
                   <Text style={styles.cell}>{selectedItem.district}</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Package No:</Text>
-                  <Text style={styles.cell}>{selectedItem.packagenumber}</Text>
-                </View>
-                <View style={styles.row}>
                   <Text style={styles.cellTitle}>fdr group:</Text>
-                  <Text style={styles.cell}>{selectedItem.fdrgroup}</Text>
+                  <Text style={styles.cell}>{selectedItem.fdrGroup}</Text>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.cellTitle}>Contractor:</Text>
                   <Text style={styles.cell}>{selectedItem.contractor}</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.cellTitle}>No Of Labs:</Text>
-                  <Text style={styles.cell}>{selectedItem.nooflabs}</Text>
+                  <Text style={styles.cellTitle}>Start Chainage</Text>
+                  <Text style={styles.cell}>{selectedItem.startChainage}</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.cellTitle}>equipment:</Text>
-                  <Text style={styles.cell}>{selectedItem.equipmenttypes}</Text>
+                  <Text style={styles.cellTitle}>End Chainage:</Text>
+                  <Text style={styles.cell}>{selectedItem.endChainage}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.cellTitle}>Objections Hindrances:</Text>
+                  <Text style={styles.cell}>
+                    {selectedItem.objectionsHindrances}
+                  </Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.cellTitle}>Remarks:</Text>
+                  <Text style={styles.cell}>{selectedItem.remarks}</Text>
                 </View>
               </ScrollView>
               <TouchableOpacity
                 style={styles.closeButton}
                 onPress={() => setModalVisible(false)}>
+                <Text style={styles.closeButtonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
+        )}
+        {selectedPhotoItem && (
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={photoModalVisible}
+            onRequestClose={() => setPhotoModalVisible(!photoModalVisible)}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignContent: 'center',
+                margin: 5,
+                backgroundColor: '#191C24',
+                alignItems:'center',
+                width:'100%'
+              }}>
+              <Text
+                style={{
+                  color: '#F1F1F1',
+                  alignSelf: 'center',
+                  margin: 30,
+                  color: '#ffffff',
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                }}>
+                Image View
+              </Text>
+              <Image
+                source={require('../components/Helpers/CH6001667216897.jpeg')}
+                resizeMode="contain"
+                style={{height: '70%', width: '100%'}}
+              />
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => setPhotoModalVisible(false)}>
                 <Text style={styles.closeButtonText}>Close</Text>
               </TouchableOpacity>
             </View>
@@ -647,4 +658,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LabDetails;
+export default JointSurveys;

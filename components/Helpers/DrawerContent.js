@@ -155,10 +155,7 @@ const DrawerContent = ({screenname, setScreenName}) => {
         {
           name: 'List All Users',
           screenName: 'ListAllUsersScreen',
-          backgroundColor:
-            (screenname === 'List All Users' || screenname === 'UPFDR Road List')
-              ? '#0F1015'
-              : null,
+          backgroundColor: screenname === 'List All Users' ? '#0F1015' : null,
         },
         {name: 'Map Contractor', screenName: 'MapContractorScreen'},
       ],
@@ -195,7 +192,7 @@ const DrawerContent = ({screenname, setScreenName}) => {
           name: 'List of PIUs',
           screenName: '',
           backgroundColor:
-            screenname === 'List of PIUs' || screenname === 'Statistics/ListPIU'
+            screenname === 'PIUList' || screenname === 'List of PIUs'
               ? '#0F1015'
               : null,
         },

@@ -18,6 +18,7 @@ import RoadList from '../RoadList';
 import ContractorsList from '../ContractorsList';
 import PIUList from '../PIUList';
 import LabDetails from '../LabDetails';
+import JointSurveys from '../JointSurveys';
 
 const DrawerMain = ({pageName,route}) => {
   const {index, screenName, setScreenName} = route.params;
@@ -35,6 +36,8 @@ const DrawerMain = ({pageName,route}) => {
       setScreenName('UserManagement/ListUser');
     }else if(index ===2){
       setScreenName('Statistics/ListPIU');
+    }else if(index === 5){
+      setScreenName('JointSurveys');      
     }
   }, [index])
   
@@ -122,6 +125,7 @@ const DrawerMain = ({pageName,route}) => {
         {(index === 1 || index === 3) && <ContractorsList />}
         {index === 2 && <PIUList />}
         {index === 4 && <LabDetails />}
+        {index === 5 && <JointSurveys/>}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}
