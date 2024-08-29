@@ -12,7 +12,7 @@ import {
   Image,
 } from 'react-native';
 
-import {JointSurveysData as  data} from './data';
+import {SiteManagement as data} from './data';
 import {useNavigation} from '@react-navigation/native';
 import {Modal} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -24,23 +24,21 @@ var RNFS = require('react-native-fs');
 
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
-const JointSurveys = () => {
+const SiteManagement = () => {
   const [search, setSearch] = useState('');
   const [userData, setuserData] = useState(data);
   const [modalVisible, setModalVisible] = useState(false);
   const [graphModalVisible, setgraphModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [selectedPhotoItem,setSelectedPhotoItem] = useState(null);
-  const [photoModalVisible,setPhotoModalVisible]= useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [mainSelectedItem, setmainSelectedItem] = useState(null);
   const navigation = useNavigation();
   // Filtered data based on search input
   const filteredData = userData.filter(
     item =>
-      item.district.toLowerCase().includes(search.toLowerCase()) ||
-      item.packageNumber.toLowerCase().includes(search.toLowerCase()) ||
-      item.fdrGroup.toLowerCase().includes(search.toLowerCase()),
+      item.District.toLowerCase().includes(search.toLowerCase()) ||
+      item.PackageNumber.toLowerCase().includes(search.toLowerCase()) ||
+      item.FDRGroup.toLowerCase().includes(search.toLowerCase()),
   );
 
   // Calculate the total number of pages
@@ -76,7 +74,7 @@ const JointSurveys = () => {
     let ws = XLSX.utils.json_to_sheet(sample_data_to_export);
     XLSX.utils.book_append_sheet(wb, ws, 'Users');
     console.log(
-      ' main path is ' + RNFS.DownloadDirectoryPath + '/JointSurveys.xlsx',
+      ' main path is ' + RNFS.DownloadDirectoryPath + '/SiteManagement.xlsx',
     );
     // Write workbook to an array buffer
     const wbout = XLSX.write(wb, {type: 'array', bookType: 'xlsx'});
@@ -88,7 +86,7 @@ const JointSurveys = () => {
 
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + '/JointSurveys.xlsx',
+      RNFS.DownloadDirectoryPath + '/SiteManagement.xlsx',
       binaryStr,
       'ascii',
     )
@@ -118,7 +116,7 @@ const JointSurveys = () => {
       const csvContent = csvHeader + csvRows;
 
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/JointSurveys.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/SiteManagement.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -146,7 +144,7 @@ const JointSurveys = () => {
           background-color: #f2f2f2;
         }
       </style>
-      <h1>Joint Surveys</h1>
+      <h1>Site Management</h1>
       <table>
         <thead>
           <tr>
@@ -173,12 +171,12 @@ const JointSurveys = () => {
 
     let options = {
       html: htmlContent,
-      fileName: 'JointSurveys',
+      fileName: 'SiteManagement',
       directory: 'Documents',
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/JointSurveys.pdf`;
+    const destPath = `${RNFS.DownloadDirectoryPath}/SiteManagement.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
@@ -222,21 +220,21 @@ const JointSurveys = () => {
             }}>
             <Text style={{color: '#0000FF'}}>Dashboard </Text>
           </TouchableOpacity>
-          <Text style={{color: '#FFFFFF'}}>/ Joint Surveys</Text>
+          <Text style={{color: '#FFFFFF'}}>/Site Management Plans</Text>
         </View>
         <View style={styles.card}>
           <Text
             style={{color: '#FFFFFF', fontWeight: 'bold', marginBottom: 10}}>
-            Roads With Joint Survey Uploaded
+            Roads With Site Management Plan Uploaded
           </Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View>
               <Text
                 style={{color: '#FFFFFF', fontWeight: 'bold', fontSize: 22}}>
-                592
+                685
               </Text>
               <Text style={{color: '#aaaaaa', fontSize: 12}}>
-                Number of Roads with Joint Survey Uploaded
+                Number of Roads with Plan Uploaded
               </Text>
             </View>
             <View style={{margin: 2}}>
@@ -256,17 +254,17 @@ const JointSurveys = () => {
             }}>
             <Text
               style={{color: '#FFFFFF', fontWeight: 'bold', marginBottom: 10}}>
-              Roads With Pending Joint Survey
+              Roads With Pending Site Management Plan
             </Text>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <View>
                 <Text
                   style={{color: '#FFFFFF', fontWeight: 'bold', fontSize: 22}}>
-                  87
+                  6
                 </Text>
                 <Text style={{color: '#aaaaaa', fontSize: 12}}>
-                  Number of Roads With pending Joint Survey
+                  Roads With Site Management Plans
                 </Text>
               </View>
               <View style={{margin: 1}}>
@@ -329,15 +327,15 @@ const JointSurveys = () => {
             <View style={styles.card}>
               <View style={styles.row}>
                 <Text style={styles.cellTitle}>Upload Date:</Text>
-                <Text style={styles.cell}>{item.uploadDate}</Text>
+                <Text style={styles.cell}>{item.UploadDate}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Survey Date:</Text>
-                <Text style={styles.cell}>{item.surveyDate}</Text>
+                <Text style={styles.cellTitle}>FDR Group:</Text>
+                <Text style={styles.cell}>{item.FDRGroup}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.cellTitle}>District:</Text>
-                <Text style={styles.cell}>{item.district}</Text>
+                <Text style={styles.cell}>{item.District}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.cellTitle}>Action:</Text>
@@ -351,10 +349,7 @@ const JointSurveys = () => {
                     borderWidth: 2,
                     alignContent: 'center',
                   }}
-                  onPress={() => {
-                    setPhotoModalVisible(!photoModalVisible);
-                    setSelectedPhotoItem(item);
-                  }}>
+                  onPress={() => {}}>
                   <Text
                     style={[
                       styles.cell,
@@ -363,7 +358,7 @@ const JointSurveys = () => {
                           item.status === 'Recommended' ? '#00D25B' : '#F8AB00',
                       },
                     ]}>
-                    View Photo
+                    View
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -380,7 +375,7 @@ const JointSurveys = () => {
                   }}
                   onPress={() => {}}>
                   <Text style={[styles.cell, {color: '#0090E7'}]}>
-                    {item.packageNumber}
+                    {item.PackageNumber}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -425,86 +420,36 @@ const JointSurveys = () => {
                 }}>
                 <View style={styles.row}>
                   <Text style={styles.cellTitle}>Upload Date:</Text>
-                  <Text style={styles.cell}>{selectedItem.uploadDate}</Text>
+                  <Text style={styles.cell}>{selectedItem.UploadDate}</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Survey Date:</Text>
-                  <Text style={styles.cell}>{selectedItem.surveyDate}</Text>
+                  <Text style={styles.cellTitle}>Package Number</Text>
+                  <Text style={styles.cell}>{selectedItem.PackageNumber}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.cellTitle}>Site Address:</Text>
+                  <Text style={styles.cell}>{selectedItem.SiteAddress}</Text>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.cellTitle}>District:</Text>
-                  <Text style={styles.cell}>{selectedItem.district}</Text>
+                  <Text style={styles.cell}>{selectedItem.District}</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.cellTitle}>fdr group:</Text>
-                  <Text style={styles.cell}>{selectedItem.fdrGroup}</Text>
+                  <Text style={styles.cellTitle}>FDR group:</Text>
+                  <Text style={styles.cell}>{selectedItem.FDRGroup}</Text>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.cellTitle}>Contractor:</Text>
-                  <Text style={styles.cell}>{selectedItem.contractor}</Text>
+                  <Text style={styles.cell}>{selectedItem.Contractor}</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Start Chainage</Text>
-                  <Text style={styles.cell}>{selectedItem.startChainage}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>End Chainage:</Text>
-                  <Text style={styles.cell}>{selectedItem.endChainage}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Objections Hindrances:</Text>
-                  <Text style={styles.cell}>
-                    {selectedItem.objectionsHindrances}
-                  </Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Remarks:</Text>
-                  <Text style={styles.cell}>{selectedItem.remarks}</Text>
+                  <Text style={styles.cellTitle}>No.Resources</Text>
+                  <Text style={styles.cell}>{selectedItem.NoOfResources}</Text>
                 </View>
               </ScrollView>
               <TouchableOpacity
                 style={styles.closeButton}
                 onPress={() => setModalVisible(false)}>
-                <Text style={styles.closeButtonText}>Close</Text>
-              </TouchableOpacity>
-            </View>
-          </Modal>
-        )}
-        {selectedPhotoItem && (
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={photoModalVisible}
-            onRequestClose={() => setPhotoModalVisible(!photoModalVisible)}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignContent: 'center',
-                margin: 5,
-                backgroundColor: '#191C24',
-                alignItems: 'center',
-                width: '100%',
-              }}>
-              <Text
-                style={{
-                  color: '#F1F1F1',
-                  alignSelf: 'center',
-                  margin: 30,
-                  color: '#ffffff',
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                }}>
-                Image View
-              </Text>
-              <Image
-                source={require('../components/Helpers/CH6001667216897.jpeg')}
-                resizeMode="contain"
-                style={{height: '70%', width: '100%'}}
-              />
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => setPhotoModalVisible(false)}>
                 <Text style={styles.closeButtonText}>Close</Text>
               </TouchableOpacity>
             </View>
@@ -658,4 +603,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default JointSurveys;
+export default SiteManagement;

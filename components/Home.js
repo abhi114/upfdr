@@ -29,17 +29,35 @@ const Card = ({index,title, number, text, iconName,color,screenName,setScreenNam
         setScreenName,
       });
     } else if (index === 1 || index === 3) {
-      console.log("screen name give to it is " + screenName);
-      navigation.navigate('HeaderMain', {index: 1, screenName:'ContractorsList', setScreenName});
+      console.log('screen name give to it is ' + screenName);
+      navigation.navigate('HeaderMain', {
+        index: 1,
+        screenName: 'ContractorsList',
+        setScreenName,
+      });
     } else if (index === 2) {
       console.log('screen name give to it is ' + screenName);
-      navigation.navigate('HeaderMain', {index, screenName:'PIUList', setScreenName});
+      navigation.navigate('HeaderMain', {
+        index,
+        screenName: 'PIUList',
+        setScreenName,
+      });
     } else if (index === 4) {
-      navigation.navigate('HeaderMain', {index, screenName:'labDetails', setScreenName});
-    }else if(index  === 5){
+      navigation.navigate('HeaderMain', {
+        index,
+        screenName: 'labDetails',
+        setScreenName,
+      });
+    } else if (index === 5) {
       navigation.navigate('HeaderMain', {
         index,
         screenName: 'JointSurveys',
+        setScreenName,
+      });
+    } else if (index === 6) {
+      navigation.navigate('HeaderMain', {
+        index,
+        screenName: 'SiteManagement',
         setScreenName,
       });
     }

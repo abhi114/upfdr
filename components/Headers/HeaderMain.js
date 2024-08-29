@@ -19,6 +19,7 @@ import ContractorsList from '../ContractorsList';
 import PIUList from '../PIUList';
 import LabDetails from '../LabDetails';
 import JointSurveys from '../JointSurveys';
+import SiteManagement from '../SiteManagement';
 
 const DrawerMain = ({pageName,route}) => {
   const {index, screenName, setScreenName} = route.params;
@@ -38,6 +39,8 @@ const DrawerMain = ({pageName,route}) => {
       setScreenName('Statistics/ListPIU');
     }else if(index === 5){
       setScreenName('JointSurveys');      
+    }else if(index === 6){
+      setScreenName('SiteManagement'); 
     }
   }, [index])
   
@@ -126,6 +129,7 @@ const DrawerMain = ({pageName,route}) => {
         {index === 2 && <PIUList />}
         {index === 4 && <LabDetails />}
         {index === 5 && <JointSurveys/>}
+        {index === 6 && <SiteManagement/>}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}
