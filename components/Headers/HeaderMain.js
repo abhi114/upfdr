@@ -20,6 +20,9 @@ import PIUList from '../PIUList';
 import LabDetails from '../LabDetails';
 import JointSurveys from '../JointSurveys';
 import SiteManagement from '../SiteManagement';
+import TrailOfEquipment from '../TrailOfEquipment';
+import SampleCollection from '../SampleCollection';
+import JobMixDesign from '../JobMixDesign';
 
 const DrawerMain = ({pageName,route}) => {
   const {index, screenName, setScreenName} = route.params;
@@ -41,6 +44,12 @@ const DrawerMain = ({pageName,route}) => {
       setScreenName('JointSurveys');      
     }else if(index === 6){
       setScreenName('SiteManagement'); 
+    }else if(index === 7){
+      setScreenName('TrailOfEquipment');
+    }else if(index === 8){
+      setScreenName('SampleCollection');
+    }else if(index === 9){
+      setScreenName('JobMixDesign');
     }
   }, [index])
   
@@ -128,8 +137,11 @@ const DrawerMain = ({pageName,route}) => {
         {(index === 1 || index === 3) && <ContractorsList />}
         {index === 2 && <PIUList />}
         {index === 4 && <LabDetails />}
-        {index === 5 && <JointSurveys/>}
-        {index === 6 && <SiteManagement/>}
+        {index === 5 && <JointSurveys />}
+        {index === 6 && <SiteManagement />}
+        {index === 7 && <TrailOfEquipment />}
+        {index === 8 && <SampleCollection />}
+        {index === 9 && <JobMixDesign/>}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}

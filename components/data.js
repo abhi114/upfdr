@@ -837,6 +837,163 @@ export const SiteManagement = [
     action: 'View',
   },
 ];
+export const SampleCollection = [
+  {
+    slNo: 1,
+    district: 'Shrawasti',
+    packageNumber: 'UP6478',
+    fdrGroup: 'UPFDR-172',
+    contractor: 'RAHAT ALI',
+    noOfJMFNeeded: 5,
+    kmWiseDataUploaded: 'No',
+  },
+  {
+    slNo: 2,
+    district: 'Shrawasti',
+    packageNumber: 'UP6478',
+    fdrGroup: 'UPFDR-172',
+    contractor: 'RAHAT ALI',
+    noOfJMFNeeded: 5,
+    kmWiseDataUploaded: 'No',
+  },
+  {
+    slNo: 3,
+    district: 'Shrawasti',
+    packageNumber: 'UP6480',
+    fdrGroup: 'UPFDR-172',
+    contractor: 'RAHAT ALI',
+    noOfJMFNeeded: 5,
+    kmWiseDataUploaded: 'No',
+  },
+  {
+    slNo: 4,
+    district: 'Shrawasti',
+    packageNumber: 'UP6476',
+    fdrGroup: 'UPFDR-172',
+    contractor: 'RAHAT ALI',
+    noOfJMFNeeded: 5,
+    kmWiseDataUploaded: 'No',
+  },
+  {
+    slNo: 5,
+    district: 'Shrawasti',
+    packageNumber: 'UP6479',
+    fdrGroup: 'UPFDR-172',
+    contractor: 'RAHAT ALI',
+    noOfJMFNeeded: 5,
+    kmWiseDataUploaded: 'No',
+  },
+  {
+    slNo: 6,
+    district: 'Shrawasti',
+    packageNumber: 'UP6461',
+    fdrGroup: 'UPFDR-172',
+    contractor: 'RAHAT ALI',
+    noOfJMFNeeded: 5,
+    kmWiseDataUploaded: 'No',
+  },
+  {
+    slNo: 7,
+    district: 'Shrawasti',
+    packageNumber: 'UP6475',
+    fdrGroup: 'UPFDR-172',
+    contractor: 'RAHAT ALI',
+    noOfJMFNeeded: 5,
+    kmWiseDataUploaded: 'No',
+  },
+  {
+    slNo: 8,
+    district: 'Shrawasti',
+    packageNumber: 'UP6475',
+    fdrGroup: 'UPFDR-172',
+    contractor: 'RAHAT ALI',
+    noOfJMFNeeded: 5,
+    kmWiseDataUploaded: 'No',
+  },
+];
+
+export const TrailData = [
+  {
+    slNo: 1,
+    district: 'Barabanki',
+    packageNumber: 'UP13197',
+    fdrGroup: 'UPFDR-82',
+    contractor: 'Siddharth construction',
+    noOfEquipments: 9,
+    machineTypes:
+      'Reclaimer | Cement Spreader | Pad Foot Roller | Tandem Roller | PTR',
+  },
+  {
+    slNo: 2,
+    district: 'Basti',
+    packageNumber: 'UP1596',
+    fdrGroup: 'UP-FDR11',
+    contractor: 'Blacklead Infratech Private Limited',
+    noOfEquipments: 6,
+    machineTypes:
+      'Reclaimer | Cement Spreader | Pad Foot Roller | Tandem Roller | PTR',
+  },
+  {
+    slNo: 3,
+    district: 'S.K. Nagar',
+    packageNumber: 'UP6075',
+    fdrGroup: 'UP-FDR11',
+    contractor: 'Blacklead Infratech Private Limited',
+    noOfEquipments: 5,
+    machineTypes:
+      'Reclaimer | Cement Spreader | Pad Foot Roller | Tandem Roller | PTR',
+  },
+  {
+    slNo: 4,
+    district: 'S.K. Nagar',
+    packageNumber: 'UP6078',
+    fdrGroup: 'UP-FDR11',
+    contractor: 'Blacklead Infratech Private Limited',
+    noOfEquipments: 5,
+    machineTypes:
+      'Reclaimer | Cement Spreader | Pad Foot Roller | Tandem Roller | PTR',
+  },
+  {
+    slNo: 5,
+    district: 'S.K. Nagar',
+    packageNumber: 'UP6073',
+    fdrGroup: 'UP-FDR11',
+    contractor: 'Blacklead Infratech Private Limited',
+    noOfEquipments: 5,
+    machineTypes:
+      'Reclaimer | Cement Spreader | Pad Foot Roller | Tandem Roller | PTR',
+  },
+  {
+    slNo: 6,
+    district: 'Basti',
+    packageNumber: 'UP1595',
+    fdrGroup: 'UP-FDR11',
+    contractor: 'Blacklead Infratech Private Limited',
+    noOfEquipments: 5,
+    machineTypes:
+      'Reclaimer | Cement Spreader | Pad Foot Roller | Tandem Roller | PTR',
+  },
+  {
+    slNo: 7,
+    district: 'Etah',
+    packageNumber: 'UP21148',
+    fdrGroup: 'UP-FDR04',
+    contractor: 'Blacklead Infratech Private Limited',
+    noOfEquipments: 10,
+    machineTypes:
+      'Cement Spreader | Reclaimer | Pad Foot Roller | PTR | Tandem Roller',
+  },
+  {
+    slNo: 8,
+    district: 'Siddharathnagar',
+    packageNumber: 'UP65109',
+    fdrGroup: 'UP-FDR13',
+    contractor: 'Bhardwaj Unibuild Private Limited',
+    noOfEquipments: 7,
+    machineTypes:
+      'Reclaimer | Cement Spreader | Pad Foot Roller | Tandem Roller | PTR',
+  },
+];
 
 export const LabData = [
   {

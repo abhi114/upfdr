@@ -60,6 +60,24 @@ const Card = ({index,title, number, text, iconName,color,screenName,setScreenNam
         screenName: 'SiteManagement',
         setScreenName,
       });
+    } else if (index === 7) {
+      navigation.navigate('HeaderMain', {
+        index,
+        screenName: 'TrailOfEquipment',
+        setScreenName,
+      });
+    } else if (index === 8) {
+      navigation.navigate('HeaderMain', {
+        index,
+        screenName: 'SampleCollection',
+        setScreenName,
+      });
+    }else if(index === 9){
+      navigation.navigate('HeaderMain', {
+        index,
+        screenName: 'JobMixDesign',
+        setScreenName,
+      });
     }
   }
   return (
