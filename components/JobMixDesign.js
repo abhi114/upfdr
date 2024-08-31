@@ -39,6 +39,7 @@ const JobMixDesign = () => {
   // Functi
    const data = [
      {
+       id: 'null',
        name: 'Unique Roads with JMFs',
        population: 685,
        color: '#26A69A',
@@ -46,6 +47,7 @@ const JobMixDesign = () => {
        legendFontSize: 15,
      },
      {
+       id: 'null',
        name: 'Repeat JMFs on Road',
        population: 429,
        color: '#EC407A',
@@ -55,6 +57,7 @@ const JobMixDesign = () => {
    ];
    const data1 = [
      {
+      id:'JMFs Recommended by PMU List',
        name: 'Recommended',
        population: 734,
        color: '#26A69A',
@@ -62,6 +65,7 @@ const JobMixDesign = () => {
        legendFontSize: 15,
      },
      {
+      id:'JMFs Not Recommended by PMU List',
        name: 'Not Recommended',
        population: 391,
        color: '#EC407A',
@@ -69,6 +73,7 @@ const JobMixDesign = () => {
        legendFontSize: 15,
      },
      {
+      id:'JMFs Pending Action by PMU List',
        name: 'Action Pending',
        population: 10,
        color: '#FFCE56',
@@ -78,6 +83,7 @@ const JobMixDesign = () => {
    ];
    const data2 = [
      {
+       id: 'JMFs Approved by PIU List',
        name: 'Recommended',
        population: 715,
        color: '#26A69A',
@@ -85,6 +91,7 @@ const JobMixDesign = () => {
        legendFontSize: 15,
      },
      {
+      id:'JMFs Returned by PIU List',
        name: 'Not Recommended',
        population: 14,
        color: '#EC407A',
@@ -92,6 +99,7 @@ const JobMixDesign = () => {
        legendFontSize: 15,
      },
      {
+       id:'JMFs Pending Action by PIU',
        name: 'Action Pending',
        population: 5,
        color: '#FFCE56',
@@ -101,6 +109,7 @@ const JobMixDesign = () => {
    ];
    const data3 = [
      {
+       id:'null',
        name: 'Pending Roads',
        population: 36,
        color: '#26A69A',
@@ -108,13 +117,13 @@ const JobMixDesign = () => {
        legendFontSize: 15,
      },
      {
+       id: 'JMFs Approved by PIU List',
        name: 'PIU Recommended',
        population: 715,
        color: '#EC407A',
        legendFontColor: '#7F7F7F',
        legendFontSize: 15,
      },
-     
    ];
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>

@@ -38,16 +38,18 @@ const JMFChart = ({data}) => {
         avoidFalseZero={true}
         onPress={index => handlePress(index)}
       />
-     
+
       <View>
         {data.map((item, index) => (
           <TouchableOpacity
             key={index}
             style={{
               flexDirection: 'row',
-              alignItems: 'center',
               marginVertical: 5,
-            }} onPress={()=>{console.log(index)}}>
+            }}
+            onPress={() => {
+              console.log(item.id);
+            }}>
             <View
               style={{
                 width: 18,
@@ -56,13 +58,24 @@ const JMFChart = ({data}) => {
                 marginRight: 8,
               }}
             />
-            <Text
-              style={{
-                color: item.color,
-                fontSize: item.legendFontSize,
-              }}>
-              {item.name} - {item.population}
-            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text
+                style={{
+                  color: item.color,
+                  fontSize: item.legendFontSize,
+                }}>
+                {item.name} - {item.population}
+              </Text>
+              <Text
+                style={{
+                  color: item.color,
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                  marginHorizontal: 10,
+                }}>
+                ↗
+              </Text>
+            </View>
           </TouchableOpacity>
         ))}
       </View>
