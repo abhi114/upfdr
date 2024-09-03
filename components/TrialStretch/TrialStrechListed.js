@@ -220,7 +220,7 @@ const TrialStrechListed = ({route}) => {
             onPress={() => {
               navigation.goBack();
             }}>
-            <Text style={{color: '#0000FF'}}>JMF Report</Text>
+            <Text style={{color: '#0000FF'}}>Ts Report</Text>
           </TouchableOpacity>
           <Text style={{color: '#FFFFFF'}}>/{name}</Text>
         </View>
@@ -287,10 +287,10 @@ const TrialStrechListed = ({route}) => {
             <View style={styles.card}>
               <View style={styles.row}>
                 <Text style={styles.cellTitle}>sl No:</Text>
-                <Text style={styles.cell}>{item.slNo}</Text>
+                <Text style={styles.cell}>{item.SlNo}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Date:</Text>
+                <Text style={styles.cellTitle}>Date Uploaded:</Text>
                 <TouchableOpacity
                   style={{
                     flex: 0.7,
@@ -302,7 +302,7 @@ const TrialStrechListed = ({route}) => {
                   }}
                   onPress={() => {}}>
                   <Text style={[styles.cell, {color: '#0090E7'}]}>
-                    {item.date}
+                    {item.DateUploaded}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -319,16 +319,16 @@ const TrialStrechListed = ({route}) => {
                   }}
                   onPress={() => {}}>
                   <Text style={[styles.cell, {color: '#0090E7'}]}>
-                    {item.packageNumber}
+                    {item.PackageNumber}
                   </Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.row}>
                 <Text style={styles.cellTitle}>FDR Group:</Text>
-                <Text style={styles.cell}>{item.fdrGroup}</Text>
+                <Text style={styles.cell}>{item.FDRGroup}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Job Mix Report:</Text>
+                <Text style={styles.cellTitle}>Action:</Text>
                 <TouchableOpacity
                   style={{
                     flex: 0.7,
@@ -352,13 +352,38 @@ const TrialStrechListed = ({route}) => {
                   </Text>
                 </TouchableOpacity>
               </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Status:</Text>
+                <TouchableOpacity
+                  style={{
+                    flex: 0.7,
+                    borderRadius: 5,
+                    alignSelf: 'center',
+                    borderColor:
+                      item.status === 'Recommended' ? '#00D25B' : '#F8AB00',
+                    borderWidth: 2,
+                    alignContent: 'center',
+                  }}
+                  onPress={() => {}}>
+                  <Text
+                    style={[
+                      styles.cell,
+                      {
+                        color:
+                          item.status === 'Recommended' ? '#00D25B' : '#F8AB00',
+                      },
+                    ]}>
+                    Recommended
+                  </Text>
+                </TouchableOpacity>
+              </View>
 
               <TouchableOpacity onPress={() => handlePress(item)}>
                 <Text style={styles.detailsButton}>See Full Details</Text>
               </TouchableOpacity>
             </View>
           )}
-          keyExtractor={item => item.slNo}
+          keyExtractor={item => item.SlNo}
         />
         {selectedItem && (
           <Modal
@@ -391,202 +416,14 @@ const TrialStrechListed = ({route}) => {
                   margin: 5,
                   backgroundColor: '#191C24',
                 }}>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Sl No:</Text>
-                  <Text style={styles.cell}>{selectedItem.slNo}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Package Number</Text>
-                  <Text style={styles.cell}>{selectedItem.packageNumber}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Date:</Text>
-                  <Text style={styles.cell}>{selectedItem.date}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>District:</Text>
-                  <Text style={styles.cell}>{selectedItem.district}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>FDR group:</Text>
-                  <Text style={styles.cell}>{selectedItem.fdrGroup}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Contractor:</Text>
-                  <Text style={styles.cell}>{selectedItem.contractor}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Institution:</Text>
-                  <Text style={styles.cell}>{selectedItem.institution}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Additive:</Text>
-                  <Text style={styles.cell}>{selectedItem.additive}</Text>
-                </View>
-                <View style={[styles.row, {justifyContent: 'space-around'}]}>
-                  <Text style={styles.cellTitle}>durability:</Text>
-                  <TouchableOpacity
-                    style={{
-                      flex: 0.2,
-                      borderRadius: 5,
-                      alignSelf: 'center',
-                      borderColor: '#FFFF00',
-                      borderWidth: 1,
-                      alignContent: 'center',
-                      marginRight: 55,
-                    }}
-                    onPress={() => {}}>
-                    <Text style={[styles.cell, {color: '#FFFF00'}]}>
-                      {selectedItem.durability}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={[styles.row, {justifyContent: 'space-around'}]}>
-                  <Text style={styles.cellTitle}>Flexural:</Text>
-                  <TouchableOpacity
-                    style={{
-                      flex: 0.2,
-                      borderRadius: 5,
-                      alignSelf: 'center',
-                      borderColor: '#FFFF00',
-                      borderWidth: 1,
-                      alignContent: 'center',
-                      marginRight: 55,
-                    }}
-                    onPress={() => {}}>
-                    <Text style={[styles.cell, {color: '#FFFF00'}]}>
-                      {selectedItem.flexural}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={[styles.row, {justifyContent: 'space-around'}]}>
-                  <Text style={styles.cellTitle}>Residual:</Text>
-                  <TouchableOpacity
-                    style={{
-                      flex: 0.2,
-                      borderRadius: 5,
-                      alignSelf: 'center',
-                      borderColor: '#FFFF00',
-                      borderWidth: 1,
-                      alignContent: 'center',
-                      marginRight: 55,
-                    }}
-                    onPress={() => {}}>
-                    <Text style={[styles.cell, {color: '#FFFF00'}]}>
-                      {selectedItem.residual}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={[styles.row, {justifyContent: 'space-around'}]}>
-                  <Text style={styles.cellTitle}>ucs7Days:</Text>
-                  <TouchableOpacity
-                    style={{
-                      flex: 0.2,
-                      borderRadius: 5,
-                      alignSelf: 'center',
-                      borderColor: '#FFFF00',
-                      borderWidth: 1,
-                      alignContent: 'center',
-                      marginRight: 55,
-                    }}
-                    onPress={() => {}}>
-                    <Text style={[styles.cell, {color: '#FFFF00'}]}>
-                      {selectedItem.ucs7Days}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={[styles.row, {justifyContent: 'space-around'}]}>
-                  <Text style={styles.cellTitle}>ucs28Days:</Text>
-                  <TouchableOpacity
-                    style={{
-                      flex: 0.2,
-                      borderRadius: 5,
-                      alignSelf: 'center',
-                      borderColor: '#FFFF00',
-                      borderWidth: 1,
-                      alignContent: 'center',
-                      marginRight: 55,
-                    }}
-                    onPress={() => {}}>
-                    <Text style={[styles.cell, {color: '#FFFF00'}]}>
-                      {selectedItem.ucs28Days}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>omc</Text>
-                  <Text style={styles.cell}>{selectedItem.omc}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>mdd</Text>
-                  <Text style={styles.cell}>{selectedItem.mdd}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>pmuPendency</Text>
-                  <Text style={styles.cell}>{selectedItem.pmuPendency}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>piuPendency</Text>
-                  <Text style={styles.cell}>{selectedItem.piuPendency}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>status Pmu:</Text>
-                  <TouchableOpacity
-                    style={{
-                      flex: 0.7,
-                      borderRadius: 5,
-                      alignSelf: 'center',
-                      borderColor:
-                        selectedItem.statusPmu === 'Recommended'
-                          ? '#00D25B'
-                          : '#F8AB00',
-                      borderWidth: 2,
-                      alignContent: 'center',
-                    }}
-                    onPress={() => {}}>
-                    <Text
-                      style={[
-                        styles.cell,
-                        {
-                          color:
-                            selectedItem.statusPmu === 'Recommended'
-                              ? '#00D25B'
-                              : '#F8AB00',
-                        },
-                      ]}>
-                      {selectedItem.statusPmu}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>status Piu:</Text>
-                  <TouchableOpacity
-                    style={{
-                      flex: 0.7,
-                      borderRadius: 5,
-                      alignSelf: 'center',
-                      borderColor:
-                        selectedItem.statusPiu === 'Recommended'
-                          ? '#00D25B'
-                          : '#F8AB00',
-                      borderWidth: 2,
-                      alignContent: 'center',
-                    }}
-                    onPress={() => {}}>
-                    <Text
-                      style={[
-                        styles.cell,
-                        {
-                          color:
-                            selectedItem.statusPiu === 'Recommended'
-                              ? '#00D25B'
-                              : '#F8AB00',
-                        },
-                      ]}>
-                      {selectedItem.statusPiu}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                {Object.entries(selectedItem)
+                  .slice(0, -1)
+                  .map(([key, value]) => (
+                    <View style={styles.row} key={key}>
+                      <Text style={styles.cellTitle}>{key}:</Text>
+                      <Text style={styles.cell}>{value}</Text>
+                    </View>
+                  ))}
               </ScrollView>
               <TouchableOpacity
                 style={styles.closeButton}
