@@ -10,6 +10,7 @@ import RoadList from '../components/RoadList';
 import DrawerMain from '../components/Headers/HeaderMain';
 import ContractorsList from '../components/ContractorsList';
 import JMFRecommendedPMU from '../components/JMFLists/JMFRecommendedPMU';
+import TrialStrechListed from '../components/TrialStretch/TrialStrechListed';
 
 
 const Stack = createNativeStackNavigator();
@@ -56,6 +57,11 @@ const StackNavigator = () => {
         options={{headerShown: false}}
         name="JMFRecommendedPMU"
         component={JMFRecommendedPMU}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="TrialStrechListed"
+        component={TrialStrechListed}
       />
     </Stack.Navigator>
   );

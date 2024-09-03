@@ -124,6 +124,12 @@ const DrawerContent = ({screenname, setScreenName}) => {
       navigation.navigate('HeaderMain', {index: 2, screenName, setScreenName});
     }else if(screenName === 'List Contractors'){
       navigation.navigate('HeaderMain', {index: 1, screenName, setScreenName});
+    }else if(screenName === 'JMF Analytics - Graph'){
+      navigation.navigate('HeaderMain', {
+        index: 9,
+        screenName: 'JobMixDesign',
+        setScreenName,
+      });
     }
     //setExpandedItem(null); // Close the dropdown after selection
   };
@@ -214,7 +220,14 @@ const DrawerContent = ({screenname, setScreenName}) => {
       subItems: [
         {name: 'Site-wide Data Uploads', screenName: ''},
         {name: 'Billing Pendencies', screenName: ''},
-        {name: 'JMF Analytics - Graph', screenName: ''},
+        {
+          name: 'JMF Analytics - Graph',
+          screenName: '',
+          backgroundColor:
+            screenname === 'JobMixDesign' || screenname === 'JobMixDesign'
+              ? '#0F1015'
+              : null,
+        },
         {name: 'JMF Analytics - Boxed', screenName: ''},
         {name: 'TS Analytics - Graph', screenName: ''},
         {name: 'TS Analytics - Boxed', screenName: ''},

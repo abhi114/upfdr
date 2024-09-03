@@ -72,10 +72,16 @@ const Card = ({index,title, number, text, iconName,color,screenName,setScreenNam
         screenName: 'SampleCollection',
         setScreenName,
       });
-    }else if(index === 9){
+    } else if (index === 9) {
       navigation.navigate('HeaderMain', {
         index,
         screenName: 'JobMixDesign',
+        setScreenName,
+      });
+    } else if (index === 10) {
+      navigation.navigate('HeaderMain', {
+        index,
+        screenName: 'TrialStretchGraph',
         setScreenName,
       });
     }

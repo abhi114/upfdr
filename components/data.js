@@ -837,6 +837,7 @@ export const SiteManagement = [
     action: 'View',
   },
 ];
+
 export const JMFPendingActionPIU = [
   {
     slNo: 1,
@@ -1297,5 +1298,42 @@ export const Chartdata = [
     color: '#00FF00',
     legendFontColor: '#7F7F7F',
     legendFontSize: 15,
+  },
+];
+
+export const TrialStretchList = [
+  {
+    SlNo: '1',
+    DateUploaded: '22-12-2022',
+    DateOfConstruction: '2022-12-20',
+    DelayInUpload: '+2 days',
+    PackageNumber: 'UP06159',
+    FDRGroup: 'UP-FDR09',
+    District: 'Azamgarh',
+    Contractor: 'BUPLSNPJV',
+    DaysPendencyAtPMU: '-',
+    Status: 'Recommended',
+    PIUName:
+      'JE: satish Chauhan, Prem Prakash, Neeraj yadav, D.P. Singh. AE: R.K.Singh, M.K. Singh, Alka Jaiswal, SE: V.K. Singh Gaur',
+    Designation: 'AE',
+    StartChainage: '7+795',
+    EndChainage: '7+895',
+    FDD: '2.057',
+    UCS7Days: '4.56 MPa',
+    UCS28Days: '5.03 MPa',
+    ResidualStrength: '5.33 MPa',
+    Durability: '3.58%',
+    FlexuralStrength: '1.13 MPa',
+    CementSpreadingRate: '22.169',
+    Additive: '650 ml/cum',
+    Natural: '8.67',
+    Field: '2.057',
+    Moisture: '9.25',
+    Thickness: '250',
+    Width: '5650',
+    Camber: '3',
+    ExistingWidthOfCarriageWay:'3.5',
+    ExistingThicknessOfCarriageWay:'250',
+    Action:'Download Report'
   },
 ];

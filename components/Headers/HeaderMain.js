@@ -23,6 +23,7 @@ import SiteManagement from '../SiteManagement';
 import TrailOfEquipment from '../TrailOfEquipment';
 import SampleCollection from '../SampleCollection';
 import JobMixDesign from '../JobMixDesign';
+import TrialStretchGraph from '../TrialStretch/TrialStretchGraph';
 
 const DrawerMain = ({pageName,route}) => {
   const {index, screenName, setScreenName} = route.params;
@@ -142,6 +143,7 @@ const DrawerMain = ({pageName,route}) => {
         {index === 7 && <TrailOfEquipment />}
         {index === 8 && <SampleCollection />}
         {index === 9 && <JobMixDesign/>}
+        {index === 10 && <TrialStretchGraph/>}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}

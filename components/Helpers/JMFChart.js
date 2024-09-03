@@ -41,6 +41,11 @@ const JMFChart = ({data}) => {
         name: 'JMFs Pending Action by PIU',
         dataName: 'JMFPendingActionPIU',
       });
+    }else if(id === 'Trial Stretch List'){
+       navigation.navigate('TrialStrechListed', {
+         name: 'Trial Stretch List',
+         dataName: 'TrialStretchList',
+       });
     }
   }
   return (
