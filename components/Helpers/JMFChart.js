@@ -9,15 +9,15 @@ const JMFChart = ({data}) => {
 
   
 
-  const handlePress = index => {
-    // Implement navigation logic based on index
-    if (index === 0) {
-      console.log(0);
-    } else if (index === 1) {
-      console.log(1)
+  const handleNavigatePress = (id)=>{
+    console.log(id);
+    if(id === 'JMFs Recommended by PMU List'){
+      navigation.navigate('JMFRecommendedPMU', {
+        name: 'JMFs Recommended by PMU List',
+        dataName: 'JMFRecommendedPMUList',
+      });
     }
-  };
-
+  }
   return (
     <View>
       <PieChart
@@ -36,7 +36,7 @@ const JMFChart = ({data}) => {
         center={[50, 0]}
         hasLegend={false}
         avoidFalseZero={true}
-        onPress={index => handlePress(index)}
+       
       />
 
       <View>
@@ -48,7 +48,7 @@ const JMFChart = ({data}) => {
               marginVertical: 5,
             }}
             onPress={() => {
-              console.log(item.id);
+              handleNavigatePress(item.id);
             }}>
             <View
               style={{

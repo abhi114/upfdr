@@ -12,33 +12,35 @@ import {
   Image,
 } from 'react-native';
 
-import {SiteManagement as data} from './data';
+import * as data from '../data';
 import {useNavigation} from '@react-navigation/native';
 import {Modal} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import {Parser} from 'json2csv';
-import RoadListModal from './Modals/RoadListModal';
 import XLSX from 'xlsx';
 var RNFS = require('react-native-fs');
 
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
-const JMFRecommendedPMU = () => {
+const JMFRecommendedPMU = ({route}) => {
+  const {name, dataName} = route.params;
   const [search, setSearch] = useState('');
-  const [userData, setuserData] = useState(data);
+  const [userData, setuserData] = useState(data[dataName]);
   const [modalVisible, setModalVisible] = useState(false);
   const [graphModalVisible, setgraphModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [mainSelectedItem, setmainSelectedItem] = useState(null);
   const navigation = useNavigation();
+  console.log(name);
+  console.log(dataName);
   // Filtered data based on search input
   const filteredData = userData.filter(
     item =>
-      item.District.toLowerCase().includes(search.toLowerCase()) ||
-      item.PackageNumber.toLowerCase().includes(search.toLowerCase()) ||
-      item.FDRGroup.toLowerCase().includes(search.toLowerCase()),
+      item.district.toLowerCase().includes(search.toLowerCase()) ||
+      item.packageNumber.toLowerCase().includes(search.toLowerCase()) ||
+      item.fdrGroup.toLowerCase().includes(search.toLowerCase()),
   );
 
   // Calculate the total number of pages
@@ -213,67 +215,25 @@ const JMFRecommendedPMU = () => {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        <View style={{flexDirection: 'row', marginBottom: 6}}>
+        <View style={{flexDirection: 'row', marginBottom: 25}}>
           <TouchableOpacity
             onPress={() => {
               navigation.goBack();
             }}>
-            <Text style={{color: '#0000FF'}}>Dashboard </Text>
+            <Text style={{color: '#0000FF'}}>JMF Report</Text>
           </TouchableOpacity>
-          <Text style={{color: '#FFFFFF'}}>/Site Management Plans</Text>
-        </View>
-        <View style={styles.card}>
-          <Text
-            style={{color: '#FFFFFF', fontWeight: 'bold', marginBottom: 10}}>
-            Roads With Site Management Plan Uploaded
-          </Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View>
-              <Text
-                style={{color: '#FFFFFF', fontWeight: 'bold', fontSize: 22}}>
-                685
-              </Text>
-              <Text style={{color: '#aaaaaa', fontSize: 12}}>
-                Number of Roads with Plan Uploaded
-              </Text>
-            </View>
-            <View style={{margin: 2}}>
-              <Icon name="road-variant" size={30} color={'#0000FF'} />
-            </View>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', marginBottom: 5}}>
-          <View
-            style={{
-              backgroundColor: '#191C24',
-              borderRadius: 10,
-              padding: 12,
-              marginBottom: 16,
-              elevation: 4,
-              flex: 1,
-            }}>
-            <Text
-              style={{color: '#FFFFFF', fontWeight: 'bold', marginBottom: 10}}>
-              Roads With Pending Site Management Plan
-            </Text>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View>
-                <Text
-                  style={{color: '#FFFFFF', fontWeight: 'bold', fontSize: 22}}>
-                  6
-                </Text>
-                <Text style={{color: '#aaaaaa', fontSize: 12}}>
-                  Roads With Site Management Plans
-                </Text>
-              </View>
-              <View style={{margin: 1}}>
-                <Icon name="road-variant" size={30} color={'#ff0000'} />
-              </View>
-            </View>
-          </View>
+          <Text style={{color: '#FFFFFF'}}>/{name}</Text>
         </View>
 
+        <Text
+          style={{
+            color: '#FFFFFF',
+            fontSize: 20,
+            margin: 15,
+            fontWeight: 'bold',
+          }}>
+          {name}
+        </Text>
         <TextInput
           style={styles.searchInput}
           placeholder="Search by District ,Package.No or Fdr Group"
@@ -326,19 +286,49 @@ const JMFRecommendedPMU = () => {
           renderItem={({item}) => (
             <View style={styles.card}>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Upload Date:</Text>
-                <Text style={styles.cell}>{item.UploadDate}</Text>
+                <Text style={styles.cellTitle}>sl No:</Text>
+                <Text style={styles.cell}>{item.slNo}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Date:</Text>
+                <TouchableOpacity
+                  style={{
+                    flex: 0.7,
+                    borderRadius: 5,
+                    alignSelf: 'center',
+                    borderColor: '#0090E7',
+                    borderWidth: 2,
+                    alignContent: 'center',
+                  }}
+                  onPress={() => {}}>
+                  <Text style={[styles.cell, {color: '#0090E7'}]}>
+                    {item.date}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Package Number:</Text>
+                <TouchableOpacity
+                  style={{
+                    flex: 0.7,
+                    borderRadius: 5,
+                    alignSelf: 'center',
+                    borderColor: '#0090E7',
+                    borderWidth: 2,
+                    alignContent: 'center',
+                  }}
+                  onPress={() => {}}>
+                  <Text style={[styles.cell, {color: '#0090E7'}]}>
+                    {item.packageNumber}
+                  </Text>
+                </TouchableOpacity>
               </View>
               <View style={styles.row}>
                 <Text style={styles.cellTitle}>FDR Group:</Text>
-                <Text style={styles.cell}>{item.FDRGroup}</Text>
+                <Text style={styles.cell}>{item.fdrGroup}</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>District:</Text>
-                <Text style={styles.cell}>{item.District}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>Action:</Text>
+                <Text style={styles.cellTitle}>Job Mix Report:</Text>
                 <TouchableOpacity
                   style={{
                     flex: 0.7,
@@ -358,24 +348,7 @@ const JMFRecommendedPMU = () => {
                           item.status === 'Recommended' ? '#00D25B' : '#F8AB00',
                       },
                     ]}>
-                    View
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>Package Number:</Text>
-                <TouchableOpacity
-                  style={{
-                    flex: 0.7,
-                    borderRadius: 5,
-                    alignSelf: 'center',
-                    borderColor: '#0090E7',
-                    borderWidth: 2,
-                    alignContent: 'center',
-                  }}
-                  onPress={() => {}}>
-                  <Text style={[styles.cell, {color: '#0090E7'}]}>
-                    {item.PackageNumber}
+                    Download Report
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -419,32 +392,200 @@ const JMFRecommendedPMU = () => {
                   backgroundColor: '#191C24',
                 }}>
                 <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Upload Date:</Text>
-                  <Text style={styles.cell}>{selectedItem.UploadDate}</Text>
+                  <Text style={styles.cellTitle}>Sl No:</Text>
+                  <Text style={styles.cell}>{selectedItem.slNo}</Text>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.cellTitle}>Package Number</Text>
-                  <Text style={styles.cell}>{selectedItem.PackageNumber}</Text>
+                  <Text style={styles.cell}>{selectedItem.packageNumber}</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Site Address:</Text>
-                  <Text style={styles.cell}>{selectedItem.SiteAddress}</Text>
+                  <Text style={styles.cellTitle}>Date:</Text>
+                  <Text style={styles.cell}>{selectedItem.date}</Text>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.cellTitle}>District:</Text>
-                  <Text style={styles.cell}>{selectedItem.District}</Text>
+                  <Text style={styles.cell}>{selectedItem.district}</Text>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.cellTitle}>FDR group:</Text>
-                  <Text style={styles.cell}>{selectedItem.FDRGroup}</Text>
+                  <Text style={styles.cell}>{selectedItem.fdrGroup}</Text>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.cellTitle}>Contractor:</Text>
-                  <Text style={styles.cell}>{selectedItem.Contractor}</Text>
+                  <Text style={styles.cell}>{selectedItem.contractor}</Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.cellTitle}>No.Resources</Text>
-                  <Text style={styles.cell}>{selectedItem.NoOfResources}</Text>
+                  <Text style={styles.cellTitle}>Institution:</Text>
+                  <Text style={styles.cell}>{selectedItem.institution}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.cellTitle}>Additive:</Text>
+                  <Text style={styles.cell}>{selectedItem.additive}</Text>
+                </View>
+                <View style={[styles.row, {justifyContent: 'space-around'}]}>
+                  <Text style={styles.cellTitle}>durability:</Text>
+                  <TouchableOpacity
+                    style={{
+                      flex: 0.2,
+                      borderRadius: 5,
+                      alignSelf: 'center',
+                      borderColor: '#FFFF00',
+                      borderWidth: 1,
+                      alignContent: 'center',
+                      marginRight: 55,
+                    }}
+                    onPress={() => {}}>
+                    <Text style={[styles.cell, {color: '#FFFF00'}]}>
+                      {selectedItem.durability}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={[styles.row, {justifyContent: 'space-around'}]}>
+                  <Text style={styles.cellTitle}>Flexural:</Text>
+                  <TouchableOpacity
+                    style={{
+                      flex: 0.2,
+                      borderRadius: 5,
+                      alignSelf: 'center',
+                      borderColor: '#FFFF00',
+                      borderWidth: 1,
+                      alignContent: 'center',
+                      marginRight: 55,
+                    }}
+                    onPress={() => {}}>
+                    <Text style={[styles.cell, {color: '#FFFF00'}]}>
+                      {selectedItem.flexural}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={[styles.row, {justifyContent: 'space-around'}]}>
+                  <Text style={styles.cellTitle}>Residual:</Text>
+                  <TouchableOpacity
+                    style={{
+                      flex: 0.2,
+                      borderRadius: 5,
+                      alignSelf: 'center',
+                      borderColor: '#FFFF00',
+                      borderWidth: 1,
+                      alignContent: 'center',
+                      marginRight: 55,
+                    }}
+                    onPress={() => {}}>
+                    <Text style={[styles.cell, {color: '#FFFF00'}]}>
+                      {selectedItem.residual}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={[styles.row, {justifyContent: 'space-around'}]}>
+                  <Text style={styles.cellTitle}>ucs7Days:</Text>
+                  <TouchableOpacity
+                    style={{
+                      flex: 0.2,
+                      borderRadius: 5,
+                      alignSelf: 'center',
+                      borderColor: '#FFFF00',
+                      borderWidth: 1,
+                      alignContent: 'center',
+                      marginRight: 55,
+                    }}
+                    onPress={() => {}}>
+                    <Text style={[styles.cell, {color: '#FFFF00'}]}>
+                      {selectedItem.ucs7Days}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={[styles.row, {justifyContent: 'space-around'}]}>
+                  <Text style={styles.cellTitle}>ucs28Days:</Text>
+                  <TouchableOpacity
+                    style={{
+                      flex: 0.2,
+                      borderRadius: 5,
+                      alignSelf: 'center',
+                      borderColor: '#FFFF00',
+                      borderWidth: 1,
+                      alignContent: 'center',
+                      marginRight: 55,
+                    }}
+                    onPress={() => {}}>
+                    <Text style={[styles.cell, {color: '#FFFF00'}]}>
+                      {selectedItem.ucs28Days}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.cellTitle}>omc</Text>
+                  <Text style={styles.cell}>{selectedItem.omc}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.cellTitle}>mdd</Text>
+                  <Text style={styles.cell}>{selectedItem.mdd}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.cellTitle}>pmuPendency</Text>
+                  <Text style={styles.cell}>{selectedItem.pmuPendency}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.cellTitle}>piuPendency</Text>
+                  <Text style={styles.cell}>{selectedItem.piuPendency}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.cellTitle}>status Pmu:</Text>
+                  <TouchableOpacity
+                    style={{
+                      flex: 0.7,
+                      borderRadius: 5,
+                      alignSelf: 'center',
+                      borderColor:
+                        selectedItem.statusPmu === 'Recommended'
+                          ? '#00D25B'
+                          : '#F8AB00',
+                      borderWidth: 2,
+                      alignContent: 'center',
+                    }}
+                    onPress={() => {}}>
+                    <Text
+                      style={[
+                        styles.cell,
+                        {
+                          color:
+                            selectedItem.statusPmu === 'Recommended'
+                              ? '#00D25B'
+                              : '#F8AB00',
+                        },
+                      ]}>
+                      {selectedItem.statusPmu}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.cellTitle}>status Piu:</Text>
+                  <TouchableOpacity
+                    style={{
+                      flex: 0.7,
+                      borderRadius: 5,
+                      alignSelf: 'center',
+                      borderColor:
+                        selectedItem.statusPiu === 'Recommended'
+                          ? '#00D25B'
+                          : '#F8AB00',
+                      borderWidth: 2,
+                      alignContent: 'center',
+                    }}
+                    onPress={() => {}}>
+                    <Text
+                      style={[
+                        styles.cell,
+                        {
+                          color:
+                            selectedItem.statusPiu === 'Recommended'
+                              ? '#00D25B'
+                              : '#F8AB00',
+                        },
+                      ]}>
+                      {selectedItem.statusPiu}
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </ScrollView>
               <TouchableOpacity

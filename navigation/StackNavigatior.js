@@ -9,6 +9,7 @@ import ResetPassword from '../components/ResetPassword';
 import RoadList from '../components/RoadList';
 import DrawerMain from '../components/Headers/HeaderMain';
 import ContractorsList from '../components/ContractorsList';
+import JMFRecommendedPMU from '../components/JMFLists/JMFRecommendedPMU';
 
 
 const Stack = createNativeStackNavigator();
@@ -50,6 +51,11 @@ const StackNavigator = () => {
         options={{headerShown: false}}
         name="ContractorsList"
         component={ContractorsList}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="JMFRecommendedPMU"
+        component={JMFRecommendedPMU}
       />
     </Stack.Navigator>
   );
