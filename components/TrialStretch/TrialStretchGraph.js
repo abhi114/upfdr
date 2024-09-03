@@ -64,7 +64,7 @@ const TrialStretchGraph = () => {
   ];
   const data2 = [
     {
-      id: 'JMFs Approved by PIU List',
+      id: 'Trial Stretch Recommended By PMU List',
       name: 'Recommended',
       population: 657,
       color: '#26A69A',
@@ -72,7 +72,7 @@ const TrialStretchGraph = () => {
       legendFontSize: 15,
     },
     {
-      id: 'JMFs Returned by PIU List',
+      id: 'Trial Stretch Not Recommended By PMU List',
       name: 'Not Recommended',
       population: 272,
       color: '#EC407A',
@@ -80,7 +80,7 @@ const TrialStretchGraph = () => {
       legendFontSize: 15,
     },
     {
-      id: 'JMFs Pending Action by PIU',
+      id: 'Trial Stretch Pending Update From PMU List',
       name: 'Action Pending',
       population: 9,
       color: '#FFCE56',
@@ -127,7 +127,7 @@ const TrialStretchGraph = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    
     backgroundColor: '#000000',
     padding: 16,
   },

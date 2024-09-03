@@ -41,11 +41,26 @@ const JMFChart = ({data}) => {
         name: 'JMFs Pending Action by PIU',
         dataName: 'JMFPendingActionPIU',
       });
-    }else if(id === 'Trial Stretch List'){
-       navigation.navigate('TrialStrechListed', {
-         name: 'Trial Stretch List',
-         dataName: 'TrialStretchList',
-       });
+    } else if (id === 'Trial Stretch List') {
+      navigation.navigate('TrialStrechListed', {
+        name: 'Trial Stretch List',
+        dataName: 'TrialStretchList',
+      });
+    } else if (id === 'Trial Stretch Recommended By PMU List') {
+      navigation.navigate('TrialStrechListed', {
+        name: 'Trial Stretch Recommended By PMU List',
+        dataName: 'TrialStretchRecommendPMUList',
+      });
+    } else if (id === 'Trial Stretch Not Recommended By PMU List') {
+      navigation.navigate('TrialStrechListed', {
+        name: 'TS Not Recommended By PMU List',
+        dataName: 'TrialStretchNotRecommendPMUList',
+      });
+    } else if (id === 'Trial Stretch Pending Update From PMU List') {
+      navigation.navigate('TrialStrechListed', {
+        name: 'TS Pending update from PMU List',
+        dataName: 'TSPendingupdatePMUList',
+      });
     }
   }
   return (

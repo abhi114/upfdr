@@ -51,6 +51,8 @@ const DrawerMain = ({pageName,route}) => {
       setScreenName('SampleCollection');
     }else if(index === 9){
       setScreenName('JobMixDesign');
+    }else if(index === 10){
+      setScreenName('TrialStretchGraph');
     }
   }, [index])
   

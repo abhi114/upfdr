@@ -122,12 +122,18 @@ const DrawerContent = ({screenname, setScreenName}) => {
     if (screenName === 'List of PIUs') {
       setScreenName('Statistics/ListPIU');
       navigation.navigate('HeaderMain', {index: 2, screenName, setScreenName});
-    }else if(screenName === 'List Contractors'){
+    } else if (screenName === 'List Contractors') {
       navigation.navigate('HeaderMain', {index: 1, screenName, setScreenName});
-    }else if(screenName === 'JMF Analytics - Graph'){
+    } else if (screenName === 'JMF Analytics - Graph') {
       navigation.navigate('HeaderMain', {
         index: 9,
         screenName: 'JobMixDesign',
+        setScreenName,
+      });
+    } else if (screenName === 'TS Analytics - Graph') {
+      navigation.navigate('HeaderMain', {
+        index: 10,
+        screenName: 'TrialStretchGraph',
         setScreenName,
       });
     }
@@ -229,7 +235,15 @@ const DrawerContent = ({screenname, setScreenName}) => {
               : null,
         },
         {name: 'JMF Analytics - Boxed', screenName: ''},
-        {name: 'TS Analytics - Graph', screenName: ''},
+        {
+          name: 'TS Analytics - Graph',
+          screenName: '',
+          backgroundColor:
+            screenname === 'TrialStretchGraph' ||
+            screenname === 'TrialStretchGraph'
+              ? '#0F1015'
+              : null,
+        },
         {name: 'TS Analytics - Boxed', screenName: ''},
         {name: 'JMF Approval Pendency', screenName: ''},
         {name: 'JMF - Sample Collection', screenName: ''},
