@@ -11,10 +11,35 @@ const JMFChart = ({data}) => {
 
   const handleNavigatePress = (id)=>{
     console.log(id);
-    if(id === 'JMFs Recommended by PMU List'){
+    if (id === 'JMFs Recommended by PMU List') {
       navigation.navigate('JMFRecommendedPMU', {
         name: 'JMFs Recommended by PMU List',
         dataName: 'JMFRecommendedPMUList',
+      });
+    } else if (id === 'JMFs Not Recommended by PMU List') {
+      navigation.navigate('JMFRecommendedPMU', {
+        name: 'JMFs Not Recommended by PMU List',
+        dataName: 'JMFNotRecommendedPMUList',
+      });
+    } else if (id === 'JMFs Pending Action by PMU List') {
+      navigation.navigate('JMFRecommendedPMU', {
+        name: 'JMFs Pending Action by PMU List',
+        dataName: 'JMFPendingPMUList',
+      });
+    } else if (id === 'JMFs Approved by PIU List') {
+      navigation.navigate('JMFRecommendedPMU', {
+        name: 'JMFs Approved by PIU List',
+        dataName: 'JMFApprovedPIUList',
+      });
+    } else if (id === 'JMFs Returned by PIU List') {
+      navigation.navigate('JMFRecommendedPMU', {
+        name: 'JMFs Returned by PIU List',
+        dataName: 'JMFReturnedPIUList',
+      });
+    } else if (id === 'JMFs Pending Action by PIU') {
+      navigation.navigate('JMFRecommendedPMU', {
+        name: 'JMFs Pending Action by PIU',
+        dataName: 'JMFPendingActionPIU',
       });
     }
   }

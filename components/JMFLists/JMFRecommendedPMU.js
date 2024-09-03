@@ -76,7 +76,7 @@ const JMFRecommendedPMU = ({route}) => {
     let ws = XLSX.utils.json_to_sheet(sample_data_to_export);
     XLSX.utils.book_append_sheet(wb, ws, 'Users');
     console.log(
-      ' main path is ' + RNFS.DownloadDirectoryPath + '/SiteManagement.xlsx',
+      ' main path is ' + RNFS.DownloadDirectoryPath + `/${dataName}.xlsx`,
     );
     // Write workbook to an array buffer
     const wbout = XLSX.write(wb, {type: 'array', bookType: 'xlsx'});
@@ -88,7 +88,7 @@ const JMFRecommendedPMU = ({route}) => {
 
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + '/SiteManagement.xlsx',
+      RNFS.DownloadDirectoryPath + `/${dataName}.xlsx`,
       binaryStr,
       'ascii',
     )
@@ -118,7 +118,7 @@ const JMFRecommendedPMU = ({route}) => {
       const csvContent = csvHeader + csvRows;
 
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/SiteManagement.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/${dataName}.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -146,7 +146,7 @@ const JMFRecommendedPMU = ({route}) => {
           background-color: #f2f2f2;
         }
       </style>
-      <h1>Site Management</h1>
+      <h1>${name}</h1>
       <table>
         <thead>
           <tr>
@@ -173,12 +173,12 @@ const JMFRecommendedPMU = ({route}) => {
 
     let options = {
       html: htmlContent,
-      fileName: 'SiteManagement',
+      fileName: `${dataName}`,
       directory: 'Documents',
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/SiteManagement.pdf`;
+    const destPath = `${RNFS.DownloadDirectoryPath}/${dataName}.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
@@ -358,7 +358,7 @@ const JMFRecommendedPMU = ({route}) => {
               </TouchableOpacity>
             </View>
           )}
-          keyExtractor={item => item.uploadDate}
+          keyExtractor={item => item.slNo}
         />
         {selectedItem && (
           <Modal
