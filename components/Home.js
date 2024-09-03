@@ -84,6 +84,12 @@ const Card = ({index,title, number, text, iconName,color,screenName,setScreenNam
         screenName: 'TrialStretchGraph',
         setScreenName,
       });
+    }else if(index === 11){
+      navigation.navigate('HeaderMain', {
+        index,
+        screenName: 'Bills',
+        setScreenName,
+      });
     }
   }
   return (
