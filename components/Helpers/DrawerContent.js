@@ -136,6 +136,12 @@ const DrawerContent = ({screenname, setScreenName}) => {
         screenName: 'TrialStretchGraph',
         setScreenName,
       });
+    }else if(screenName === 'Billing Pendencies'){
+      navigation.navigate('HeaderMain', {
+        index: 11,
+        screenName: 'Bills',
+        setScreenName,
+      });
     }
     //setExpandedItem(null); // Close the dropdown after selection
   };
@@ -225,7 +231,12 @@ const DrawerContent = ({screenname, setScreenName}) => {
       isDropable: true,
       subItems: [
         {name: 'Site-wide Data Uploads', screenName: ''},
-        {name: 'Billing Pendencies', screenName: ''},
+        {
+          name: 'Billing Pendencies',
+          screenName: '',
+          backgroundColor:
+            screenname === 'Bills' || screenname === 'Bills' ? '#0F1015' : null,
+        },
         {
           name: 'JMF Analytics - Graph',
           screenName: '',

@@ -54,6 +54,8 @@ const DrawerMain = ({pageName,route}) => {
       setScreenName('JobMixDesign');
     }else if(index === 10){
       setScreenName('TrialStretchGraph');
+    }else if(index === 11){
+      setScreenName('Bills');
     }
   }, [index])
   
@@ -147,7 +149,7 @@ const DrawerMain = ({pageName,route}) => {
         {index === 8 && <SampleCollection />}
         {index === 9 && <JobMixDesign/>}
         {index === 10 && <TrialStretchGraph/>}
-        {index === 11 && <Bills/>}
+        {(index === 11 || index === 12) && <Bills/>}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}
