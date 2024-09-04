@@ -32,6 +32,12 @@ const Bills = () => {
           dataName: 'ContractorBillsReport',
         });
     }
+     if (id === '3') {
+       navigation.navigate('MobilizationAdvanceList', {
+         name: 'Mobilization Advance List',
+         dataName: 'MobilizationAdvanceList',
+       });
+     }
   }
   const data = [
     {

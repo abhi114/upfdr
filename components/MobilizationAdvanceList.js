@@ -12,33 +12,36 @@ import {
   Image,
 } from 'react-native';
 
-import {SiteManagement as data} from './data';
+import * as data from './data';
 import {useNavigation} from '@react-navigation/native';
 import {Modal} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import {Parser} from 'json2csv';
-import RoadListModal from './Modals/RoadListModal';
 import XLSX from 'xlsx';
 var RNFS = require('react-native-fs');
 
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
-const SiteManagement = () => {
+const MobilizationAdvanceList = ({route}) => {
+  const {name, dataName} = route.params;
   const [search, setSearch] = useState('');
-  const [userData, setuserData] = useState(data);
+  const [userData, setuserData] = useState(data[dataName]);
   const [modalVisible, setModalVisible] = useState(false);
   const [graphModalVisible, setgraphModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [mainSelectedItem, setmainSelectedItem] = useState(null);
+  const [approveSelected,setApproveSelected] = useState('');
   const navigation = useNavigation();
+  console.log(name);
+  console.log(dataName);
   // Filtered data based on search input
   const filteredData = userData.filter(
     item =>
       item.District.toLowerCase().includes(search.toLowerCase()) ||
-      item.PackageNumber.toLowerCase().includes(search.toLowerCase()) ||
-      item.FDRGroup.toLowerCase().includes(search.toLowerCase()),
+      item.Package.toLowerCase().includes(search.toLowerCase()) ||
+      item.FDR.toLowerCase().includes(search.toLowerCase()),
   );
 
   // Calculate the total number of pages
@@ -74,7 +77,7 @@ const SiteManagement = () => {
     let ws = XLSX.utils.json_to_sheet(sample_data_to_export);
     XLSX.utils.book_append_sheet(wb, ws, 'Users');
     console.log(
-      ' main path is ' + RNFS.DownloadDirectoryPath + '/SiteManagement.xlsx',
+      ' main path is ' + RNFS.DownloadDirectoryPath + `/${dataName}.xlsx`,
     );
     // Write workbook to an array buffer
     const wbout = XLSX.write(wb, {type: 'array', bookType: 'xlsx'});
@@ -86,7 +89,7 @@ const SiteManagement = () => {
 
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + '/SiteManagement.xlsx',
+      RNFS.DownloadDirectoryPath + `/${dataName}.xlsx`,
       binaryStr,
       'ascii',
     )
@@ -116,7 +119,7 @@ const SiteManagement = () => {
       const csvContent = csvHeader + csvRows;
 
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/SiteManagement.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/${dataName}.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -144,7 +147,7 @@ const SiteManagement = () => {
           background-color: #f2f2f2;
         }
       </style>
-      <h1>Site Management</h1>
+      <h1>${name}</h1>
       <table>
         <thead>
           <tr>
@@ -171,12 +174,12 @@ const SiteManagement = () => {
 
     let options = {
       html: htmlContent,
-      fileName: 'SiteManagement',
+      fileName: `${dataName}`,
       directory: 'Documents',
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/SiteManagement.pdf`;
+    const destPath = `${RNFS.DownloadDirectoryPath}/${dataName}.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
@@ -209,71 +212,50 @@ const SiteManagement = () => {
       DownloadExcel();
     }
   };
-
+ const approveRequest = (item)=>{
+    if(item.Status !== 'Approved'){
+         setSelectedItem(item);
+         setModalVisible(true);
+    }
+ }
+ const updateStatus = (submission)=>{
+     const indexToUpdate = userData.findIndex(item => item.Submission === submission);
+     let ans = ''
+    if(approveSelected === 'Approve'){
+        ans = 'Approved';
+    }else if (approveSelected === 'Reject'){
+        ans = 'Rejected';
+    }
+      if (indexToUpdate !== -1) {
+        const updatedUserData = [...userData];
+        updatedUserData[indexToUpdate].Status = ans;
+        setuserData(updatedUserData);
+      }
+     console.log(paginatedData[indexToUpdate].Status);
+      setModalVisible(false);
+ }
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        <View style={{flexDirection: 'row', marginBottom: 6}}>
+        <View style={{flexDirection: 'row', marginBottom: 25}}>
           <TouchableOpacity
             onPress={() => {
               navigation.goBack();
             }}>
-            <Text style={{color: '#0000FF'}}>Dashboard </Text>
+            <Text style={{color: '#0000FF'}}>Bills Report</Text>
           </TouchableOpacity>
-          <Text style={{color: '#FFFFFF'}}>/Site Management Plans</Text>
-        </View>
-        <View style={styles.card}>
-          <Text
-            style={{color: '#FFFFFF', fontWeight: 'bold', marginBottom: 10}}>
-            Roads With Site Management Plan Uploaded
-          </Text>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <View>
-              <Text
-                style={{color: '#FFFFFF', fontWeight: 'bold', fontSize: 22}}>
-                685
-              </Text>
-              <Text style={{color: '#aaaaaa', fontSize: 12}}>
-                Number of Roads with Plan Uploaded
-              </Text>
-            </View>
-            <View style={{margin: 2}}>
-              <Icon name="road-variant" size={30} color={'#0000FF'} />
-            </View>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', marginBottom: 5}}>
-          <View
-            style={{
-              backgroundColor: '#191C24',
-              borderRadius: 10,
-              padding: 12,
-              marginBottom: 16,
-              elevation: 4,
-              flex: 1,
-            }}>
-            <Text
-              style={{color: '#FFFFFF', fontWeight: 'bold', marginBottom: 10}}>
-              Roads With Pending Site Management Plan
-            </Text>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View>
-                <Text
-                  style={{color: '#FFFFFF', fontWeight: 'bold', fontSize: 22}}>
-                  6
-                </Text>
-                <Text style={{color: '#aaaaaa', fontSize: 12}}>
-                  Roads With Site Management Plans
-                </Text>
-              </View>
-              <View style={{margin: 1}}>
-                <Icon name="road-variant" size={30} color={'#ff0000'} />
-              </View>
-            </View>
-          </View>
+          <Text style={{color: '#FFFFFF'}}>/{name}</Text>
         </View>
 
+        <Text
+          style={{
+            color: '#FFFFFF',
+            fontSize: 20,
+            margin: 15,
+            fontWeight: 'bold',
+          }}>
+          {name}
+        </Text>
         <TextInput
           style={styles.searchInput}
           placeholder="Search by District ,Package.No or Fdr Group"
@@ -326,42 +308,10 @@ const SiteManagement = () => {
           renderItem={({item}) => (
             <View style={styles.card}>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Upload Date:</Text>
-                <Text style={styles.cell}>{item.UploadDate}</Text>
+                <Text style={styles.cellTitle}>Submission:</Text>
+                <Text style={styles.cell}>{item.Submission}</Text>
               </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>FDR Group:</Text>
-                <Text style={styles.cell}>{item.FDRGroup}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>District:</Text>
-                <Text style={styles.cell}>{item.District}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>Action:</Text>
-                <TouchableOpacity
-                  style={{
-                    flex: 0.7,
-                    borderRadius: 5,
-                    alignSelf: 'center',
-                    borderColor:
-                      item.status === 'Recommended' ? '#00D25B' : '#F8AB00',
-                    borderWidth: 2,
-                    alignContent: 'center',
-                  }}
-                  onPress={() => {}}>
-                  <Text
-                    style={[
-                      styles.cell,
-                      {
-                        color:
-                          item.status === 'Recommended' ? '#00D25B' : '#F8AB00',
-                      },
-                    ]}>
-                    View
-                  </Text>
-                </TouchableOpacity>
-              </View>
+
               <View style={styles.row}>
                 <Text style={styles.cellTitle}>Package Number:</Text>
                 <TouchableOpacity
@@ -375,17 +325,61 @@ const SiteManagement = () => {
                   }}
                   onPress={() => {}}>
                   <Text style={[styles.cell, {color: '#0090E7'}]}>
-                    {item.PackageNumber}
+                    {item.Package}
                   </Text>
                 </TouchableOpacity>
               </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>District:</Text>
+                <Text style={styles.cell}>{item.District}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>FDR Group:</Text>
+                <Text style={styles.cell}>{item.FDR}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Company:</Text>
+                <Text style={styles.cell}>{item.Company}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Amount:</Text>
+                <Text style={styles.cell}>{item.Amount}</Text>
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Date:</Text>
+                <Text style={styles.cell}>{item.Date}</Text>
+              </View>
 
-              <TouchableOpacity onPress={() => handlePress(item)}>
-                <Text style={styles.detailsButton}>See Full Details</Text>
-              </TouchableOpacity>
+              <View style={styles.row}>
+                <Text style={styles.cellTitle}>Status:</Text>
+                <TouchableOpacity
+                  style={{
+                    flex: 0.7,
+                    borderRadius: 5,
+                    alignSelf: 'center',
+                    borderColor:
+                      item.Status === 'Approved' ? '#00D25B' : '#0090E7',
+                    borderWidth: 2,
+                    alignContent: 'center',
+                  }}
+                  onPress={() => {
+                    approveRequest(item);
+                  }}>
+                  <Text
+                    style={[
+                      styles.cell,
+                      {
+                        color:
+                          item.Status === 'Approved' ? '#00D25B' : '#0090E7',
+                      },
+                    ]}>
+                    {item.Status === 'Approved' ? 'Approved' : 'Approve/Reject'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
-          keyExtractor={item => item.UploadDate}
+          keyExtractor={item => item.Submission}
         />
         {selectedItem && (
           <Modal
@@ -410,7 +404,7 @@ const SiteManagement = () => {
                   fontSize: 20,
                   fontWeight: 'bold',
                 }}>
-                Detailed View
+                Approval/Rejection
               </Text>
               <ScrollView
                 style={{
@@ -418,33 +412,94 @@ const SiteManagement = () => {
                   margin: 5,
                   backgroundColor: '#191C24',
                 }}>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Upload Date:</Text>
-                  <Text style={styles.cell}>{selectedItem.UploadDate}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Package Number</Text>
-                  <Text style={styles.cell}>{selectedItem.PackageNumber}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Site Address:</Text>
-                  <Text style={styles.cell}>{selectedItem.SiteAddress}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>District:</Text>
-                  <Text style={styles.cell}>{selectedItem.District}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>FDR group:</Text>
-                  <Text style={styles.cell}>{selectedItem.FDRGroup}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>Contractor:</Text>
-                  <Text style={styles.cell}>{selectedItem.Contractor}</Text>
-                </View>
-                <View style={styles.row}>
-                  <Text style={styles.cellTitle}>No.Resources</Text>
-                  <Text style={styles.cell}>{selectedItem.NoOfResources}</Text>
+                <View style={styles.card}>
+                  <View style={styles.row}>
+                    <Text style={styles.cellTitle}>Status:</Text>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                      }}>
+                      <TouchableOpacity
+                        style={{
+                          borderRadius: 5,
+                          alignSelf: 'center',
+                          borderColor:
+                            approveSelected === 'Approve'
+                              ? '#00D25B'
+                              : '#0090E7',
+                          borderWidth: 2,
+                          alignContent: 'center',
+                          marginRight: 15,
+                        }}
+                        onPress={() => {
+                          setApproveSelected('Approve');
+                        }}>
+                        <Text
+                          style={[
+                            styles.cell,
+                            {
+                              color:
+                                approveSelected === 'Approve'
+                                  ? '#00D25B'
+                                  : '#0090E7',
+                              marginHorizontal: 4,
+                            },
+                          ]}>
+                          Approve
+                        </Text>
+                      </TouchableOpacity>
+                      <Text style={{color: '#aaaaaa', fontWeight: 'bold'}}>
+                        /
+                      </Text>
+                      <TouchableOpacity
+                        style={{
+                          borderRadius: 5,
+                          alignSelf: 'center',
+                          borderColor:
+                            approveSelected === 'Reject'
+                              ? '#00D25B'
+                              : '#0090E7',
+                          borderWidth: 2,
+                          alignContent: 'center',
+                          marginLeft: 15,
+                        }}
+                        onPress={() => {
+                          setApproveSelected('Reject');
+                        }}>
+                        <Text
+                          style={[
+                            styles.cell,
+                            {
+                              color:
+                                approveSelected === 'Reject'
+                                  ? '#00D25B'
+                                  : '#0090E7',
+                              marginHorizontal: 4,
+                            },
+                          ]}>
+                          Reject
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                  {approveSelected !== '' && (
+                    <View style={styles.row}>
+                      <Text style={styles.cellTitle}>Selected Choice:</Text>
+                      <Text style={styles.cell}>{approveSelected}</Text>
+                    </View>
+                  )}
+
+                  <TouchableOpacity
+                    style={{
+                      marginTop: 15,
+                      backgroundColor: '#FFD700',
+                      borderRadius: 20,
+                      marginBottom: 10,
+                      alignItems: 'center',
+                    }}
+                    onPress={() => {updateStatus(selectedItem.Submission)}}>
+                    <Text style={styles.closeButtonText}>Update Status</Text>
+                  </TouchableOpacity>
                 </View>
               </ScrollView>
               <TouchableOpacity
@@ -603,4 +658,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SiteManagement;
+export default MobilizationAdvanceList;
