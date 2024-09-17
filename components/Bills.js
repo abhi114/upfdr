@@ -42,6 +42,16 @@ const Bills = () => {
          name: 'Bills Approved By PIU',
          dataName: 'BillsApprovedPIU',
        });
+     }else if(id === '5'){
+       navigation.navigate('BillDetails', {
+         name: 'Contractors Bills Rejected By PIU',
+         dataName: 'BillsRejectedByPIU',
+       });
+     }else if(id === '6'){
+       navigation.navigate('BillDetails', {
+         name: 'Contractors Bills Pending By PIU',
+         dataName: 'BillsPendingByPIU',
+       });
      }
   }
   const data = [

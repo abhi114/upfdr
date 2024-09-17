@@ -324,7 +324,7 @@ const BillDetails = ({route}) => {
                     borderRadius: 5,
                     alignSelf: 'center',
                     borderColor:
-                      item.status === 'Recommended' ? '#00D25B' : '#F8AB00',
+                      item.status === 'Recommended' ? '#00D25B' : '#FF0000',
                     borderWidth: 2,
                     alignContent: 'center',
                   }}
@@ -334,7 +334,7 @@ const BillDetails = ({route}) => {
                       styles.cell,
                       {
                         color:
-                          item.status === 'Recommended' ? '#00D25B' : '#F8AB00',
+                          item.status === 'Recommended' ? '#00D25B' : '#FF0000',
                       },
                     ]}>
                     {item.BillApprovedByJE}

@@ -1494,6 +1494,54 @@ export const BillsApprovedPIU = [
     status:'Recommended'
   },
 ];
+export const BillsRejectedByPIU = [
+  {
+    SerialNo: 1,
+    PackageNumber: 'UP18136',
+    FDRGroup: 'UPFDR-90',
+    District: 'Chandauli',
+    CompanyName: 'Chandrawati Construction Pvt Ltd',
+    BillSubmissionDate: '2022-09-07',
+    BillAmountByContractor: 25000,
+    NoOfResubmissions: 0,
+    DateOfVerificationByJE: '2022-09-27',
+    BillApprovedByJE: '0 Rejected',
+    CommentByJE: 'Work not Started on Field Yet.',
+    DateOfVerificationByAE: '2022-09-27',
+    AmountApprovedByAE: '0',
+    DateOfVerificationByXEN: '',
+    AmountApprovedByXEN: '',
+    DateOfVerificationByUPRRDA: '',
+    CCLAmountByUPRRDA: '',
+    DateOfPaymentReleaseByXEN: '',
+    AmountReleasedByXEN: '',
+    status: 'Rejected',
+  },
+];
+export const BillsPendingByPIU = [
+  {
+    SerialNo: 1,
+    PackageNumber: 'UP18136',
+    FDRGroup: 'UPFDR-90',
+    District: 'Chandauli',
+    CompanyName: 'Chandrawati Construction Pvt Ltd',
+    BillSubmissionDate: '2022-09-07',
+    BillAmountByContractor: 25000,
+    NoOfResubmissions: 0,
+    DateOfVerificationByJE: '2022-09-27',
+    BillApprovedByJE: 'Not Updated',
+    CommentByJE: 'Work not Started on Field Yet.',
+    DateOfVerificationByAE: '2022-09-27',
+    AmountApprovedByAE: '0',
+    DateOfVerificationByXEN: '',
+    AmountApprovedByXEN: '',
+    DateOfVerificationByUPRRDA: '',
+    CCLAmountByUPRRDA: '',
+    DateOfPaymentReleaseByXEN: '',
+    AmountReleasedByXEN: '',
+    status: 'Not Updated',
+  },
+];
 
 export const MobilizationAdvanceList = [
   {
@@ -1545,5 +1593,26 @@ export const MobilizationAdvanceList = [
     Amount: '12800000',
     Date: '2022-09-21',
     Status: 'Approved',
+  },
+];
+
+export const DailyWorkProgress = [
+  {
+    SerialNo: 1,
+    PackageNumber: 'UP18136',
+    FDRGroup: 'UPFDR-90',
+    District: 'Chandauli',
+    block: 'Bichpuri',
+    WorkDate: '2022-09-27',
+    WorkStatus: 'Not Worked',
+    startChainage: '0+600',
+    endChainage: '0+800',
+    residual: 5.13,
+    durability: 5.47,
+    flexural: 1.38,
+    "FDR(KM)":'',
+    "BC(KM)": '',
+     "CC(Km":'',
+     "View":'View',
   },
 ];
