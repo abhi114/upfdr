@@ -25,6 +25,7 @@ import SampleCollection from '../SampleCollection';
 import JobMixDesign from '../JobMixDesign';
 import TrialStretchGraph from '../TrialStretch/TrialStretchGraph';
 import Bills from '../Bills';
+import DailyWork from '../DailyWork';
 
 const DrawerMain = ({pageName,route}) => {
   const {index, screenName, setScreenName} = route.params;
@@ -54,8 +55,10 @@ const DrawerMain = ({pageName,route}) => {
       setScreenName('JobMixDesign');
     }else if(index === 10){
       setScreenName('TrialStretchGraph');
-    }else if(index === 11){
+    }else if(index === 11 || index === 12){
       setScreenName('Bills');
+    }else if(index == 13){
+      setScreenName('DailyWork');
     }
   }, [index])
   
@@ -147,9 +150,15 @@ const DrawerMain = ({pageName,route}) => {
         {index === 6 && <SiteManagement />}
         {index === 7 && <TrailOfEquipment />}
         {index === 8 && <SampleCollection />}
-        {index === 9 && <JobMixDesign/>}
-        {index === 10 && <TrialStretchGraph/>}
-        {(index === 11 || index === 12) && <Bills/>}
+        {index === 9 && <JobMixDesign />}
+        {index === 10 && <TrialStretchGraph />}
+        {(index === 11 || index === 12) && (
+          <DailyWork
+            name={'Daily Work Progress List'}
+            dataName={'DailyWorkProgress'}
+          />
+        )}
+        {index === 13 && <DailyWork />}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}

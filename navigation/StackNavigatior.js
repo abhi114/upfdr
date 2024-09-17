@@ -13,6 +13,7 @@ import JMFRecommendedPMU from '../components/JMFLists/JMFRecommendedPMU';
 import TrialStrechListed from '../components/TrialStretch/TrialStrechListed';
 import BillDetails from '../components/BillDetails';
 import MobilizationAdvanceList from '../components/MobilizationAdvanceList';
+import DailyWork from '../components/DailyWork';
 
 
 const Stack = createNativeStackNavigator();
@@ -74,6 +75,11 @@ const StackNavigator = () => {
         options={{headerShown: false}}
         name="MobilizationAdvanceList"
         component={MobilizationAdvanceList}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="DailyWork"
+        component={DailyWork}
       />
     </Stack.Navigator>
   );

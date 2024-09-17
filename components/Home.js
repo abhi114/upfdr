@@ -96,6 +96,12 @@ const Card = ({index,title, number, text, iconName,color,screenName,setScreenNam
         screenName: 'Bills',
         setScreenName,
       });
+    } else if (index === 13) {
+      navigation.navigate('HeaderMain', {
+        index,
+        screenName: 'DailyWork',
+        setScreenName,
+      });
     }
   }
   return (
