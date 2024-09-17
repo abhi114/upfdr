@@ -1470,6 +1470,31 @@ export const ContractorBillsReport = [
   },
 ];
 
+export const BillsApprovedPIU = [
+  {
+    SerialNo: 1,
+    PackageNumber: 'UP18136',
+    FDRGroup: 'UPFDR-90',
+    District: 'Chandauli',
+    CompanyName: 'Chandrawati Construction Pvt Ltd',
+    BillSubmissionDate: '2022-09-07',
+    BillAmountByContractor: 25000,
+    NoOfResubmissions: 0,
+    DateOfVerificationByJE: '2022-09-27',
+    BillApprovedByJE: '0 Rejected',
+    CommentByJE: 'Work not Started on Field Yet.',
+    DateOfVerificationByAE: '2022-09-27',
+    AmountApprovedByAE: '0',
+    DateOfVerificationByXEN: '',
+    AmountApprovedByXEN: '',
+    DateOfVerificationByUPRRDA: '',
+    CCLAmountByUPRRDA: '',
+    DateOfPaymentReleaseByXEN: '',
+    AmountReleasedByXEN: '',
+    status:'Recommended'
+  },
+];
+
 export const MobilizationAdvanceList = [
   {
     Submission: '2022-10-29 17:22:09',

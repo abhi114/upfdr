@@ -37,6 +37,11 @@ const Bills = () => {
          name: 'Mobilization Advance List',
          dataName: 'MobilizationAdvanceList',
        });
+     }else if(id === '4'){
+       navigation.navigate('BillDetails', {
+         name: 'Bills Approved By PIU',
+         dataName: 'BillsApprovedPIU',
+       });
      }
   }
   const data = [
