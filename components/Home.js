@@ -102,6 +102,12 @@ const Card = ({index,title, number, text, iconName,color,screenName,setScreenNam
         screenName: 'DailyWork',
         setScreenName,
       });
+    } else if (index === 14) {
+      navigation.navigate('HeaderMain', {
+        index,
+        screenName: 'CompletedRoadList',
+        setScreenName,
+      });
     }
   }
   return (

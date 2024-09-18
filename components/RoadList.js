@@ -11,7 +11,7 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 
-import { data } from './data';
+import * as data from './data';
 import { useNavigation } from '@react-navigation/native';
 import { Modal } from 'react-native';
 import DownloadExcel from './Helpers/DownloadExcel';
@@ -21,9 +21,14 @@ import RoadListModal from './Modals/RoadListModal';
 var RNFS = require('react-native-fs');
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
-const RoadList = () => {
+const RoadList = ({name}) => {
+  console.log('name is' + name);
   const [search, setSearch] = useState('');
-  const [userData,setuserData] = useState(data);
+  const [userData, setuserData] = useState(
+    name === 'UP FDR Completed Roads List'
+      ? data['Completeddata']
+      : data['data'],
+  );
   const [modalVisible, setModalVisible] = useState(false);
   const [graphModalVisible,setgraphModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -195,9 +200,9 @@ const RoadList = () => {
           }}>
           <Text style={{color: '#0000FF'}}>Dashboard </Text>
         </TouchableOpacity>
-        <Text style={{color: '#FFFFFF'}}>/ UP FDR Roads List</Text>
+        <Text style={{color: '#FFFFFF'}}>/ {name}</Text>
       </View>
-      <Text style={styles.title}>UP FDR Roads List</Text>
+      <Text style={styles.title}>{name}</Text>
       <TextInput
         style={styles.searchInput}
         placeholder="Search by package number or road name or district"

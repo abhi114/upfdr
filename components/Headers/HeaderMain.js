@@ -142,7 +142,7 @@ const DrawerMain = ({pageName,route}) => {
           handleProfilePress={handleProfilePress}
           handleTabPress={handleTabPress}
         />
-        {index === 0 && <RoadList />}
+        {index === 0 && <RoadList name={'UP FDR Roads List'} />}
         {(index === 1 || index === 3) && <ContractorsList />}
         {index === 2 && <PIUList />}
         {index === 4 && <LabDetails />}
@@ -159,6 +159,7 @@ const DrawerMain = ({pageName,route}) => {
           />
         )}
         {index === 13 && <DailyWork />}
+        {index === 14 && <RoadList name={'UP FDR Completed Roads List'} />}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}

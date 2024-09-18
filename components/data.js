@@ -359,6 +359,28 @@ export const data = [
     Status: true,
   },
 ];
+export const Completeddata = [
+  {
+    id: '1',
+    packageNumber: 'UP01112',
+    fdrGroup: 'UPFDR-48',
+    district: 'Agra',
+    block: 'Bichpuri',
+    roadName:
+      'MRLD-06-NH-11 (Madhoux) to CATK Rd (Madhoux) via Barara Canal Road',
+    yearSanctioned: '2021-2022',
+    imsBatch: '2.00',
+    totalLength: '6.85',
+    sanctionedAmount: '590.69',
+    PavementCost: '47.42674824',
+    PavementCostUnit: 'Rs./m',
+    CarriageWidth: '5.500',
+    TrafficName: 'T5',
+    TotalCost: '634.78723',
+    AverageCost: '92.666',
+    Status: true,
+  },
+]
 export const contractorsData = [
   {
     SerialNo: 1,
@@ -1616,3 +1638,4 @@ export const DailyWorkProgress = [
      "View":'View',
   },
 ];
+
