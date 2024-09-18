@@ -14,6 +14,7 @@ import TrialStrechListed from '../components/TrialStretch/TrialStrechListed';
 import BillDetails from '../components/BillDetails';
 import MobilizationAdvanceList from '../components/MobilizationAdvanceList';
 import DailyWork from '../components/DailyWork';
+import WelcomeAnimation from '../components/Helpers/WelcomeAnimation';
 
 
 const Stack = createNativeStackNavigator();
@@ -80,6 +81,11 @@ const StackNavigator = () => {
         options={{headerShown: false}}
         name="DailyWork"
         component={DailyWork}
+      />
+      <Stack.Screen
+      component={WelcomeAnimation}
+      name='WelcomeAnimation'
+      options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

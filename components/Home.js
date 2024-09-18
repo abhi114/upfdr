@@ -112,10 +112,16 @@ const Card = ({index,title, number, text, iconName,color,screenName,setScreenNam
   }
   return (
     <TouchableOpacity style={styles.card} onPress={CardPress}>
-      <View style={{flexDirection: 'row',justifyContent:'space-evenly',alignItems:'center',}}>
-        <View style={{width:'52%',}}>
+      
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
+        }}>
+        <View style={{width: '52%'}}>
           <Text style={styles.cardTitle}>{title}</Text>
-          {number && (<Text style={styles.cardNumber}>{number}</Text>)}
+          {number && <Text style={styles.cardNumber}>{number}</Text>}
           <Text style={styles.cardText}>{text}</Text>
         </View>
         <Icon name={iconName} size={65} color={`${color}`} />
@@ -325,7 +331,9 @@ const [cardsData] = useState([
           handleProfilePress={handleProfilePress}
           handleTabPress={handleTabPress}
         />
+
         <ScrollView style={styles.content}>
+         
           {cardsData.map((card, index) => (
             <Card
               key={index}

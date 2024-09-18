@@ -34,7 +34,7 @@ const LoginScreen = () => {
      console.log("not valuid")
      //return;
     }
-    navigation.navigate('Home');
+    navigation.navigate('WelcomeAnimation');
     console.log('Email:', email);
     console.log('Password:', password);
   };
