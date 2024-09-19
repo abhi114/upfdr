@@ -98,8 +98,9 @@ const RoadList = ({name}) => {
       const csvContent = csvHeader + csvRows;
       
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/RoadDataUPFDR.csv`;
-
+      const timestamp = new Date().getTime();
+      const filePath = `${RNFS.DownloadDirectoryPath}/RoadDataUPFDR_${timestamp}.csv`;
+      
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
 
@@ -158,7 +159,9 @@ const RoadList = ({name}) => {
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-     const destPath = `${RNFS.DownloadDirectoryPath}/RoadData.pdf`;
+    const timestamp = new Date().getTime();
+     const destPath = `${RNFS.DownloadDirectoryPath}/RoadData1_${timestamp}.pdf`;
+      
      try {
        await RNFS.moveFile(file.filePath, destPath);
        alert(`PDF Downloaded to: ${destPath}`);

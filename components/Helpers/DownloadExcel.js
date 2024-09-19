@@ -16,7 +16,9 @@ const DownloadExcel =async () => {
   );
   // Write workbook to an array buffer
   const wbout = XLSX.write(wb, {type: 'array', bookType: 'xlsx'});
-
+ 
+  const timestamp = new Date().getTime();
+  
   // Convert array buffer to binary string
   const binaryStr = new Uint8Array(wbout).reduce((data, byte) => {
     return data + String.fromCharCode(byte);
@@ -24,7 +26,7 @@ const DownloadExcel =async () => {
 
   // Write generated excel to Storage
   RNFS.writeFile(
-    RNFS.DownloadDirectoryPath + '/FDRROADLIST.xlsx',
+    RNFS.DownloadDirectoryPath + `/FDRROADLIST_${timestamp}.xlsx`,
     binaryStr,
     'ascii',
   )
