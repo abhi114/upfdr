@@ -87,15 +87,16 @@ const DailyWork = () => {
     const binaryStr = new Uint8Array(wbout).reduce((data, byte) => {
       return data + String.fromCharCode(byte);
     }, '');
-
+    const timestamp = new Date().getTime();
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + `/${dataName}.xlsx`,
+      RNFS.DownloadDirectoryPath + `/${dataName}_${timestamp}.xlsx`,
       binaryStr,
       'ascii',
     )
       .then(() => {
         console.log('success');
+        alert("Successfully Downloaded")
       })
       .catch(e => {
         console.log('Error', e);
@@ -118,9 +119,9 @@ const DailyWork = () => {
 
       // Combine header and rows
       const csvContent = csvHeader + csvRows;
-
+      const timestamp = new Date().getTime();
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/${dataName}.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/${dataName}_${timestamp}.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -180,7 +181,8 @@ const DailyWork = () => {
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/${dataName}.pdf`;
+    const timestamp = new Date().getTime();
+    const destPath = `${RNFS.DownloadDirectoryPath}/${dataName}_${timestamp}.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
