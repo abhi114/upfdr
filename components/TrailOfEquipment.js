@@ -93,6 +93,7 @@ const TrailOfEquipment = () => {
     )
       .then(() => {
         console.log('success');
+        alert("Saved Successfully to Downloads")
       })
       .catch(e => {
         console.log('Error', e);

@@ -87,13 +87,15 @@ const JMFRecommendedPMU = ({route}) => {
     }, '');
 
     // Write generated excel to Storage
+    const timestamp = new Date().getTime();
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + `/${dataName}.xlsx`,
+      RNFS.DownloadDirectoryPath + `/${dataName}_${timestamp}.xlsx`,
       binaryStr,
       'ascii',
     )
       .then(() => {
         console.log('success');
+        alert("Saved Successfully To Downloads");
       })
       .catch(e => {
         console.log('Error', e);
@@ -118,7 +120,8 @@ const JMFRecommendedPMU = ({route}) => {
       const csvContent = csvHeader + csvRows;
 
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/${dataName}.csv`;
+      const timestamp = new Date().getTime();
+      const filePath = `${RNFS.DownloadDirectoryPath}/${dataName}_${timestamp}.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -178,7 +181,8 @@ const JMFRecommendedPMU = ({route}) => {
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/${dataName}.pdf`;
+    const timestamp = new Date().getTime();
+    const destPath = `${RNFS.DownloadDirectoryPath}/${dataName}_${timestamp}.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
