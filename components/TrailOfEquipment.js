@@ -84,10 +84,10 @@ const TrailOfEquipment = () => {
     const binaryStr = new Uint8Array(wbout).reduce((data, byte) => {
       return data + String.fromCharCode(byte);
     }, '');
-
+    const timestamp = new Date().getTime();
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + '/TrailOfEquipments.xlsx',
+      RNFS.DownloadDirectoryPath + `/TrailOfEquipments_${timestamp}.xlsx`,
       binaryStr,
       'ascii',
     )
@@ -115,9 +115,9 @@ const TrailOfEquipment = () => {
 
       // Combine header and rows
       const csvContent = csvHeader + csvRows;
-
+      const timestamp = new Date().getTime();
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/TrailOfEquipments.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/TrailOfEquipments_${timestamp}.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -177,7 +177,8 @@ const TrailOfEquipment = () => {
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/TrailOfEquipments.pdf`;
+    const timestamp = new Date().getTime();
+    const destPath = `${RNFS.DownloadDirectoryPath}/TrailOfEquipments_${timestamp}.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
