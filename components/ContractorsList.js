@@ -84,7 +84,8 @@ const ContractorsList = () => {
       const csvContent = csvHeader + csvRows;
 
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/ContractorsListed1.csv`;
+      const timestamp = new Date().getTime();
+      const filePath = `${RNFS.DownloadDirectoryPath}/ContractorsListed_${timestamp}.csv`;
        const fileExists = await RNFS.exists(filePath);
        if (fileExists) {
          await RNFS.unlink(filePath); // Delete the existing file
@@ -147,7 +148,8 @@ const ContractorsList = () => {
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/ContractorsList.pdf`;
+    const timestamp = new Date().getTime();
+    const destPath = `${RNFS.DownloadDirectoryPath}/ContractorsList_${timestamp}.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
@@ -173,14 +175,12 @@ const ContractorsList = () => {
     const binaryStr = new Uint8Array(wbout).reduce((data, byte) => {
       return data + String.fromCharCode(byte);
     }, '');
-     const filePath = `${RNFS.DownloadDirectoryPath}/ContractorsList1.xlsx`;
-     const fileExists = await RNFS.exists(filePath);
-     if (fileExists) {
-       await RNFS.unlink(filePath); // Delete the existing file
-     }
+      const timestamp = new Date().getTime();
+     const filePath = `${RNFS.DownloadDirectoryPath}/ContractorsList_${timestamp}.xlsx`;
+     
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + '/ContractorsList1.xlsx',
+      filePath,
       binaryStr,
       'ascii',
     )

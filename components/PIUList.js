@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
   PermissionsAndroid,
+  Alert,
 } from 'react-native';
 
 import {PiuData as data} from './data';
@@ -82,15 +83,16 @@ const PIUList = () => {
     const binaryStr = new Uint8Array(wbout).reduce((data, byte) => {
       return data + String.fromCharCode(byte);
     }, '');
-
+    const timestamp = new Date().getTime();
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + '/PIUList.xlsx',
+      RNFS.DownloadDirectoryPath + `/PIUList_${timestamp}.xlsx`,
       binaryStr,
       'ascii',
     )
       .then(() => {
         console.log('success');
+        alert("Saved to Downloades")
       })
       .catch(e => {
         console.log('Error', e);
@@ -113,9 +115,9 @@ const PIUList = () => {
 
       // Combine header and rows
       const csvContent = csvHeader + csvRows;
-
+      const timestamp = new Date().getTime();
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/PIUList.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/PIUList_${timestamp}.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -175,7 +177,8 @@ const PIUList = () => {
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/PIUList.pdf`;
+    const timestamp = new Date().getTime();
+    const destPath = `${RNFS.DownloadDirectoryPath}/PIUList_${timestamp}.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);

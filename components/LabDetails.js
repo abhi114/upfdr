@@ -84,8 +84,9 @@ const LabDetails = () => {
     }, '');
 
     // Write generated excel to Storage
+    const timestamp = new Date().getTime();
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + '/LabDetails.xlsx',
+      RNFS.DownloadDirectoryPath + `/LabDetails_${timestamp}.xlsx`,
       binaryStr,
       'ascii',
     )
@@ -113,9 +114,9 @@ const LabDetails = () => {
 
       // Combine header and rows
       const csvContent = csvHeader + csvRows;
-
+      const timestamp = new Date().getTime();
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/LabDetails.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/LabDetails_${timestamp}.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -175,7 +176,8 @@ const LabDetails = () => {
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/LabDetails.pdf`;
+    const timestamp = new Date().getTime();
+    const destPath = `${RNFS.DownloadDirectoryPath}/LabDetails_${timestamp}.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);

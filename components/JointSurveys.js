@@ -85,15 +85,16 @@ const JointSurveys = () => {
     const binaryStr = new Uint8Array(wbout).reduce((data, byte) => {
       return data + String.fromCharCode(byte);
     }, '');
-
+    const timestamp = new Date().getTime();
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + '/JointSurveys.xlsx',
+      RNFS.DownloadDirectoryPath + `/JointSurveys_${timestamp}.xlsx`,
       binaryStr,
       'ascii',
     )
       .then(() => {
         console.log('success');
+        alert("Saved Successfully to Downloads")
       })
       .catch(e => {
         console.log('Error', e);
@@ -116,9 +117,9 @@ const JointSurveys = () => {
 
       // Combine header and rows
       const csvContent = csvHeader + csvRows;
-
+      const timestamp = new Date().getTime();
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/JointSurveys.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/JointSurveys_${timestamp}.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -178,7 +179,8 @@ const JointSurveys = () => {
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/JointSurveys.pdf`;
+    const timestamp = new Date().getTime();
+    const destPath = `${RNFS.DownloadDirectoryPath}/JointSurveys_${timestamp}.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
