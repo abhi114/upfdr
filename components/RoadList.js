@@ -84,13 +84,13 @@ const RoadList = ({name}) => {
     //manully creating csv
     try {
       // Extract the keys (column names)
-      const keys = Object.keys(data[0]);
-
+      const keys = Object.keys(userData[0]);
+      console.log(keys);
       // Create CSV header
       const csvHeader = keys.join(',') + '\n';
 
       // Create CSV rows
-      const csvRows = data
+      const csvRows = userData
         .map(row => keys.map(key => row[key]).join(','))
         .join('\n');
 
@@ -98,7 +98,7 @@ const RoadList = ({name}) => {
       const csvContent = csvHeader + csvRows;
       
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/RoadData.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/RoadDataUPFDR.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -130,13 +130,13 @@ const RoadList = ({name}) => {
       <table>
         <thead>
           <tr>
-            ${Object.keys(data[0])
+            ${Object.keys(userData[0])
               .map(key => `<th>${key}</th>`)
               .join('')}
           </tr>
         </thead>
         <tbody>
-          ${data
+          ${userData
             .map(
               row => `
             <tr>
@@ -161,7 +161,7 @@ const RoadList = ({name}) => {
      const destPath = `${RNFS.DownloadDirectoryPath}/RoadData.pdf`;
      try {
        await RNFS.moveFile(file.filePath, destPath);
-       alert(`PDF moved to: ${destPath}`);
+       alert(`PDF Downloaded to: ${destPath}`);
      } catch (err) {
        console.error('Error moving file: ', err);
      }

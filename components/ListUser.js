@@ -9,38 +9,38 @@ import {
   TouchableOpacity,
   ScrollView,
   PermissionsAndroid,
-  Image,
+  Alert,
 } from 'react-native';
 
 import * as data from './data';
 import {useNavigation} from '@react-navigation/native';
 import {Modal} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import RNHTMLtoPDF from 'react-native-html-to-pdf';
-import {Parser} from 'json2csv';
-import XLSX from 'xlsx';
-var RNFS = require('react-native-fs');
 
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import XLSX from 'xlsx';
+import {Parser} from 'json2csv';
+import RoadListModal from './Modals/RoadListModal';
+var RNFS = require('react-native-fs');
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
-const BillDetails = ({route}) => {
-  const {name, dataName} = route.params;
+const RoadList = ({name}) => {
+  console.log('name is' + name);
   const [search, setSearch] = useState('');
-  const [userData, setuserData] = useState(data[dataName]);
+  const [userData, setuserData] = useState(
+    name === 'Users List' ? data['ListAllUsers'] : null,
+  );
   const [modalVisible, setModalVisible] = useState(false);
   const [graphModalVisible, setgraphModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [mainSelectedItem, setmainSelectedItem] = useState(null);
   const navigation = useNavigation();
-  console.log(name);
-  console.log(dataName);
   // Filtered data based on search input
   const filteredData = userData.filter(
     item =>
-      item.District.toLowerCase().includes(search.toLowerCase()) ||
-      item.PackageNumber.toLowerCase().includes(search.toLowerCase()) ||
-      item.FDRGroup.toLowerCase().includes(search.toLowerCase()),
+      item.Company.includes(search) ||
+      item.Contact.toLowerCase().includes(search.toLowerCase()) ||
+      item.Email.toLowerCase().includes(search.toLowerCase()),
   );
 
   // Calculate the total number of pages
@@ -68,6 +68,46 @@ const BillDetails = ({route}) => {
       setCurrentPage(currentPage - 1);
     }
   };
+  const changeStatus = selectedid => {
+    //console.log(id);
+    const indexToUpdate = userData.findIndex(item => item.id === selectedid);
+
+    if (indexToUpdate !== -1) {
+      const updatedUserData = [...userData];
+      updatedUserData[indexToUpdate].Status =
+        !updatedUserData[indexToUpdate].Status;
+      setuserData(updatedUserData);
+    }
+    console.log(paginatedData[indexToUpdate].Status);
+  };
+  const generateCSV = async () => {
+    //manully creating csv
+    try {
+      // Extract the keys (column names)
+      const keys = Object.keys(userData[0]);
+
+      // Create CSV header
+      const csvHeader = keys.join(',') + '\n';
+
+      // Create CSV rows
+      const csvRows = userData
+        .map(row => keys.map(key => row[key]).join(','))
+        .join('\n');
+
+      // Combine header and rows
+      const csvContent = csvHeader + csvRows;
+
+      // Define the file path
+      const filePath = `${RNFS.DownloadDirectoryPath}/UsersList.csv`;
+
+      // Write the CSV to the file
+      await RNFS.writeFile(filePath, csvContent, 'utf8');
+
+      alert(`CSV saved to: Downloads`);
+    } catch (err) {
+      console.error('Error creating CSV: ', err);
+    }
+  };
   const DownloadExcel = async () => {
     // Created Sample data
     let sample_data_to_export = userData;
@@ -76,7 +116,7 @@ const BillDetails = ({route}) => {
     let ws = XLSX.utils.json_to_sheet(sample_data_to_export);
     XLSX.utils.book_append_sheet(wb, ws, 'Users');
     console.log(
-      ' main path is ' + RNFS.DownloadDirectoryPath + `/${dataName}.xlsx`,
+      ' main path is ' + RNFS.DownloadDirectoryPath + `/UsersList.xlsx`,
     );
     // Write workbook to an array buffer
     const wbout = XLSX.write(wb, {type: 'array', bookType: 'xlsx'});
@@ -88,7 +128,7 @@ const BillDetails = ({route}) => {
 
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + `/${dataName}.xlsx`,
+      RNFS.DownloadDirectoryPath + `/UsersList.xlsx`,
       binaryStr,
       'ascii',
     )
@@ -98,35 +138,6 @@ const BillDetails = ({route}) => {
       .catch(e => {
         console.log('Error', e);
       });
-  };
-
-  const generateCSV = async () => {
-    //manully creating csv
-    try {
-      // Extract the keys (column names)
-      const keys = Object.keys(data[0]);
-
-      // Create CSV header
-      const csvHeader = keys.join(',') + '\n';
-
-      // Create CSV rows
-      const csvRows = data
-        .map(row => keys.map(key => row[key]).join(','))
-        .join('\n');
-
-      // Combine header and rows
-      const csvContent = csvHeader + csvRows;
-
-      // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/${dataName}.csv`;
-
-      // Write the CSV to the file
-      await RNFS.writeFile(filePath, csvContent, 'utf8');
-
-      alert(`CSV saved to: Downloads`);
-    } catch (err) {
-      console.error('Error creating CSV: ', err);
-    }
   };
   const generatePDF = async () => {
     let htmlContent = `
@@ -146,17 +157,17 @@ const BillDetails = ({route}) => {
           background-color: #f2f2f2;
         }
       </style>
-      <h1>${name}</h1>
+      <h1>Users List</h1>
       <table>
         <thead>
           <tr>
-            ${Object.keys(data[0])
+            ${Object.keys(userData[0])
               .map(key => `<th>${key}</th>`)
               .join('')}
           </tr>
         </thead>
         <tbody>
-          ${data
+          ${userData
             .map(
               row => `
             <tr>
@@ -173,12 +184,12 @@ const BillDetails = ({route}) => {
 
     let options = {
       html: htmlContent,
-      fileName: `${dataName}`,
+      fileName: 'UsersList',
       directory: 'Documents',
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/${dataName}.pdf`;
+    const destPath = `${RNFS.DownloadDirectoryPath}/UsersList.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
@@ -211,32 +222,26 @@ const BillDetails = ({route}) => {
       DownloadExcel();
     }
   };
-
+  const handleMainPress = item => {
+    setSelectedItem(item);
+    setgraphModalVisible(!graphModalVisible);
+  };
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        <View style={{flexDirection: 'row', marginBottom: 25}}>
+        <View style={{flexDirection: 'row', marginBottom: 6}}>
           <TouchableOpacity
             onPress={() => {
               navigation.goBack();
             }}>
-            <Text style={{color: '#0000FF'}}>Bills Report</Text>
+            <Text style={{color: '#0000FF'}}>Dashboard </Text>
           </TouchableOpacity>
-          <Text style={{color: '#FFFFFF'}}>/{name}</Text>
+          <Text style={{color: '#FFFFFF'}}>/ {name}</Text>
         </View>
-
-        <Text
-          style={{
-            color: '#FFFFFF',
-            fontSize: 20,
-            margin: 15,
-            fontWeight: 'bold',
-          }}>
-          {name}
-        </Text>
+        <Text style={styles.title}>{name}</Text>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search by District ,Package.No or Fdr Group"
+          placeholder="Search by Company Name,Contact or Email ID"
           placeholderTextColor="#aaaaaa"
           value={search}
           onChangeText={text => {
@@ -285,116 +290,23 @@ const BillDetails = ({route}) => {
           data={paginatedData}
           renderItem={({item}) => (
             <View style={styles.card}>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>Serial No:</Text>
-                <Text style={styles.cell}>{item.SerialNo}</Text>
-              </View>
-
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>Package Number:</Text>
-                <TouchableOpacity
-                  style={{
-                    flex: 0.7,
-                    borderRadius: 5,
-                    alignSelf: 'center',
-                    borderColor: '#0090E7',
-                    borderWidth: 2,
-                    alignContent: 'center',
-                  }}
-                  onPress={() => {}}>
-                  <Text style={[styles.cell, {color: '#0090E7'}]}>
-                    {item.PackageNumber}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>District:</Text>
-                <Text style={styles.cell}>{item.District}</Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>FDR Group:</Text>
-                <Text style={styles.cell}>{item.FDRGroup}</Text>
-              </View>
-
-              <View style={styles.row}>
-                <Text style={styles.cellTitle}>Bill Approved By JE:</Text>
-                <TouchableOpacity
-                  style={{
-                    flex: 0.7,
-                    borderRadius: 5,
-                    alignSelf: 'center',
-                    borderColor:
-                      item.status === 'Recommended' ? '#00D25B' : '#FF0000',
-                    borderWidth: 2,
-                    alignContent: 'center',
-                  }}
-                  onPress={() => {}}>
-                  <Text
-                    style={[
-                      styles.cell,
-                      {
-                        color:
-                          item.status === 'Recommended' ? '#00D25B' : '#FF0000',
-                      },
-                    ]}>
-                    {item.BillApprovedByJE}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-
-              <TouchableOpacity onPress={() => handlePress(item)}>
-                <Text style={styles.detailsButton}>See Full Details</Text>
-              </TouchableOpacity>
+              {Object.entries(item).map(([key, value], index) => (
+                <View style={styles.row} key={key}>
+                  <Text style={styles.cellTitle}>{key}:</Text>
+                  {key === 'Actions' ? (
+                    <TouchableOpacity
+                      onPress={() => Alert.alert("Password Reset")} style={{flex:1}}>
+                      <Text style={styles.actionsCell}>{value}</Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <Text style={styles.cell}>{value}</Text>
+                  )}
+                </View>
+              ))}
             </View>
           )}
-          keyExtractor={item => item.SerialNo}
+          keyExtractor={item => item.id}
         />
-        {selectedItem && (
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => setModalVisible(!modalVisible)}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignContent: 'center',
-                margin: 5,
-                backgroundColor: '#191C24',
-              }}>
-              <Text
-                style={{
-                  color: '#F1F1F1',
-                  alignSelf: 'center',
-                  margin: 30,
-                  color: '#ffffff',
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                }}>
-                Detailed View
-              </Text>
-              <ScrollView
-                style={{
-                  flex: 1,
-                  margin: 5,
-                  backgroundColor: '#191C24',
-                }}>
-                {Object.entries(selectedItem).map(([key, value]) => (
-                  <View style={styles.row} key={key}>
-                    <Text style={styles.cellTitle}>{key}:</Text>
-                    <Text style={styles.cell}>{value}</Text>
-                  </View>
-                ))}
-              </ScrollView>
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => setModalVisible(false)}>
-                <Text style={styles.closeButtonText}>Close</Text>
-              </TouchableOpacity>
-            </View>
-          </Modal>
-        )}
 
         <View style={styles.pagination}>
           <Button
@@ -429,6 +341,12 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
   },
+  actionsCell: {
+    flex: 1,
+    textAlign: 'center',
+    color: 'blue',
+    textDecorationLine: 'underline',
+  },
   detailsButton: {
     color: '#1e90ff',
     height: 20,
@@ -439,7 +357,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#ffffff',
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
     margin: 12,
     textAlign: 'center',
@@ -483,7 +401,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 5,
+    marginTop: 10,
     paddingHorizontal: 10,
   },
   pageIndicator: {
@@ -543,4 +461,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BillDetails;
+export default RoadList;

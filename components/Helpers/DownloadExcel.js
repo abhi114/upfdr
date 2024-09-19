@@ -12,7 +12,7 @@ const DownloadExcel =async () => {
   let ws = XLSX.utils.json_to_sheet(sample_data_to_export);
   XLSX.utils.book_append_sheet(wb, ws, 'Users');
   console.log(
-    ' main path is ' + RNFS.DownloadDirectoryPath + '/UPFDR_ROAD_LIST.xlsx',
+    ' main path is ' + RNFS.DownloadDirectoryPath + '/FDRROADLIST.xlsx',
   );
   // Write workbook to an array buffer
   const wbout = XLSX.write(wb, {type: 'array', bookType: 'xlsx'});
@@ -24,7 +24,7 @@ const DownloadExcel =async () => {
 
   // Write generated excel to Storage
   RNFS.writeFile(
-    RNFS.DownloadDirectoryPath + '/UP_FDR_ROAD_LIST.xlsx',
+    RNFS.DownloadDirectoryPath + '/FDRROADLIST.xlsx',
     binaryStr,
     'ascii',
   )

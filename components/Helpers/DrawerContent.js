@@ -110,7 +110,7 @@ const DrawerItems = ({
 
 const DrawerContent = ({screenname, setScreenName}) => {
   const [selectedScreen, setSelectedScreen] = useState(screenname);
-  console.log(screenname)
+  console.log("new is  " + screenname)
   const [expandedItem, setExpandedItem] = useState(null);
   const navigation = useNavigation();
   //console.log(screenname);
@@ -140,6 +140,13 @@ const DrawerContent = ({screenname, setScreenName}) => {
       navigation.navigate('HeaderMain', {
         index: 11,
         screenName: 'Bills',
+        setScreenName,
+      });
+    }else if(screenName === 'List All Users'){
+      console.log("hitting 15");
+      navigation.navigate('HeaderMain', {
+        index: 15,
+        screenName: 'ListAllUser',
         setScreenName,
       });
     }

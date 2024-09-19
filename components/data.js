@@ -1638,4 +1638,13 @@ export const DailyWorkProgress = [
      "View":'View',
   },
 ];
-
+export const ListAllUsers = [
+  {
+    "Serial": "1",
+    "Company": "ACE Construction",
+    "Contact": "JACKSON PATTON",
+    "Phone": "9774391939",
+    "Email": "aceconstruction2011@gmail.com",
+    "Actions": "Reset"
+  }
+]

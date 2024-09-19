@@ -72,7 +72,7 @@ const DailyWork = () => {
   };
   const DownloadExcel = async () => {
     // Created Sample data
-    let sample_data_to_export = data;
+    let sample_data_to_export = userData;
 
     let wb = XLSX.utils.book_new();
     let ws = XLSX.utils.json_to_sheet(sample_data_to_export);
@@ -106,13 +106,13 @@ const DailyWork = () => {
     //manully creating csv
     try {
       // Extract the keys (column names)
-      const keys = Object.keys(data[0]);
+      const keys = Object.keys(userData[0]);
 
       // Create CSV header
       const csvHeader = keys.join(',') + '\n';
 
       // Create CSV rows
-      const csvRows = data
+      const csvRows = userData
         .map(row => keys.map(key => row[key]).join(','))
         .join('\n');
 
@@ -152,13 +152,13 @@ const DailyWork = () => {
       <table>
         <thead>
           <tr>
-            ${Object.keys(data[0])
+            ${Object.keys(userData[0])
               .map(key => `<th>${key}</th>`)
               .join('')}
           </tr>
         </thead>
         <tbody>
-          ${data
+          ${userData
             .map(
               row => `
             <tr>
