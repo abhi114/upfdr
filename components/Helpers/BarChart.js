@@ -1,6 +1,7 @@
 import React from 'react';
 import {BarChart} from 'react-native-chart-kit';
-import {Dimensions, View, Text, StyleSheet} from 'react-native';
+import {Dimensions, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const screenWidth = Dimensions.get('screen').width;
 
@@ -31,8 +32,18 @@ const chartConfig = {
 };
 
 const BarChartComponent = () => {
+    const navigation = useNavigation();
   return (
     <View>
+      <View style={{flexDirection: 'row', margin: 25}}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Text style={{color: '#0000FF'}}>Dashboard</Text>
+        </TouchableOpacity>
+        <Text style={{color: '#FFFFFF'}}> / JMF Report</Text>
+      </View>
       <View style={styles.card}>
         <Text style={styles.header}>JMF Status: Upload Per Week</Text>
         <View style={styles.chartContainer}>
