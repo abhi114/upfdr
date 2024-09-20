@@ -27,6 +27,8 @@ import TrialStretchGraph from '../TrialStretch/TrialStretchGraph';
 import Bills from '../Bills';
 import DailyWork from '../DailyWork';
 import ListUser from '../ListUser';
+import { BarChart } from 'react-native-chart-kit';
+import BarChartComponent from '../Helpers/BarChart';
 
 const DrawerMain = ({pageName,route}) => {
   const {index, screenName, setScreenName} = route.params;
@@ -162,6 +164,7 @@ const DrawerMain = ({pageName,route}) => {
         {index === 13 && <DailyWork />}
         {index === 14 && <RoadList name={'UP FDR Completed Roads List'} />}
         {index === 15 && <ListUser name={'Users List'} />}
+        {index === 16 && <BarChartComponent/>}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}

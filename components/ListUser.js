@@ -96,9 +96,9 @@ const RoadList = ({name}) => {
 
       // Combine header and rows
       const csvContent = csvHeader + csvRows;
-
+      const timestamp = new Date().getTime();
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/UsersList.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/UsersList_${timestamp}.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -125,15 +125,16 @@ const RoadList = ({name}) => {
     const binaryStr = new Uint8Array(wbout).reduce((data, byte) => {
       return data + String.fromCharCode(byte);
     }, '');
-
+    const timestamp = new Date().getTime();
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + `/UsersList.xlsx`,
+      RNFS.DownloadDirectoryPath + `/UsersList_${timestamp}.xlsx`,
       binaryStr,
       'ascii',
     )
       .then(() => {
         console.log('success');
+        alert("File Saved To Downloads Folder")
       })
       .catch(e => {
         console.log('Error', e);
@@ -189,7 +190,8 @@ const RoadList = ({name}) => {
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    const destPath = `${RNFS.DownloadDirectoryPath}/UsersList.pdf`;
+    const timestamp = new Date().getTime();
+    const destPath = `${RNFS.DownloadDirectoryPath}/UsersList_${timestamp}.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
@@ -295,7 +297,7 @@ const RoadList = ({name}) => {
                   <Text style={styles.cellTitle}>{key}:</Text>
                   {key === 'Actions' ? (
                     <TouchableOpacity
-                      onPress={() => Alert.alert("Password Reset")} style={{flex:1}}>
+                      onPress={() => alert("Password Reset Successfully")} style={{flex:1}}>
                       <Text style={styles.actionsCell}>{value}</Text>
                     </TouchableOpacity>
                   ) : (

@@ -149,6 +149,12 @@ const DrawerContent = ({screenname, setScreenName}) => {
         screenName: 'ListAllUser',
         setScreenName,
       });
+    }else if(screenName === "Site-wide Data Uploads"){
+      navigation.navigate('HeaderMain', {
+        index: 16,
+        screenName: 'SiteDataUpload',
+        setScreenName,
+      });
     }
     //setExpandedItem(null); // Close the dropdown after selection
   };
@@ -180,7 +186,7 @@ const DrawerContent = ({screenname, setScreenName}) => {
         {
           name: 'List All Users',
           screenName: 'ListAllUsersScreen',
-          backgroundColor: screenname === 'List All Users' ? '#0F1015' : null,
+          backgroundColor: screenname === 'ListAllUser' ? '#0F1015' : null,
         },
         {name: 'Map Contractor', screenName: 'MapContractorScreen'},
       ],
