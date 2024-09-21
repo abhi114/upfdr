@@ -157,15 +157,13 @@ const DrawerMain = ({pageName,route}) => {
         {index === 8 && <SampleCollection />}
         {index === 9 && <JobMixDesign />}
         {index === 10 && <TrialStretchGraph />}
-        {(index === 11 || index === 12) && (
-          <Bills/>
-        )}
+        {(index === 11 || index === 12) && <Bills />}
         {index === 13 && <DailyWork />}
         {index === 14 && <RoadList name={'UP FDR Completed Roads List'} />}
         {index === 15 && <ListUser name={'Users List'} />}
-        {index === 16 && <BarChartComponent/>}
-        {index === 17 && <MappedContractorsList/>}
-        {index === 18 && <StartDate/>}
+        {index === 16 && <BarChartComponent />}
+        {index === 17 && <MappedContractorsList />}
+        {index === 18 && <StartDate name={'MCW Start Requests'} />}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}

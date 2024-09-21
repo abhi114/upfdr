@@ -210,7 +210,11 @@ const DrawerContent = ({screenname, setScreenName}) => {
 
       isDropable: true,
       subItems: [
-        {name: 'For MCW Start Date', screenName: 'ListAllUsersScreen'},
+        {
+          name: 'For MCW Start Date',
+          screenName: 'ListAllUsersScreen',
+          backgroundColor: screenname === 'MCWStartDate' ? '#0F1015' : null,
+        },
         {name: 'For Core Testing', screenName: 'MapContractorScreen'},
       ],
     },
