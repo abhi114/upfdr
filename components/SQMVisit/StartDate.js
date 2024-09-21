@@ -23,12 +23,10 @@ import RoadListModal from './Modals/RoadListModal';
 var RNFS = require('react-native-fs');
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
-const RoadList = ({name}) => {
+const StartDate = ({name}) => {
   console.log('name is' + name);
   const [search, setSearch] = useState('');
-  const [userData, setuserData] = useState(
-    name === 'Users List' ? data['ListAllUsers'] : null,
-  );
+  const [userData, setuserData] = useState(data['MCWStartDate']);
   const [modalVisible, setModalVisible] = useState(false);
   const [graphModalVisible, setgraphModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -38,9 +36,9 @@ const RoadList = ({name}) => {
   // Filtered data based on search input
   const filteredData = userData.filter(
     item =>
-      item.Company.includes(search) ||
-      item.Contact.toLowerCase().includes(search.toLowerCase()) ||
-      item.Email.toLowerCase().includes(search.toLowerCase()),
+      item.District.includes(search) ||
+      item.Contractor.toLowerCase().includes(search.toLowerCase()) ||
+      item.FDRGroup.toLowerCase().includes(search.toLowerCase()),
   );
 
   // Calculate the total number of pages
@@ -98,7 +96,7 @@ const RoadList = ({name}) => {
       const csvContent = csvHeader + csvRows;
       const timestamp = new Date().getTime();
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/UsersList_${timestamp}.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/MCWStartRequests_${timestamp}.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -116,7 +114,7 @@ const RoadList = ({name}) => {
     let ws = XLSX.utils.json_to_sheet(sample_data_to_export);
     XLSX.utils.book_append_sheet(wb, ws, 'Users');
     console.log(
-      ' main path is ' + RNFS.DownloadDirectoryPath + `/UsersList.xlsx`,
+      ' main path is ' + RNFS.DownloadDirectoryPath + `/MCWStartRequests.xlsx`,
     );
     // Write workbook to an array buffer
     const wbout = XLSX.write(wb, {type: 'array', bookType: 'xlsx'});
@@ -128,13 +126,13 @@ const RoadList = ({name}) => {
     const timestamp = new Date().getTime();
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + `/UsersList_${timestamp}.xlsx`,
+      RNFS.DownloadDirectoryPath + `/MCWStartRequests_${timestamp}.xlsx`,
       binaryStr,
       'ascii',
     )
       .then(() => {
         console.log('success');
-        alert("File Saved To Downloads Folder")
+        alert('File Saved To Downloads Folder');
       })
       .catch(e => {
         console.log('Error', e);
@@ -191,7 +189,7 @@ const RoadList = ({name}) => {
 
     let file = await RNHTMLtoPDF.convert(options);
     const timestamp = new Date().getTime();
-    const destPath = `${RNFS.DownloadDirectoryPath}/UsersList_${timestamp}.pdf`;
+    const destPath = `${RNFS.DownloadDirectoryPath}/MCWStartRequests_${timestamp}.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
@@ -243,7 +241,7 @@ const RoadList = ({name}) => {
         <Text style={styles.title}>{name}</Text>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search by Company Name,Contact or Email ID"
+          placeholder="Search by Contractor,District or FDR Group"
           placeholderTextColor="#aaaaaa"
           value={search}
           onChangeText={text => {
@@ -298,8 +296,13 @@ const RoadList = ({name}) => {
                   {key === 'Actions' ? (
                     <TouchableOpacity
                       onPress={() => alert('Password Reset Successfully')}
-                      style={{flexDirection: 'row',justifyContent:'center',alignItems:'center',flex:1}}>
-                      <Icon name="setting" color={'#0000FF'} size={20}/>
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flex: 1,
+                      }}>
+                      <Icon name="setting" color={'#0000FF'} size={20} />
                       <Text style={styles.actionsCell}>{value}</Text>
                     </TouchableOpacity>
                   ) : (
@@ -309,7 +312,7 @@ const RoadList = ({name}) => {
               ))}
             </View>
           )}
-          keyExtractor={item => item.Serial}
+          keyExtractor={item => item.uploadDate}
         />
 
         <View style={styles.pagination}>
@@ -346,7 +349,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   actionsCell: {
-
     textAlign: 'center',
     color: 'blue',
     textDecorationLine: 'underline',
@@ -465,4 +467,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RoadList;
+export default StartDate;

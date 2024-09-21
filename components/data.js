@@ -1684,3 +1684,51 @@ export const MappedcontractorsData = [
     Block: 'Behta',
   },
 ];
+
+export const MCWStartDate = [
+  {
+    uploadDate: '2022-10-31 11:48:17',
+    'Date Requested': '2022-09-21',
+    'Package Number': 'UP66144',
+    FDRGroup: 'UP-FDR33',
+    District: 'Mathura',
+    Contractor: 'Siddharth construction',
+    Status: 'Accepted',
+  },
+  {
+    uploadDate: '2022-10-31 11:48:17',
+    'Date Requested': '2022-09-21',
+    'Package Number': 'UP66144',
+    'FDR Group': 'UP-FDR33',
+    District: 'Mathura',
+    Contractor: 'Siddharth construction',
+    Status: 'Accepted',
+  },
+  {
+    uploadDate: '2022-10-31 11:48:17',
+    'Date Requested': '2022-09-21',
+    'Package Number': 'UP66144',
+    'FDR Group': 'UP-FDR33',
+    District: 'Mathura',
+    Contractor: 'Siddharth construction',
+    Status: 'Accepted',
+  },
+  {
+    uploadDate: '2022-10-31 11:48:17',
+    'Date Requested': '2022-09-21',
+    'Package Number': 'UP66144',
+    'FDR Group': 'UP-FDR33',
+    District: 'Mathura',
+    Contractor: 'Siddharth construction',
+    Status: 'Accepted',
+  },
+  {
+    uploadDate: '2022-10-31 11:48:17',
+    'Date Requested': '2022-09-21',
+    'Package Number': 'UP66144',
+    'FDR Group': 'UP-FDR33',
+    District: 'Mathura',
+    Contractor: 'Siddharth construction',
+    Status: 'Accepted',
+  },
+];
