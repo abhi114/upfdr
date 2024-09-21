@@ -29,6 +29,7 @@ import DailyWork from '../DailyWork';
 import ListUser from '../ListUser';
 import { BarChart } from 'react-native-chart-kit';
 import BarChartComponent from '../Helpers/BarChart';
+import MappedContractorsList from '../MappedContractorsList';
 
 const DrawerMain = ({pageName,route}) => {
   const {index, screenName, setScreenName} = route.params;
@@ -156,15 +157,13 @@ const DrawerMain = ({pageName,route}) => {
         {index === 9 && <JobMixDesign />}
         {index === 10 && <TrialStretchGraph />}
         {(index === 11 || index === 12) && (
-          <DailyWork
-            name={'Daily Work Progress List'}
-            dataName={'DailyWorkProgress'}
-          />
+          <Bills/>
         )}
         {index === 13 && <DailyWork />}
         {index === 14 && <RoadList name={'UP FDR Completed Roads List'} />}
         {index === 15 && <ListUser name={'Users List'} />}
         {index === 16 && <BarChartComponent/>}
+        {index === 17 && <MappedContractorsList/>}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}

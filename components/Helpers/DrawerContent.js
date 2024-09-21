@@ -155,6 +155,12 @@ const DrawerContent = ({screenname, setScreenName}) => {
         screenName: 'SiteDataUpload',
         setScreenName,
       });
+    }else if (screenName === 'List Mapped Contractors') {
+       navigation.navigate('HeaderMain', {
+         index: 17,
+         screenName: 'MappedContractors',
+         setScreenName,
+       });
     }
     //setExpandedItem(null); // Close the dropdown after selection
   };
@@ -243,7 +249,11 @@ const DrawerContent = ({screenname, setScreenName}) => {
 
       isDropable: true,
       subItems: [
-        {name: 'Site-wide Data Uploads', screenName: ''},
+        {
+          name: 'Site-wide Data Uploads',
+          screenName: '',
+          backgroundColor: screenname === 'SiteDataUpload' ? '#0F1015' : null,
+        },
         {
           name: 'Billing Pendencies',
           screenName: '',

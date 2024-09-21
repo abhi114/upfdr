@@ -1648,3 +1648,39 @@ export const ListAllUsers = [
     "Actions": "Reset"
   }
 ]
+
+export const MappedcontractorsData = [
+  {
+    SerialNo: 1,
+    PackageNumber: 'UP66144',
+    CompanyName: 'A K Associates',
+    RoadName: 'MRL13-T-01(LAHARPUR- TAMBAUR ROAD) TO MANGAL PURWA',
+    FDRGroup: 'UP-FDR33',
+    ContactPerson: 'Avadhesh Kumar',
+    PhoneNo: 9935083555,
+    District: 'Sonebhadra',
+    Block: 'Behta',
+  },
+  {
+    SerialNo: 2,
+    PackageNumber: 'UP66144',
+    RoadName: 'MRL13-T-01(LAHARPUR- TAMBAUR ROAD) TO MANGAL PURWA',
+    CompanyName: 'A.P.S. and Co. pvt. Ltd.',
+    ContactPerson: 'Ashutosh singh',
+    FDRGroup: 'UP-FDR33',
+    PhoneNo: 9936305556,
+    District: 'Allahabad',
+    Block: 'Behta',
+  },
+  {
+    SerialNo: 3,
+    PackageNumber: 'UP66144',
+    RoadName: 'MRL13-T-01(LAHARPUR- TAMBAUR ROAD) TO MANGAL PURWA',
+    FDRGroup: 'UP-FDR33',
+    CompanyName: 'ACE Construction',
+    ContactPerson: 'JACKSON PATTON',
+    PhoneNo: 9774391939,
+    District: 'Mathura',
+    Block: 'Behta',
+  },
+];
