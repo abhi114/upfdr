@@ -12,14 +12,13 @@ import {
   Alert,
 } from 'react-native';
 
-import * as data from './data';
+import * as data from '../data';
 import {useNavigation} from '@react-navigation/native';
 import {Modal} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import XLSX from 'xlsx';
 import {Parser} from 'json2csv';
-import RoadListModal from './Modals/RoadListModal';
 var RNFS = require('react-native-fs');
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
@@ -293,7 +292,9 @@ const StartDate = ({name}) => {
               {Object.entries(item).map(([key, value], index) => (
                 <View style={styles.row} key={key}>
                   <Text style={styles.cellTitle}>{key}:</Text>
-                  {key === 'Actions' ? (
+                  {key === 'uploadDate' ||
+                  key === 'Package Number' ||
+                  key === 'Status' ? (
                     <TouchableOpacity
                       onPress={() => alert('Password Reset Successfully')}
                       style={{
@@ -301,9 +302,18 @@ const StartDate = ({name}) => {
                         justifyContent: 'center',
                         alignItems: 'center',
                         flex: 1,
+                        borderRadius: 6,
+                        borderWidth: 2,
+                        borderColor: key === 'Status' ? '#00D25B' : '#0000FF',
                       }}>
-                      <Icon name="setting" color={'#0000FF'} size={20} />
-                      <Text style={styles.actionsCell}>{value}</Text>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          color: key === 'Status' ? '#00D25B' : '#0000FF',
+                          
+                        }}>
+                        {value}
+                      </Text>
                     </TouchableOpacity>
                   ) : (
                     <Text style={styles.cell}>{value}</Text>
@@ -350,8 +360,7 @@ const styles = StyleSheet.create({
   },
   actionsCell: {
     textAlign: 'center',
-    color: 'blue',
-    textDecorationLine: 'underline',
+    color: '#0000FF',
   },
   detailsButton: {
     color: '#1e90ff',

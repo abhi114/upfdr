@@ -136,31 +136,37 @@ const DrawerContent = ({screenname, setScreenName}) => {
         screenName: 'TrialStretchGraph',
         setScreenName,
       });
-    }else if(screenName === 'Billing Pendencies'){
+    } else if (screenName === 'Billing Pendencies') {
       navigation.navigate('HeaderMain', {
         index: 11,
         screenName: 'Bills',
         setScreenName,
       });
-    }else if(screenName === 'List All Users'){
-      console.log("hitting 15");
+    } else if (screenName === 'List All Users') {
+      console.log('hitting 15');
       navigation.navigate('HeaderMain', {
         index: 15,
         screenName: 'ListAllUser',
         setScreenName,
       });
-    }else if(screenName === "Site-wide Data Uploads"){
+    } else if (screenName === 'Site-wide Data Uploads') {
       navigation.navigate('HeaderMain', {
         index: 16,
         screenName: 'SiteDataUpload',
         setScreenName,
       });
-    }else if (screenName === 'List Mapped Contractors') {
-       navigation.navigate('HeaderMain', {
-         index: 17,
-         screenName: 'MappedContractors',
-         setScreenName,
-       });
+    } else if (screenName === 'List Mapped Contractors') {
+      navigation.navigate('HeaderMain', {
+        index: 17,
+        screenName: 'MappedContractors',
+        setScreenName,
+      });
+    } else if (screenName === 'For MCW Start Date') {
+      navigation.navigate('HeaderMain', {
+        index: 18,
+        screenName: 'MCWStartDate',
+        setScreenName,
+      });
     }
     //setExpandedItem(null); // Close the dropdown after selection
   };

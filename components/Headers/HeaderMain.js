@@ -30,6 +30,7 @@ import ListUser from '../ListUser';
 import { BarChart } from 'react-native-chart-kit';
 import BarChartComponent from '../Helpers/BarChart';
 import MappedContractorsList from '../MappedContractorsList';
+import StartDate from '../SQMVisit/StartDate';
 
 const DrawerMain = ({pageName,route}) => {
   const {index, screenName, setScreenName} = route.params;
@@ -164,6 +165,7 @@ const DrawerMain = ({pageName,route}) => {
         {index === 15 && <ListUser name={'Users List'} />}
         {index === 16 && <BarChartComponent/>}
         {index === 17 && <MappedContractorsList/>}
+        {index === 18 && <StartDate/>}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}
