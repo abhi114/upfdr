@@ -42,9 +42,13 @@ const StartDate = ({name}) => {
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
-  const handlePress = item => {
+  const handlePress = (key,item) => {
+    if(key === 'uploadDate'){
+      console.log("item is " + item);
     setSelectedItem(item);
     setModalVisible(true);
+    }
+   
   };
   // Slice the data for the current page
   const paginatedData = filteredData.slice(
@@ -225,6 +229,7 @@ const StartDate = ({name}) => {
     setSelectedItem(item);
     setgraphModalVisible(!graphModalVisible);
   };
+  
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
@@ -289,41 +294,93 @@ const StartDate = ({name}) => {
           data={paginatedData}
           renderItem={({item}) => (
             <View style={styles.card}>
-              {Object.entries(item).map(([key, value], index) => (
-                <View style={styles.row} key={key}>
-                  <Text style={styles.cellTitle}>{key}:</Text>
-                  {key === 'uploadDate' ||
-                  key === 'Package Number' ||
-                  key === 'Status' ? (
-                    <TouchableOpacity
-                      onPress={() => alert('Password Reset Successfully')}
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        flex: 1,
-                        borderRadius: 6,
-                        borderWidth: 2,
-                        borderColor: key === 'Status' ? '#00D25B' : '#0000FF',
-                      }}>
-                      <Text
+              {Object.entries(item)
+                .slice(0, -1)
+                .map(([key, value], index) => (
+                  <View style={styles.row} key={key}>
+                    <Text style={styles.cellTitle}>{key}:</Text>
+                    {key === 'uploadDate' ||
+                    key === 'Package Number' ||
+                    key === 'Status' ? (
+                      <TouchableOpacity
+                        onPress={() => handlePress(key, item)}
                         style={{
-                          textAlign: 'center',
-                          color: key === 'Status' ? '#00D25B' : '#0000FF',
-                          
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          flex: 1,
+                          borderRadius: 6,
+                          borderWidth: 2,
+                          borderColor: key === 'Status' ? '#00D25B' : '#0000FF',
                         }}>
-                        {value}
-                      </Text>
-                    </TouchableOpacity>
-                  ) : (
-                    <Text style={styles.cell}>{value}</Text>
-                  )}
-                </View>
-              ))}
+                        <Text
+                          style={{
+                            textAlign: 'center',
+                            color: key === 'Status' ? '#00D25B' : '#0000FF',
+                          }}>
+                          {value}
+                        </Text>
+                      </TouchableOpacity>
+                    ) : (
+                      <Text style={styles.cell}>{value}</Text>
+                    )}
+                  </View>
+                ))}
             </View>
           )}
           keyExtractor={item => item.uploadDate}
         />
+        {selectedItem && (
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => setModalVisible(!modalVisible)}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignContent: 'center',
+                margin: 5,
+                backgroundColor: '#191C24',
+              }}>
+              <Text
+                style={{
+                  color: '#F1F1F1',
+                  alignSelf: 'center',
+                  margin: 30,
+                  color: '#ffffff',
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                }}>
+                MCW Date Request Status
+              </Text>
+              <ScrollView
+                style={{
+                  flex: 1,
+                  margin: 5,
+                  backgroundColor: '#191C24',
+                }}>
+                {Object.entries(selectedItem['StatusData']).map(
+                  ([key, value]) => (
+                    <View style={styles.row} key={key}>
+                      <View style={{flex:1}}>
+                      
+                        <Text style={styles.cellTitle}>{key}:</Text>
+                      </View>
+                      <Text style={styles.cell}>{value}</Text>
+                    </View>
+                  ),
+                )}
+              </ScrollView>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => setModalVisible(false)}>
+                <Text style={styles.closeButtonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
+        )}
 
         <View style={styles.pagination}>
           <Button
