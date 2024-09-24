@@ -167,6 +167,12 @@ const DrawerContent = ({screenname, setScreenName}) => {
         screenName: 'MCWStartDate',
         setScreenName,
       });
+    }else if(screenName === 'For Core Testing'){
+      navigation.navigate('HeaderMain', {
+        index: 19,
+        screenName: 'CoreTesting',
+        setScreenName,
+      });
     }
     //setExpandedItem(null); // Close the dropdown after selection
   };

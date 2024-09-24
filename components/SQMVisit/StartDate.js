@@ -15,17 +15,18 @@ import {
 import * as data from '../data';
 import {useNavigation} from '@react-navigation/native';
 import {Modal} from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import XLSX from 'xlsx';
 import {Parser} from 'json2csv';
 var RNFS = require('react-native-fs');
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
-const StartDate = ({name}) => {
+const StartDate = ({name,dataName}) => {
   console.log('name is' + name);
+  console.log("data name is "+ dataName);
   const [search, setSearch] = useState('');
-  const [userData, setuserData] = useState(data['MCWStartDate']);
+  const [userData, setuserData] = useState(data[dataName]);
   const [modalVisible, setModalVisible] = useState(false);
   const [graphModalVisible, setgraphModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -99,7 +100,7 @@ const StartDate = ({name}) => {
       const csvContent = csvHeader + csvRows;
       const timestamp = new Date().getTime();
       // Define the file path
-      const filePath = `${RNFS.DownloadDirectoryPath}/MCWStartRequests_${timestamp}.csv`;
+      const filePath = `${RNFS.DownloadDirectoryPath}/${dataName}_${timestamp}.csv`;
 
       // Write the CSV to the file
       await RNFS.writeFile(filePath, csvContent, 'utf8');
@@ -117,7 +118,7 @@ const StartDate = ({name}) => {
     let ws = XLSX.utils.json_to_sheet(sample_data_to_export);
     XLSX.utils.book_append_sheet(wb, ws, 'Users');
     console.log(
-      ' main path is ' + RNFS.DownloadDirectoryPath + `/MCWStartRequests.xlsx`,
+      ' main path is ' + RNFS.DownloadDirectoryPath + `/${dataName}.xlsx`,
     );
     // Write workbook to an array buffer
     const wbout = XLSX.write(wb, {type: 'array', bookType: 'xlsx'});
@@ -129,7 +130,7 @@ const StartDate = ({name}) => {
     const timestamp = new Date().getTime();
     // Write generated excel to Storage
     RNFS.writeFile(
-      RNFS.DownloadDirectoryPath + `/MCWStartRequests_${timestamp}.xlsx`,
+      RNFS.DownloadDirectoryPath + `/${dataName}_${timestamp}.xlsx`,
       binaryStr,
       'ascii',
     )
@@ -192,7 +193,7 @@ const StartDate = ({name}) => {
 
     let file = await RNHTMLtoPDF.convert(options);
     const timestamp = new Date().getTime();
-    const destPath = `${RNFS.DownloadDirectoryPath}/MCWStartRequests_${timestamp}.pdf`;
+    const destPath = `${RNFS.DownloadDirectoryPath}/${dataName}_${timestamp}.pdf`;
     try {
       await RNFS.moveFile(file.filePath, destPath);
       alert(`PDF Downloaded to: ${destPath}`);
@@ -240,7 +241,7 @@ const StartDate = ({name}) => {
             }}>
             <Text style={{color: '#0000FF'}}>Dashboard </Text>
           </TouchableOpacity>
-          <Text style={{color: '#FFFFFF'}}>/ {name}</Text>
+          <Text style={{color: '#FFFFFF'}}>/ SQM Data Requests</Text>
         </View>
         <Text style={styles.title}>{name}</Text>
         <TextInput
@@ -353,7 +354,7 @@ const StartDate = ({name}) => {
                   fontSize: 20,
                   fontWeight: 'bold',
                 }}>
-                MCW Date Request Status
+                {name}
               </Text>
               <ScrollView
                 style={{
@@ -362,15 +363,45 @@ const StartDate = ({name}) => {
                   backgroundColor: '#191C24',
                 }}>
                 {Object.entries(selectedItem['StatusData']).map(
-                  ([key, value]) => (
-                    <View style={styles.row} key={key}>
-                      <View style={{flex:1}}>
-                      
+                  ([key, value]) => {
+                    let icon;
+                    let color;
+
+                    switch (key) {
+                      case 'Requested Date':
+                        icon = 'calendar';
+                        color = '#007bff'; // blue
+                        break;
+                      case 'Comments':
+                        icon = 'comment';
+                        color = '#ff9800'; // orange
+                        break;
+                      case 'Confirmation Status':
+                        icon = 'check-circle';
+                        color = '#28a745'; // green
+                        break;
+                      case 'Comment':
+                        icon = 'comment';
+                        color = '#ff9800'; // orange
+                        break;
+                      default:
+                        icon = 'question-circle';
+                        color = '#999'; // gray
+                    }
+
+                    return (
+                      <View style={styles.row} key={key}>
+                        <Icon
+                          name={icon}
+                          size={20}
+                          color={color}
+                          style={{marginRight: 10}}
+                        />
                         <Text style={styles.cellTitle}>{key}:</Text>
+                        <Text style={styles.cell}>{value}</Text>
                       </View>
-                      <Text style={styles.cell}>{value}</Text>
-                    </View>
-                  ),
+                    );
+                  },
                 )}
               </ScrollView>
               <TouchableOpacity

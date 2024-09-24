@@ -163,7 +163,15 @@ const DrawerMain = ({pageName,route}) => {
         {index === 15 && <ListUser name={'Users List'} />}
         {index === 16 && <BarChartComponent />}
         {index === 17 && <MappedContractorsList />}
-        {index === 18 && <StartDate name={'MCW Start Requests'} />}
+        {index === 18 && (
+          <StartDate name={'MCW Start Requests'} dataName={'MCWStartDate'} />
+        )}
+        {index === 19 && (
+          <StartDate
+            name={'SQM Date Requests (For Core Testing)'}
+            dataName={'SQMVisitCoreTesting'}
+          />
+        )}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}

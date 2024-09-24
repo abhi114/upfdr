@@ -1763,4 +1763,52 @@ export const MCWStartDate = [
   },
 ];
 
+export const SQMVisitCoreTesting = [
+  {
+    uploadDate: '2022-10-31 11:48:18',
+    'Date Requested': '2022-09-21',
+    'Package Number': 'UP66144',
+    FDRGroup: 'UP-FDR33',
+    District: 'Mathura',
+    Contractor: 'Siddharth construction',
+    Status: 'Accepted',
+    StatusData: {
+      'Requested Date': '2023-05-05',
+      Comments: 'Please Approve to commence the FDR work',
+      'Confirmation Status': 'Accepted',
+      Comment: 'sh anil kumar singh',
+    },
+  },
+  {
+    uploadDate: '2022-10-31 11:48:19',
+    'Date Requested': '2022-09-21',
+    'Package Number': 'UP66144',
+    'FDR Group': 'UP-FDR33',
+    District: 'Mathura',
+    Contractor: 'Siddharth construction',
+    Status: 'Accepted',
+    StatusData: {
+      'Requested Date': '2023-05-05',
+      Comments: 'Please Approve to commence the FDR work',
+      'Confirmation Status': 'Accepted',
+      Comment: 'sh anil kumar singh',
+    },
+  },
+  {
+    uploadDate: '2022-10-31 11:48:11',
+    'Date Requested': '2022-09-21',
+    'Package Number': 'UP66144',
+    'FDR Group': 'UP-FDR33',
+    District: 'Mathura',
+    Contractor: 'Siddharth construction',
+    Status: 'Accepted',
+    StatusData: {
+      'Requested Date': '2023-05-05',
+      Comments: 'Please Approve to commence the FDR work',
+      'Confirmation Status': 'Accepted',
+      Comment: 'sh anil kumar singh',
+    },
+  },
+]
+
 
