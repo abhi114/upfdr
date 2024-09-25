@@ -173,6 +173,12 @@ const DrawerContent = ({screenname, setScreenName}) => {
         screenName: 'CoreTesting',
         setScreenName,
       });
+    }else if(screenName === 'List of TS Requests'){
+      navigation.navigate('HeaderMain', {
+        index: 20,
+        screenName: 'TsRequestsData',
+        setScreenName,
+      });
     }
     //setExpandedItem(null); // Close the dropdown after selection
   };

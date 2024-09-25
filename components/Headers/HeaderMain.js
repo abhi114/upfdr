@@ -172,6 +172,13 @@ const DrawerMain = ({pageName,route}) => {
             dataName={'SQMVisitCoreTesting'}
           />
         )}
+        {index === 20 && (
+          <StartDate
+            name={'TS Data Requests'}
+            dataName={'TsRequestsData'}
+          />
+        )}
+        
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}
