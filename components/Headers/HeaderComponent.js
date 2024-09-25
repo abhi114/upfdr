@@ -1,12 +1,21 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import Icon1 from 'react-native-vector-icons/Octicons';
+import Icon2 from 'react-native-vector-icons/Entypo';
 
 const Header = ({handleProfilePress, handleTabPress}) => {
   return (
     <View style={styles.header}>
       <Text style={styles.headerText}>UTTAM-FDR</Text>
       <View style={{flexDirection: 'row'}}>
+        <TouchableOpacity>
+          <Icon2
+            name="circle-with-plus"
+            size={25}
+            style={styles.tabIcon}
+            color={'#00D25B'}
+          />
+        </TouchableOpacity>
         <TouchableOpacity onPress={handleProfilePress}>
           <Image source={require('../logo_login.png')} style={styles.logo} />
         </TouchableOpacity>
@@ -35,6 +44,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     width: 32,
     height: 32,
+    
   },
   headerText: {
     fontSize: 24,
@@ -43,7 +53,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginTop: 2,
-    marginHorizontal: 15,
+    marginRight:15,
+    marginLeft:5,
     width: 32,
     height: 32,
     borderRadius: 80,
