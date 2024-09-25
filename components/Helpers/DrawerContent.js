@@ -255,7 +255,14 @@ const DrawerContent = ({screenname, setScreenName}) => {
               ? '#0F1015'
               : null,
         },
-        {name: 'List of TS Requests', screenName: ''},
+        {
+          name: 'List of TS Requests',
+          screenName: '',
+          backgroundColor:
+            screenname === 'TsRequestsData' || screenname === 'TsRequestsData'
+              ? '#0F1015'
+              : null,
+        },
         {name: 'All JMF List', screenName: ''},
         {name: 'All SC List', screenName: ''},
         {name: 'List of Road Profiles', screenName: ''},

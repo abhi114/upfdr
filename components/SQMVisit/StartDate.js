@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import XLSX from 'xlsx';
 import {Parser} from 'json2csv';
+import TrialStretchForm from '../TrialStretch/TrialStretchForm';
 var RNFS = require('react-native-fs');
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
@@ -241,9 +242,15 @@ const StartDate = ({name,dataName}) => {
             }}>
             <Text style={{color: '#0000FF'}}>Dashboard </Text>
           </TouchableOpacity>
-          <Text style={{color: '#FFFFFF'}}>/ SQM Data Requests</Text>
+          <Text style={{color: '#FFFFFF'}}>/ {name}</Text>
         </View>
         <Text style={styles.title}>{name}</Text>
+        {name === 'TS Data Requests' && (
+          <View style={styles.card}>
+            <TrialStretchForm />
+          </View>
+        )}
+
         <TextInput
           style={styles.searchInput}
           placeholder="Search by Contractor,District or FDR Group"
@@ -302,7 +309,8 @@ const StartDate = ({name,dataName}) => {
                     <Text style={styles.cellTitle}>{key}:</Text>
                     {key === 'uploadDate' ||
                     key === 'Package Number' ||
-                    key === 'Status' ? (
+                    key === 'Status' ||
+                    key === 'PMU Status' ? (
                       <TouchableOpacity
                         onPress={() => handlePress(key, item)}
                         style={{
@@ -312,12 +320,18 @@ const StartDate = ({name,dataName}) => {
                           flex: 1,
                           borderRadius: 6,
                           borderWidth: 2,
-                          borderColor: key === 'Status' ? '#00D25B' : '#0000FF',
+                          borderColor:
+                            key === 'Status' || key === 'PMU Status'
+                              ? '#00D25B'
+                              : '#0000FF',
                         }}>
                         <Text
                           style={{
                             textAlign: 'center',
-                            color: key === 'Status' ? '#00D25B' : '#0000FF',
+                            color:
+                              key === 'Status' || key === 'PMU Status'
+                                ? '#00D25B'
+                                : '#0000FF',
                           }}>
                           {value}
                         </Text>
