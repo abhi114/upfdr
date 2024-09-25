@@ -10,11 +10,13 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
   TextInput,
+  Modal,
 } from 'react-native';
 
 import DrawerTab from './Headers/DrawerTab';
 import ProfileTab from './Headers/ProfileTab';
 import Header from './Headers/HeaderComponent';
+import AddUserForm from './AddUser';
 
 
 const ResetPassword = ({route}) => {
@@ -22,6 +24,11 @@ const ResetPassword = ({route}) => {
     const [showTab, setShowTab] = useState(false);
     const [tabPosition, setTabPosition] = useState(new Animated.Value(300));
     const [showProfileTab, setShowProfileTab] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+     const handleAddUserPress = () => {
+       console.log('pressed it user add');
+       setModalVisible(true);
+     };
     const [profileTabPosition, setProfileTabPosition] = useState(
       new Animated.Value(0),
     );
@@ -115,9 +122,49 @@ const ResetPassword = ({route}) => {
     <TouchableWithoutFeedback onPress={handleOutsideTabPress}>
       <View style={styles.container}>
         <Header
+          handleAddUserPress={handleAddUserPress}
           handleProfilePress={handleProfilePress}
           handleTabPress={handleTabPress}
         />
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(!modalVisible)}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignContent: 'center',
+              margin: 5,
+              backgroundColor: '#191C24',
+            }}>
+            <Text
+              style={{
+                color: '#F1F1F1',
+                alignSelf: 'center',
+                margin: 30,
+                color: '#ffffff',
+                fontSize: 20,
+                fontWeight: 'bold',
+              }}>
+              Add User
+            </Text>
+            <ScrollView
+              style={{
+                flex: 1,
+                margin: 5,
+                backgroundColor: '#191C24',
+              }}>
+              <AddUserForm />
+            </ScrollView>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}>
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
         <View
           style={{
             padding: 30,
@@ -231,6 +278,20 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: 'bold',
     color: '#00ff00',
+  },
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: '#FFD700',
+    paddingVertical: 10,
+    paddingHorizontal: 40,
+    marginHorizontal: '32%',
+    borderRadius: 20,
+    marginBottom: 10,
+  },
+  closeButtonText: {
+    fontSize: 18,
+    color: '#333333',
+    fontWeight: 'bold',
   },
 });
 

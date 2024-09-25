@@ -3,12 +3,13 @@ import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import Icon1 from 'react-native-vector-icons/Octicons';
 import Icon2 from 'react-native-vector-icons/Entypo';
 
-const Header = ({handleProfilePress, handleTabPress}) => {
+const Header = ({handleAddUserPress, handleProfilePress, handleTabPress}) => {
+  //console.log('function is' + newfunction);
   return (
     <View style={styles.header}>
       <Text style={styles.headerText}>UTTAM-FDR</Text>
       <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleAddUserPress}>
           <Icon2
             name="circle-with-plus"
             size={25}
