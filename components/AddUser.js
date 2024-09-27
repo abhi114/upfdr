@@ -23,7 +23,7 @@ const AddUserForm = () => {
 
   return (
     <View style={styles.card}>
-      <Text style={styles.header}>Add User</Text>
+      <Text style={styles.header}>User Information</Text>
       <Text style={styles.subHeader}>New User Details</Text>
 
       {/* Full Name */}

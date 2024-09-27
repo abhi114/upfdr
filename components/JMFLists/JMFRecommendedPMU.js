@@ -23,8 +23,9 @@ var RNFS = require('react-native-fs');
 
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
 
-const JMFRecommendedPMU = ({route}) => {
-  const {name, dataName} = route.params;
+const JMFRecommendedPMU = ({route, name: propName, dataName: propDataName}) => {
+  const name = route?.params?.name || propName;
+  const dataName = route?.params?.dataName || propDataName;
   const [search, setSearch] = useState('');
   const [userData, setuserData] = useState(data[dataName]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -95,7 +96,7 @@ const JMFRecommendedPMU = ({route}) => {
     )
       .then(() => {
         console.log('success');
-        alert("Saved Successfully To Downloads");
+        alert('Saved Successfully To Downloads');
       })
       .catch(e => {
         console.log('Error', e);
@@ -219,7 +220,7 @@ const JMFRecommendedPMU = ({route}) => {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        <View style={{flexDirection: 'row', marginBottom: 25}}>
+        <View style={{flexDirection: 'row', marginBottom: 15}}>
           <TouchableOpacity
             onPress={() => {
               navigation.goBack();

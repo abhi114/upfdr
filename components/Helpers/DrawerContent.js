@@ -179,6 +179,12 @@ const DrawerContent = ({screenname, setScreenName}) => {
         screenName: 'TsRequestsData',
         setScreenName,
       });
+    }else if (screenName === 'All JMF List') {
+     navigation.navigate('HeaderMain', {
+       index: 21,
+       screenName: 'AllJMFList',
+       setScreenName,
+     });
     }
     //setExpandedItem(null); // Close the dropdown after selection
   };

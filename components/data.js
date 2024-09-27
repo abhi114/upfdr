@@ -1845,4 +1845,28 @@ export const TsRequestsData = [
   },
 ];
 
+export const AllJMFList = [
+  {
+    slNo: 1,
+    date: '12-10-2022',
+    packageNumber: 'UP66137',
+    fdrGroup: 'UP-FDR34',
+    district: 'Sitapur',
+    contractor: 'Vishwa Samudra Engineering Pvt. Ltd.',
+    institution: 'AVANI',
+    additive: 'STABILROAD',
+    durability: 5.47,
+    flexural: 1.38,
+    residual: 5.13,
+    ucs7Days: 4.75,
+    ucs28Days: 5.86,
+    omc: 10.3,
+    mdd: 1.98,
+    jobMixReport: 'Download Report',
+    pmuPendency: '-',
+    piuPendency: '-',
+    statusPmu: 'Recommended',
+    statusPiu: 'Recommended',
+  },
+];
 
