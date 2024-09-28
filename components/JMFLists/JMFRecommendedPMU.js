@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import {Parser} from 'json2csv';
 import XLSX from 'xlsx';
+import DateModal from '../Helpers/DateModal';
 var RNFS = require('react-native-fs');
 
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
@@ -33,6 +34,7 @@ const JMFRecommendedPMU = ({route, name: propName, dataName: propDataName}) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [mainSelectedItem, setmainSelectedItem] = useState(null);
+   const [DateModalVisible, setDateModalVisible] = useState(false);
   const navigation = useNavigation();
   console.log(name);
   console.log(dataName);
@@ -216,7 +218,12 @@ const JMFRecommendedPMU = ({route, name: propName, dataName: propDataName}) => {
       DownloadExcel();
     }
   };
+  const DatePress = (item)=>{
+    setDateModalVisible(true);
+    console.log(item.packageNumber);
+    setSelectedItem(item);
 
+  }
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
@@ -305,7 +312,9 @@ const JMFRecommendedPMU = ({route, name: propName, dataName: propDataName}) => {
                     borderWidth: 2,
                     alignContent: 'center',
                   }}
-                  onPress={() => {}}>
+                  onPress={() => {
+                    DatePress(item);
+                  }}>
                   <Text style={[styles.cell, {color: '#0090E7'}]}>
                     {item.date}
                   </Text>
@@ -365,6 +374,23 @@ const JMFRecommendedPMU = ({route, name: propName, dataName: propDataName}) => {
           )}
           keyExtractor={item => item.slNo}
         />
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={DateModalVisible}
+          onRequestClose={() => setDateModalVisible(!DateModalVisible)}>
+          <ScrollView
+            style={{
+              flex: 1,
+              
+              alignContent: 'center',
+              margin: 5,
+              backgroundColor: '#000000',
+            }}>
+            <DateModal selectedItem={selectedItem} />
+          </ScrollView>
+        </Modal>
         {selectedItem && (
           <Modal
             animationType="slide"
