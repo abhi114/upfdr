@@ -185,6 +185,12 @@ const DrawerContent = ({screenname, setScreenName}) => {
        screenName: 'AllJMFList',
        setScreenName,
      });
+    }else if (screenName === 'Map Contractor') {
+       navigation.navigate('HeaderMain', {
+         index: 22,
+         screenName: 'MapContractors',
+         setScreenName,
+       });
     }
     //setExpandedItem(null); // Close the dropdown after selection
   };
@@ -218,7 +224,11 @@ const DrawerContent = ({screenname, setScreenName}) => {
           screenName: 'ListAllUsersScreen',
           backgroundColor: screenname === 'ListAllUser' ? '#0F1015' : null,
         },
-        {name: 'Map Contractor', screenName: 'MapContractorScreen'},
+        {
+          name: 'Map Contractor',
+          screenName: 'MapContractorScreen',
+          backgroundColor: screenname === 'MapContractors' ? '#0F1015' : null,
+        },
       ],
     },
     {

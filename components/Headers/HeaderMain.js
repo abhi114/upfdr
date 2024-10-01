@@ -34,6 +34,7 @@ import StartDate from '../SQMVisit/StartDate';
 import { Modal } from 'react-native';
 import AddUserForm from '../AddUser';
 import JMFRecommendedPMU from '../JMFLists/JMFRecommendedPMU';
+import MapContractors from '../MapContractors';
 
 const DrawerMain = ({pageName,route}) => {
   const {index, screenName, setScreenName} = route.params;
@@ -231,6 +232,9 @@ const DrawerMain = ({pageName,route}) => {
         )}
         {index === 21 && (
           <JMFRecommendedPMU name={'All JMF List'} dataName={'AllJMFList'} />
+        )}
+        {index === 22 && (
+          <MapContractors/>
         )}
         {showTab && (
           <DrawerTab
