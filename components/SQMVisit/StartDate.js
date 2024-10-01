@@ -321,16 +321,24 @@ const StartDate = ({name,dataName}) => {
                           borderRadius: 6,
                           borderWidth: 2,
                           borderColor:
-                            key === 'Status' || key === 'PMU Status'
+                            key === 'Status'
                               ? '#00D25B'
+                              : key === 'PMU Status' && value === 'Accepted'
+                              ? '#00D25B'
+                              : key === 'PMU Status' && value !== 'Accepted'
+                              ? '#FF0000'
                               : '#0000FF',
                         }}>
                         <Text
                           style={{
                             textAlign: 'center',
                             color:
-                              key === 'Status' || key === 'PMU Status'
+                              key === 'Status'
                                 ? '#00D25B'
+                                : key === 'PMU Status' && value === 'Accepted'
+                                ? '#00D25B'
+                                : key === 'PMU Status' && value !== 'Accepted'
+                                ? '#FF0000'
                                 : '#0000FF',
                           }}>
                           {value}

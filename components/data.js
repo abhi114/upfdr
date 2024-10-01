@@ -1835,7 +1835,7 @@ export const TsRequestsData = [
     'FDR Group': 'UP-FDR33',
     District: 'Mathura',
     Contractor: 'Siddharth construction',
-    'PMU Status': 'Accepted',
+    'PMU Status': 'Revised Data Requested',
     StatusData: {
       'Requested Date': '2023-05-05',
       Comments: 'Please Approve to commence the FDR work',
