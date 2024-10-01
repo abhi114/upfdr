@@ -35,6 +35,7 @@ import { Modal } from 'react-native';
 import AddUserForm from '../AddUser';
 import JMFRecommendedPMU from '../JMFLists/JMFRecommendedPMU';
 import MapContractors from '../MapContractors';
+import AllSCList from '../AllSCList';
 
 const DrawerMain = ({pageName,route}) => {
   const {index, screenName, setScreenName} = route.params;
@@ -233,8 +234,9 @@ const DrawerMain = ({pageName,route}) => {
         {index === 21 && (
           <JMFRecommendedPMU name={'All JMF List'} dataName={'AllJMFList'} />
         )}
-        {index === 22 && (
-          <MapContractors/>
+        {index === 22 && <MapContractors />}
+        {index === 23 && (
+          <AllSCList name={'All Sc List'} dataName={'AllScList'} />
         )}
         {showTab && (
           <DrawerTab

@@ -1890,6 +1890,19 @@ export const AllJMFList = [
     },
   },
 ];
-
+export const AllScList = [
+  {
+    slNo: 1,
+    district: 'Sitapur',
+    packageNumber: 'UP66137',
+    fdrGroup: 'UP-FDR34',
+    contractor: 'Vishwa Samudra Engineering Pvt. Ltd.',
+    noOfJMFNeeded: 5,
+    'km-Wise Uploaded': 'No',
+    'Date Sent To lab':'',
+    'Lab Name': '',
+    Action:'View',
+  },
+];
 
 

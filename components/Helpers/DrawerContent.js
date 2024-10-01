@@ -191,6 +191,12 @@ const DrawerContent = ({screenname, setScreenName}) => {
          screenName: 'MapContractors',
          setScreenName,
        });
+    }else if(screenName === 'All SC List'){
+       navigation.navigate('HeaderMain', {
+         index: 23,
+         screenName: 'AllScList',
+         setScreenName,
+       });
     }
     //setExpandedItem(null); // Close the dropdown after selection
   };
@@ -280,7 +286,14 @@ const DrawerContent = ({screenname, setScreenName}) => {
               : null,
         },
         {name: 'All JMF List', screenName: ''},
-        {name: 'All SC List', screenName: ''},
+        {
+          name: 'All SC List',
+          screenName: '',
+          backgroundColor:
+            screenname === 'AllScList' || screenname === 'AllScList'
+              ? '#0F1015'
+              : null,
+        },
         {name: 'List of Road Profiles', screenName: ''},
         {name: 'TS Internal Only', screenName: ''},
         {name: 'List MCW Own Risk', screenName: ''},
