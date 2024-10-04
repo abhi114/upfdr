@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import {View, Text, StyleSheet, TouchableOpacity, Image, Modal, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/Feather'; // Adjust based on your icon library
 
@@ -7,50 +7,48 @@ import PdfCard from './Helpers/Pdf';
 
 const SCKmPhoto = ({selectedItem}) => {
   // First set of data (from the first image)
+  const [photoModal,setphotoModal] = useState(false);
+  const [photoUrl,setPhotoUrl] = useState(null);
   const dataMapping1 = [
-    {key: 'Date of Reporting', icon: 'calendar', color: '#007bff'}, // Blue
-    {key: 'Package No.', icon: 'file-text', color: '#007bff'}, // Blue
-    {key: 'Institution', icon: 'university', color: '#28a745'}, // Green
-    {key: 'Cement Content', icon: 'building', color: '#ff9800'}, // Orange
-    {key: 'Optimum Moisture', icon: 'tint', color: '#9c27b0'}, // Purple
-    {key: 'Maximum Dry Density (MDD)', icon: 'balance-scale', color: '#9c27b0'}, // Purple
-    {
-      key: 'Unconfined Compression Strength - 7 Days',
-      icon: 'bolt',
-      color: '#f44336',
-    }, // Red
-    {
-      key: 'Unconfined Compression Strength - 28 Days',
-      icon: 'bolt',
-      color: '#f44336',
-    }, // Red
+    {key: 'Contractor', icon: 'file-text', color: '#007bff'}, // Blue
+    {key: 'Phone Number', icon: 'file-text', color: '#007bff'}, // Blue
+    {key: 'Total Length', icon: 'file-text', color: '#007bff'}, // Blue
+    {key: 'Road Name', icon: 'file-text', color: '#007bff'}, // Blue
+    {key: 'District', icon: 'cloud', color: '#28a745'}, // Green
+    {key: 'Block', icon: 'cloud', color: '#28a745'}, // Green
   ];
 
   // Second set of data (from the second image)
   const dataMapping2 = [
-    {key: 'Flexural Strength', icon: 'cloud', color: '#28a745'}, // Green
-    {key: 'Residual Strength', icon: 'cloud', color: '#28a745'}, // Green
-    {key: 'Durability', icon: 'shield', color: '#9c27b0'}, // Purple
-    {key: 'Additive Name', icon: 'flask', color: '#9c27b0'}, // Purple
-    {key: 'Additive Type', icon: 'flask', color: '#f44336'}, // Red
-    {key: 'IRC Accredited', icon: 'check-circle', color: '#f44336'}, // Red
-    {key: 'Required Quantity', icon: 'tint', color: '#ff9800'}, // Orange
-    {key: 'Remarks', icon: 'comment', color: '#ff9800'}, // Orange
+    {key: 'Date of Sample Collection', icon: 'file-text', color: '#007bff'}, // Blue
+    {key: 'Date of Upload', icon: 'file-text', color: '#007bff'}, // Blue
+    {key: 'Date Sent to Lab', icon: 'file-text', color: '#007bff'}, // Blue
+    {key: 'Lab Name', icon: 'file-text', color: '#007bff'}, // Blue
+    {key: 'No. of JMF Needed', icon: 'cloud', color: '#28a745'}, // Green
+    {key: 'Remarks', icon: 'cloud', color: '#28a745'}, // Green
   ];
+  const photoPress = (card)=>{
+    setphotoModal(true);
+    setPhotoUrl(card.PhotoUrl);
+  }
   const cardData = [
     {
-      header: 'PMU Comment',
-      date: '2022-12-24 04:17:46',
-      comment:
-        'This JMF is recommended for construction of trial patch and with the condition: 1. All the values must be achieved 2. Final clearance and the permission for construction of the main carriageway will be granted after checking all the satisfactory results from the trial patch.',
+      header: 'Information',
+      slNo: '1',
+      Chainage: '0.500',
+      Side: 'L',
+      CrustThickness: '0.36',
       status: 'Recommended',
+      PhotoUrl: './Helpers/check2.jpeg',
     },
     {
-      header: 'PIU Comment',
-      date: '2022-12-27 12:08:25',
-      comment:
-        'All the conditions given by PMU is must be followed strictly during trial patch and construction of entire Road and maintained all machineries and equipments before trial patch.',
+      header: 'Information',
+      slNo: '2',
+      Chainage: '0.700',
+      Side: 'C',
+      CrustThickness: '0.55',
       status: 'Recommended',
+      PhotoUrl: './Helpers/check2.jpeg',
     },
   ];
   return (
@@ -64,8 +62,9 @@ const SCKmPhoto = ({selectedItem}) => {
             marginVertical: 20,
             fontSize: 20,
             fontWeight: 'bold',
+            marginHorizontal: 10,
           }}>
-          Mix Design Details - 29
+          Road Profile - UP3574 | FDR Group-UPFDR-130
         </Text>
         {dataMapping1.map(({key, icon, color}) => {
           const value = selectedItem['MixDesignData'][key];
@@ -73,12 +72,7 @@ const SCKmPhoto = ({selectedItem}) => {
             return (
               <View style={styles.card} key={key}>
                 <View style={styles.row}>
-                  <Icon
-                    name={icon}
-                    size={20}
-                    color={color}
-                    style={{marginRight: 10}}
-                  />
+                  <Icon name={icon} size={20} color={color} />
                   <View style={styles.textContainer}>
                     <Text style={styles.cellTitle}>{key}</Text>
                     <Text style={styles.cell}>{value}</Text>
@@ -98,8 +92,9 @@ const SCKmPhoto = ({selectedItem}) => {
             marginVertical: 20,
             fontSize: 20,
             fontWeight: 'bold',
+            marginHorizontal: 10,
           }}>
-          Mix Design Details - 29
+          Sample Collection Data
         </Text>
         {dataMapping2.map(({key, icon, color}) => {
           const value = selectedItem['MixDesignData'][key];
@@ -111,7 +106,7 @@ const SCKmPhoto = ({selectedItem}) => {
                     name={icon}
                     size={20}
                     color={color}
-                    style={{marginRight: 10}}
+                    style={{marginRight: 1}}
                   />
                   <View style={styles.textContainer}>
                     <Text style={styles.cellTitle}>{key}</Text>
@@ -124,59 +119,69 @@ const SCKmPhoto = ({selectedItem}) => {
           return null;
         })}
       </View>
-      <View style={styles.touchableContainer}>
-        <TouchableOpacity
-          style={styles.touchableCard}
-          onPress={() => {
-            /* Download Mix Design Logic */
-          }}>
-          <View style={styles.touchableCardContent}>
-            <View>
-              <Text style={styles.touchableCardTitle}>
-                Download Mix Design Report
-              </Text>
-              <Text style={styles.touchableCardSubtitle}>
-                Download Mix Design (Job Mix Formula) PDF Report
-              </Text>
-            </View>
-            <Icon1 name="arrow-up-right" size={20} color="#28a745" />
-          </View>
-        </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.touchableCard}
-          onPress={() => {
-            /* Back to Road Details Page Logic */
-          }}>
-          <View style={styles.touchableCardContent}>
-            <View>
-              <Text style={styles.touchableCardTitle}>
-                Back to Road Details Page
-              </Text>
-              <Text style={styles.touchableCardSubtitle}>
-                Go Back to Road Details Page
-              </Text>
-            </View>
-            <Icon1 name="arrow-up-right" size={20} color="#28a745" />
-          </View>
-        </TouchableOpacity>
-      </View>
-
-      <PdfCard />
+      <Text
+        style={{
+          color: '#ffffff',
+          alignSelf: 'center',
+          marginVertical: 20,
+          fontSize: 20,
+          fontWeight: 'bold',
+          marginHorizontal: 10,
+        }}>
+        Sample Collection(km-wise)
+      </Text>
       <View style={styles1.cardContainer}>
         {cardData.map((card, index) => (
           <View key={index} style={styles1.card}>
             <Text style={styles1.headerText}>{card.header}</Text>
             <View style={styles1.row}>
-              <Text style={styles1.cellTitle}>Date</Text>
-              <Text style={styles1.cell}>{card.date}</Text>
+              <Text style={styles1.cellTitle}>SlNo/Km</Text>
+              <Text style={styles1.cell}>{card.slNo}</Text>
             </View>
             <View style={styles1.row}>
-              <Text style={styles1.cellTitle}>Comment</Text>
-              <Text style={styles1.cell}>{card.comment}</Text>
+              <Text style={styles1.cellTitle}>Chainage</Text>
+              <Text style={styles1.cell}>{card.Chainage}</Text>
             </View>
             <View style={styles1.row}>
-              <Text style={styles1.cellTitle}>Status</Text>
+              <Text style={styles1.cellTitle}>Side</Text>
+              <Text style={styles1.cell}>{card.Side}</Text>
+            </View>
+            <View style={styles1.row}>
+              <Text style={styles1.cellTitle}>Crust Thickness</Text>
+              <Text style={styles1.cell}>{card.CrustThickness}</Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                margin: 5,
+                alignSelf: 'center',
+              }}>
+              <Text style={styles1.cellTitle}>Photo</Text>
+              <TouchableOpacity
+                style={{
+                  width: 50,
+                  height: 50,
+                  flex: 2,
+                }}
+                onPress={() => {
+                  photoPress(card);
+                }}>
+                <Image
+                  source={require('./Helpers/check2.jpeg')} //change it to uri when the image starts coming from the remote url 
+                  style={{
+                    width: 50,
+                    height: 50,
+                    flex: 2,
+                    borderRadius: 15,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles1.row}>
+              <Text style={styles1.cellTitle}>Geo-Location</Text>
               <Text style={{color: '#FFFF00', fontSize: 13, flex: 2}}>
                 {card.status}
               </Text>
@@ -184,6 +189,31 @@ const SCKmPhoto = ({selectedItem}) => {
           </View>
         ))}
       </View>
+      {photoUrl && (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={photoModal}
+          onRequestClose={() => setphotoModal(!photoModal)}>
+          <View
+            style={{
+              flex: 1,
+
+              alignContent: 'center',
+              margin: 5,
+              backgroundColor: '#000000',
+            }}>
+            <Image
+              source={require('./Helpers/check2.jpeg')}
+              resizeMode="contain"
+              style={{
+                width: Dimensions.get('screen').width,
+                height: Dimensions.get('screen').height,
+              }}
+            />
+          </View>
+        </Modal>
+      )}
     </View>
   );
 };
@@ -240,18 +270,21 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#242730',
     borderRadius: 10,
-    padding: 10,
+    padding: 12,
     marginVertical: 5,
-    width: '48%', // Two cards per row
+    width: '49%', // Two cards per row
     elevation: 2,
     minHeight: 100, // Reducing the height
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent:'center'
   },
   textContainer: {
     flexDirection: 'column',
+    padding:5,
+    justifyContent:'center'
   },
   cellTitle: {
     color: '#F1F1F1',
@@ -261,6 +294,7 @@ const styles = StyleSheet.create({
   cell: {
     color: '#B0B0B0',
     fontSize: 12,
+    
   },
   touchableContainer: {
     flexDirection: 'row',

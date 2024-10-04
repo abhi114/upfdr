@@ -1903,25 +1903,21 @@ export const AllScList = [
     'Lab Name': 'Not Available',
     Action: 'View',
     MixDesignData: {
-      // Data from the first image
-      'Date of Reporting': '2022-12-03', // From the image
-      'Package No.': 'UP13161', // From the image
-      Institution: 'AVS INNO INFRA', // From the image
-      'Cement Content': '4%', // From the image
-      'Optimum Moisture': '8.50%', // From the image
-      'Maximum Dry Density (MDD)': '2.075gm/cc', // From the image
-      'Unconfined Compression Strength - 7 Days': '4.95 MPa', // From the image
-      'Unconfined Compression Strength - 28 Days': '5.81 MPa', // From the image,
+      Contractor: 'HANSRAJ CONSTRUCTION Pvt Ltd',
+      'Phone Number': '9719631400',
+      'Total Length': '5.80 km',
+      'Road Name': 'MRL09 - Dhawarsi To Aadampur',
+      District: 'J.B.F. Nagar',
+      Block: 'Gangeshwari',
 
-      // Data from the second image
-      'Flexural Strength': '1.183 MPa', // From the second image
-      'Residual Strength': '3.29 MPa', // From the second image
-      Durability: '6.51% loss', // From the second image
-      'Additive Name': 'ANT STABILIZER', // From the second image
-      'Additive Type': 'Liquid', // From the second image
-      'IRC Accredited': 'Yes', // From the second image
-      'Required Quantity': '100 ml/cubic-m', // From the second image
-      Remarks: '', // Empty for now as no data is provided in the second image
+      // Data from the right card
+      'Date of Sample Collection': '2023-04-07',
+      'Date of Upload': '2023-06-24 07:09:33',
+      'Date Sent to Lab': '2023-04-07',
+      'Lab Name': 'IIT Roorkee',
+      'No. of JMF Needed': 'NA',
+      Remarks:
+        'This is the JMF which was repeated due to change in Additive and only one JMF was required',
     },
   },
 ];
