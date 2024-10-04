@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import XLSX from 'xlsx';
 import {Parser} from 'json2csv';
+import SCKmPhoto from './SCKmPhoto';
 
 var RNFS = require('react-native-fs');
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
@@ -33,6 +34,7 @@ const AllSCList = ({name, dataName}) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [mainSelectedItem, setmainSelectedItem] = useState(null);
+   const [DateModalVisible, setDateModalVisible] = useState(false);
   const navigation = useNavigation();
   // Filtered data based on search input
   const filteredData = userData.filter(
@@ -49,6 +51,10 @@ const AllSCList = ({name, dataName}) => {
       console.log('item is ' + item);
       setSelectedItem(item);
       setModalVisible(true);
+    }else if(key === 'Action'){
+      console.log('item is ' + item);
+        setSelectedItem(item);
+        setDateModalVisible(true);
     }
   };
   // Slice the data for the current page
@@ -244,11 +250,6 @@ const AllSCList = ({name, dataName}) => {
           <Text style={{color: '#FFFFFF'}}>/ {name}</Text>
         </View>
         <Text style={styles.title}>{name}</Text>
-        {name === 'TS Data Requests' && (
-          <View style={styles.card}>
-            <TrialStretchForm />
-          </View>
-        )}
 
         <TextInput
           style={styles.searchInput}
@@ -301,25 +302,35 @@ const AllSCList = ({name, dataName}) => {
           data={paginatedData}
           renderItem={({item}) => (
             <View style={styles.card}>
-              {Object.entries(item)
-                .slice(0, -1)
-                .map(([key, value], index) => (
-                  <View style={styles.row} key={key}>
-                    <Text style={styles.cellTitle}>{key}:</Text>
-                    {key === 'uploadDate' ||
-                    key === 'Package Number' ||
-                    key === 'Status' ||
-                    key === 'PMU Status' ? (
-                      <TouchableOpacity
-                        onPress={() => handlePress(key, item)}
+              {Object.entries(item).slice(0,-1).map(([key, value], index) => (
+                <View style={styles.row} key={key}>
+                  <Text style={styles.cellTitle}>{key}:</Text>
+                  {key === 'Action' ||
+                  key === 'Package Number' ||
+                  key === 'Status' ||
+                  key === 'PMU Status' ? (
+                    <TouchableOpacity
+                      onPress={() => handlePress(key, item)}
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flex: 0.8,
+                        borderRadius: 6,
+                        borderWidth: 2,
+                        borderColor:
+                          key === 'Status'
+                            ? '#00D25B'
+                            : key === 'PMU Status' && value === 'Accepted'
+                            ? '#00D25B'
+                            : key === 'PMU Status' && value !== 'Accepted'
+                            ? '#FF0000'
+                            : '#0000FF',
+                      }}>
+                      <Text
                         style={{
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          flex: 1,
-                          borderRadius: 6,
-                          borderWidth: 2,
-                          borderColor:
+                          textAlign: 'center',
+                          color:
                             key === 'Status'
                               ? '#00D25B'
                               : key === 'PMU Status' && value === 'Accepted'
@@ -328,30 +339,34 @@ const AllSCList = ({name, dataName}) => {
                               ? '#FF0000'
                               : '#0000FF',
                         }}>
-                        <Text
-                          style={{
-                            textAlign: 'center',
-                            color:
-                              key === 'Status'
-                                ? '#00D25B'
-                                : key === 'PMU Status' && value === 'Accepted'
-                                ? '#00D25B'
-                                : key === 'PMU Status' && value !== 'Accepted'
-                                ? '#FF0000'
-                                : '#0000FF',
-                          }}>
-                          {value}
-                        </Text>
-                      </TouchableOpacity>
-                    ) : (
-                      <Text style={styles.cell}>{value}</Text>
-                    )}
-                  </View>
-                ))}
+                        {value}
+                      </Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <Text style={styles.cell}>{value}</Text>
+                  )}
+                </View>
+              ))}
             </View>
           )}
-          keyExtractor={item => item.uploadDate}
+          keyExtractor={item => item.packageNumber}
         />
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={DateModalVisible}
+          onRequestClose={() => setDateModalVisible(!DateModalVisible)}>
+          <ScrollView
+            style={{
+              flex: 1,
+
+              alignContent: 'center',
+              margin: 5,
+              backgroundColor: '#000000',
+            }}>
+            <SCKmPhoto selectedItem={selectedItem} />
+          </ScrollView>
+        </Modal>
         {selectedItem && (
           <Modal
             animationType="slide"
@@ -383,47 +398,7 @@ const AllSCList = ({name, dataName}) => {
                   margin: 5,
                   backgroundColor: '#191C24',
                 }}>
-                {Object.entries(selectedItem['StatusData']).map(
-                  ([key, value]) => {
-                    let icon;
-                    let color;
-
-                    switch (key) {
-                      case 'Requested Date':
-                        icon = 'calendar';
-                        color = '#007bff'; // blue
-                        break;
-                      case 'Comments':
-                        icon = 'comment';
-                        color = '#ff9800'; // orange
-                        break;
-                      case 'Confirmation Status':
-                        icon = 'check-circle';
-                        color = '#28a745'; // green
-                        break;
-                      case 'Comment':
-                        icon = 'comment';
-                        color = '#ff9800'; // orange
-                        break;
-                      default:
-                        icon = 'question-circle';
-                        color = '#999'; // gray
-                    }
-
-                    return (
-                      <View style={styles.row} key={key}>
-                        <Icon
-                          name={icon}
-                          size={20}
-                          color={color}
-                          style={{marginRight: 10}}
-                        />
-                        <Text style={styles.cellTitle}>{key}:</Text>
-                        <Text style={styles.cell}>{value}</Text>
-                      </View>
-                    );
-                  },
-                )}
+                
               </ScrollView>
               <TouchableOpacity
                 style={styles.closeButton}
