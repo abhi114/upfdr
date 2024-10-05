@@ -203,6 +203,12 @@ const DrawerContent = ({screenname, setScreenName}) => {
         screenName: 'ListRoadProfile',
         setScreenName,
       });
+    }else if (screenName === 'TS Internal Only') {
+      navigation.navigate('HeaderMain', {
+        index: 25,
+        screenName: 'TsInternalOnly',
+        setScreenName,
+      });
     }
     //setExpandedItem(null); // Close the dropdown after selection
   };
@@ -308,7 +314,14 @@ const DrawerContent = ({screenname, setScreenName}) => {
               ? '#0F1015'
               : null,
         },
-        {name: 'TS Internal Only', screenName: ''},
+        {
+          name: 'TS Internal Only',
+          screenName: '',
+          backgroundColor:
+            screenname === 'TsInternalOnly' || screenname === 'TsInternalOnly'
+              ? '#0F1015'
+              : null,
+        },
         {name: 'List MCW Own Risk', screenName: ''},
         {name: 'JMF List Archive ', screenName: ''},
       ],

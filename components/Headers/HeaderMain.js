@@ -37,6 +37,7 @@ import JMFRecommendedPMU from '../JMFLists/JMFRecommendedPMU';
 import MapContractors from '../MapContractors';
 import AllSCList from '../AllSCList';
 import RoadProfiles from '../RoadProfiles';
+import TrialStrechListed from '../TrialStretch/TrialStrechListed';
 
 const DrawerMain = ({pageName,route}) => {
   const {index, screenName, setScreenName} = route.params;
@@ -239,8 +240,12 @@ const DrawerMain = ({pageName,route}) => {
         {index === 23 && (
           <AllSCList name={'All Sc List'} dataName={'AllScList'} />
         )}
-        {index === 24 && (
-          <RoadProfiles/>
+        {index === 24 && <RoadProfiles />}
+        {index === 25 && (
+          <TrialStrechListed
+            name={'TS with Internal Only'}
+            dataName={'TrialStretchInternalsOnly'}
+          />
         )}
         {showTab && (
           <DrawerTab
