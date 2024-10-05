@@ -2090,4 +2090,16 @@ export const TrialStretchInternalsOnly = [
  },
 ];
 
+export const MCWownRisk = [
+  {
+    SlNo: '1',
+    PackageNumber: 'UP06159',
+    Declaration: 'Download',
+    'Approval Status': 'Not Recommended',
+    FDRGroup: 'UP-FDR09',
+    District: 'Azamgarh',
+    Contractor: 'BUPLSNPJV',
+  },
+];
+
 

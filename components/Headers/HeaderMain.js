@@ -38,6 +38,7 @@ import MapContractors from '../MapContractors';
 import AllSCList from '../AllSCList';
 import RoadProfiles from '../RoadProfiles';
 import TrialStrechListed from '../TrialStretch/TrialStrechListed';
+import MCWRisk from '../MCWRisk';
 
 const DrawerMain = ({pageName,route}) => {
   const {index, screenName, setScreenName} = route.params;
@@ -247,6 +248,7 @@ const DrawerMain = ({pageName,route}) => {
             dataName={'TrialStretchInternalsOnly'}
           />
         )}
+        {index === 26 && <MCWRisk/>}
         {showTab && (
           <DrawerTab
             setShowTab={setShowTab}
