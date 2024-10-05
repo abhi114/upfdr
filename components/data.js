@@ -1356,7 +1356,28 @@ export const TrialStretchList = [
     Camber: '3',
     ExistingWidthOfCarriageWay:'3.5',
     ExistingThicknessOfCarriageWay:'250',
-    Action:'Download Report'
+    Action:'Download Report',
+     dataValues: {
+  // Left card (dataMapping1)
+  'Date of Construction': '2022-04-12',
+  'Package No.': 'UP01124',
+  'Start Chainage': '0.300',
+  'End Chainage': '0.400',
+  'Field Dry Density': '2.110 (19.37%)',
+  'Durability': '3.58%', // No value shown in the image
+  'Unconfined Compression Strength - 7 Days': '4.56MPa', // No value shown in the image
+  'Unconfined Compression Strength - 28 Days': '5.03Mpa', // No value shown in the image
+  
+  // Right card (dataMapping2)
+  'Flexural Strength': '-', // No value shown in the image
+  'Residual Strength': '-', // No value shown in the image
+  'Cement Spreading Rate': '19.897',
+  'Additive Spreading Rate': '22.5ML / sqm',
+  'Natural Moisture Content': '3.60',
+  'Field Moisture Content': '8.89',
+  'Contractor': 'Rameshwar Prasad Sharma Contractor',
+  'District': 'Agra'
+}
   },
 ];
 export const TrialStretchRecommendPMUList = [
@@ -1393,6 +1414,27 @@ export const TrialStretchRecommendPMUList = [
     ExistingWidthOfCarriageWay: '3.5',
     ExistingThicknessOfCarriageWay: '250',
     Action: 'Download Report',
+    dataValues: {
+      // Left card (dataMapping1)
+      'Date of Construction': '2022-04-12',
+      'Package No.': 'UP01124',
+      'Start Chainage': '0.300',
+      'End Chainage': '0.400',
+      'Field Dry Density': '2.110 (19.37%)',
+      Durability: '3.58%', // No value shown in the image
+      'Unconfined Compression Strength - 7 Days': '4.56MPa', // No value shown in the image
+      'Unconfined Compression Strength - 28 Days': '5.03Mpa', // No value shown in the image
+
+      // Right card (dataMapping2)
+      'Flexural Strength': '-', // No value shown in the image
+      'Residual Strength': '-', // No value shown in the image
+      'Cement Spreading Rate': '19.897',
+      'Additive Spreading Rate': '22.5ML / sqm',
+      'Natural Moisture Content': '3.60',
+      'Field Moisture Content': '8.89',
+      Contractor: 'Rameshwar Prasad Sharma Contractor',
+      District: 'Agra',
+    },
   },
 ];
 export const TrialStretchNotRecommendPMUList = [
@@ -1429,44 +1471,30 @@ export const TrialStretchNotRecommendPMUList = [
     ExistingWidthOfCarriageWay: '3.5',
     ExistingThicknessOfCarriageWay: '250',
     Action: 'Download Report',
+    dataValues: {
+      // Left card (dataMapping1)
+      'Date of Construction': '2022-04-12',
+      'Package No.': 'UP01124',
+      'Start Chainage': '0.300',
+      'End Chainage': '0.400',
+      'Field Dry Density': '2.110 (19.37%)',
+      Durability: '3.58%', // No value shown in the image
+      'Unconfined Compression Strength - 7 Days': '4.56MPa', // No value shown in the image
+      'Unconfined Compression Strength - 28 Days': '5.03Mpa', // No value shown in the image
+
+      // Right card (dataMapping2)
+      'Flexural Strength': '-', // No value shown in the image
+      'Residual Strength': '-', // No value shown in the image
+      'Cement Spreading Rate': '19.897',
+      'Additive Spreading Rate': '22.5ML / sqm',
+      'Natural Moisture Content': '3.60',
+      'Field Moisture Content': '8.89',
+      Contractor: 'Rameshwar Prasad Sharma Contractor',
+      District: 'Agra',
+    },
   },
 ];
-export const TrialStretchInternalsOnly = [
-  {
-    SlNo: '1',
-    DateUploaded: '22-12-2022',
-    DateOfConstruction: '2022-12-20',
-    DelayInUpload: '+2 days',
-    PackageNumber: 'UP06159',
-    FDRGroup: 'UP-FDR09',
-    District: 'Azamgarh',
-    Contractor: 'BUPLSNPJV',
-    DaysPendencyAtPMU: '-',
-    Status: 'Recommended',
-    PIUName:
-      'JE: satish Chauhan, Prem Prakash, Neeraj yadav, D.P. Singh. AE: R.K.Singh, M.K. Singh, Alka Jaiswal, SE: V.K. Singh Gaur',
-    Designation: 'AE',
-    StartChainage: '7+795',
-    EndChainage: '7+895',
-    FDD: '2.057',
-    UCS7Days: '4.56 MPa',
-    UCS28Days: '5.03 MPa',
-    ResidualStrength: '5.33 MPa',
-    Durability: '3.58%',
-    FlexuralStrength: '1.13 MPa',
-    CementSpreadingRate: '22.169',
-    Additive: '650 ml/cum',
-    Natural: '8.67',
-    Field: '2.057',
-    Moisture: '9.25',
-    Thickness: '250',
-    Width: '5650',
-    Camber: '3',
-    ExistingWidthOfCarriageWay: '3.5',
-    ExistingThicknessOfCarriageWay: '250',
-    Action: 'Download Report',
-  },
-];
+
 export const TSPendingupdatePMUList = [
   {
     SlNo: '1',
@@ -1501,6 +1529,27 @@ export const TSPendingupdatePMUList = [
     ExistingWidthOfCarriageWay: '3.5',
     ExistingThicknessOfCarriageWay: '250',
     Action: 'Download Report',
+    dataValues: {
+      // Left card (dataMapping1)
+      'Date of Construction': '2022-04-12',
+      'Package No.': 'UP01124',
+      'Start Chainage': '0.300',
+      'End Chainage': '0.400',
+      'Field Dry Density': '2.110 (19.37%)',
+      Durability: '3.58%', // No value shown in the image
+      'Unconfined Compression Strength - 7 Days': '4.56MPa', // No value shown in the image
+      'Unconfined Compression Strength - 28 Days': '5.03Mpa', // No value shown in the image
+
+      // Right card (dataMapping2)
+      'Flexural Strength': '-', // No value shown in the image
+      'Residual Strength': '-', // No value shown in the image
+      'Cement Spreading Rate': '19.897',
+      'Additive Spreading Rate': '22.5ML / sqm',
+      'Natural Moisture Content': '3.60',
+      'Field Moisture Content': '8.89',
+      Contractor: 'Rameshwar Prasad Sharma Contractor',
+      District: 'Agra',
+    },
   },
 ];
 
@@ -1982,6 +2031,63 @@ export const RoadProfiles = [
     contractor: 'Blacklead Infratech Private Limited',
    
   },
+];
+export const TrialStretchInternalsOnly = [
+  {
+    SlNo: '1',
+    DateUploaded: '22-12-2022',
+    DateOfConstruction: '2022-12-20',
+    DelayInUpload: '+2 days',
+    PackageNumber: 'UP06159',
+    FDRGroup: 'UP-FDR09',
+    District: 'Azamgarh',
+    Contractor: 'BUPLSNPJV',
+    DaysPendencyAtPMU: '-',
+    Status: 'Recommended',
+    PIUName:
+      'JE: satish Chauhan, Prem Prakash, Neeraj yadav, D.P. Singh. AE: R.K.Singh, M.K. Singh, Alka Jaiswal, SE: V.K. Singh Gaur',
+    Designation: 'AE',
+    StartChainage: '7+795',
+    EndChainage: '7+895',
+    FDD: '2.057',
+    UCS7Days: '4.56 MPa',
+    UCS28Days: '5.03 MPa',
+    ResidualStrength: '5.33 MPa',
+    Durability: '3.58%',
+    FlexuralStrength: '1.13 MPa',
+    CementSpreadingRate: '22.169',
+    Additive: '650 ml/cum',
+    Natural: '8.67',
+    Field: '2.057',
+    Moisture: '9.25',
+    Thickness: '250',
+    Width: '5650',
+    Camber: '3',
+    ExistingWidthOfCarriageWay: '3.5',
+    ExistingThicknessOfCarriageWay: '250',
+    Action: 'Download Report',
+    dataValues: {
+  // Left card (dataMapping1)
+  'Date of Construction': '2022-04-12',
+  'Package No.': 'UP01124',
+  'Start Chainage': '0.300',
+  'End Chainage': '0.400',
+  'Field Dry Density': '2.110 (19.37%)',
+  'Durability': '3.58%', // No value shown in the image
+  'Unconfined Compression Strength - 7 Days': '4.56MPa', // No value shown in the image
+  'Unconfined Compression Strength - 28 Days': '5.03Mpa', // No value shown in the image
+  
+  // Right card (dataMapping2)
+  'Flexural Strength': '-', // No value shown in the image
+  'Residual Strength': '-', // No value shown in the image
+  'Cement Spreading Rate': '19.897',
+  'Additive Spreading Rate': '22.5ML / sqm',
+  'Natural Moisture Content': '3.60',
+  'Field Moisture Content': '8.89',
+  'Contractor': 'Rameshwar Prasad Sharma Contractor',
+  'District': 'Agra'
+}
+ },
 ];
 
 

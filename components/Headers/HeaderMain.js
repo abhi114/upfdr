@@ -243,7 +243,7 @@ const DrawerMain = ({pageName,route}) => {
         {index === 24 && <RoadProfiles />}
         {index === 25 && (
           <TrialStrechListed
-            name={'TS with Internal Only'}
+            name={'TS with Internals Only'}
             dataName={'TrialStretchInternalsOnly'}
           />
         )}

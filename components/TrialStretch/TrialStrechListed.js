@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import {Parser} from 'json2csv';
 import XLSX from 'xlsx';
+import TsDetails from '../TsDetails';
 var RNFS = require('react-native-fs');
 
 const ITEMS_PER_PAGE = 5; // Adjust the number of items per page as needed
@@ -29,6 +30,7 @@ const TrialStrechListed = ({route, name: propName, dataName: propDataName}) => {
   const [search, setSearch] = useState('');
   const [userData, setuserData] = useState(data[dataName]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [DateModalVisible, setDateModalVisible] = useState(false);
   const [graphModalVisible, setgraphModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -216,7 +218,12 @@ const TrialStrechListed = ({route, name: propName, dataName: propDataName}) => {
       DownloadExcel();
     }
   };
+  const datePress = (item)=>{
+    setDateModalVisible(true);
+    console.log(item);
+    setSelectedItem(item);
 
+  }
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
@@ -305,7 +312,9 @@ const TrialStrechListed = ({route, name: propName, dataName: propDataName}) => {
                     borderWidth: 2,
                     alignContent: 'center',
                   }}
-                  onPress={() => {}}>
+                  onPress={() => {
+                    datePress(item);
+                  }}>
                   <Text style={[styles.cell, {color: '#0090E7'}]}>
                     {item.DateUploaded}
                   </Text>
@@ -438,7 +447,22 @@ const TrialStrechListed = ({route, name: propName, dataName: propDataName}) => {
             </View>
           </Modal>
         )}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={DateModalVisible}
+          onRequestClose={() => setDateModalVisible(!DateModalVisible)}>
+          <ScrollView
+            style={{
+              flex: 1,
 
+              alignContent: 'center',
+              margin: 5,
+              backgroundColor: '#000000',
+            }}>
+            <TsDetails selectedItem={selectedItem}/>
+          </ScrollView>
+        </Modal>
         <View style={styles.pagination}>
           <Button
             borderRadius={20}
