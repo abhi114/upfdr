@@ -36,6 +36,7 @@ import AddUserForm from '../AddUser';
 import JMFRecommendedPMU from '../JMFLists/JMFRecommendedPMU';
 import MapContractors from '../MapContractors';
 import AllSCList from '../AllSCList';
+import RoadProfiles from '../RoadProfiles';
 
 const DrawerMain = ({pageName,route}) => {
   const {index, screenName, setScreenName} = route.params;
@@ -148,7 +149,7 @@ const DrawerMain = ({pageName,route}) => {
       Animated.timing(profileTabPosition, {
         toValue: 0,
         duration: 200,
-        useNativeDriver: true,
+        useNativeDriver: true, 
       }).start();
     }
   };
@@ -237,6 +238,9 @@ const DrawerMain = ({pageName,route}) => {
         {index === 22 && <MapContractors />}
         {index === 23 && (
           <AllSCList name={'All Sc List'} dataName={'AllScList'} />
+        )}
+        {index === 24 && (
+          <RoadProfiles/>
         )}
         {showTab && (
           <DrawerTab

@@ -169,7 +169,7 @@ const SCKmPhoto = ({selectedItem}) => {
                   photoPress(card);
                 }}>
                 <Image
-                  source={require('./Helpers/check2.jpeg')} //change it to uri when the image starts coming from the remote url 
+                  source={require('./Helpers/check3.jpeg')} //change it to uri when the image starts coming from the remote url 
                   style={{
                     width: 50,
                     height: 50,
@@ -204,7 +204,7 @@ const SCKmPhoto = ({selectedItem}) => {
               backgroundColor: '#000000',
             }}>
             <Image
-              source={require('./Helpers/check2.jpeg')}
+              source={require('./Helpers/check3.jpeg')}
               resizeMode="contain"
               style={{
                 width: Dimensions.get('screen').width,

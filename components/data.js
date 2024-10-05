@@ -1921,5 +1921,31 @@ export const AllScList = [
     },
   },
 ];
+export const RoadProfiles = [
+  {
+    slNo: 1,
+    district: 'Barabanki',
+    packageNumber: 'UP13197',
+    fdrGroup: 'UPFDR-82',
+    contractor: 'Siddharth construction',
+   
+  },
+  {
+    slNo: 2,
+    district: 'Basti',
+    packageNumber: 'UP1596',
+    fdrGroup: 'UP-FDR11',
+    contractor: 'Blacklead Infratech Private Limited',
+   
+  },
+  {
+    slNo: 3,
+    district: 'S.K. Nagar',
+    packageNumber: 'UP6075',
+    fdrGroup: 'UP-FDR11',
+    contractor: 'Blacklead Infratech Private Limited',
+   
+  },
+];
 
 
